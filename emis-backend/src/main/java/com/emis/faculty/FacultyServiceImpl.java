@@ -2,8 +2,12 @@ package com.emis.faculty;
 
 import com.emis.customexception.ResourceNotFoundException;
 import com.emis.common.ApiResp;
+import com.emis.department.Department;
+import com.emis.department.DepartmentRepository;
 import com.emis.faculty.dto.FacultyProfileDto;
 import com.emis.faculty.dto.FacultyReq;
+import com.emis.user.User;
+import com.emis.user.UserRole;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -24,6 +28,7 @@ public class FacultyServiceImpl implements FacultyService {
    // private final DepartmentRepository departmentRepository;
     private final ModelMapper mapper;
     private final PasswordEncoder encoder;
+    private final DepartmentRepository departmentRepository;
 
     //GET PROFILE
     //ACCESS BY ADMIN AND FACULTY

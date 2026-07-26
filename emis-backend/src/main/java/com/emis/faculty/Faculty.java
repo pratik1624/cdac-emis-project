@@ -1,6 +1,7 @@
 package com.emis.faculty;
 
 import com.emis.common.BaseEntity;
+import com.emis.department.Department;
 import com.emis.common.Gender;
 import com.emis.user.User;
 import jakarta.persistence.*;
@@ -43,8 +44,8 @@ public class Faculty extends BaseEntity {
         faculty * -> 1 department
      */
 
-//    @ManyToOne
-//    @JoinColumn(name = "dept_id")
-//    Department assignedDepartment;
+    @ManyToOne
+    @JoinColumn(name = "dept_id")
+    Department assignedDepartment;
 
     }
