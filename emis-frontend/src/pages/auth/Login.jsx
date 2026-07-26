@@ -69,24 +69,30 @@ export default function Login() {
       // Redirect according to role
       switch (data.role) {
         case "ADMIN":
-          navigate("/admin");
+          navigate("/admin/dashboard");
           break;
 
         case "FACULTY":
-          navigate("/faculty");
+          navigate("/faculty/dashboard");
           break;
 
         case "STUDENT":
-          navigate("/student");
+          navigate("/student/dashboard");
           break;
 
         default:
           navigate("/");
       }
     } catch (err) {
-      console.error(err);
-      setError("Invalid Email or Password");
-    } finally {
+  console.log(err.response);
+
+  if (err.response) {
+    console.log("Status:", err.response.status);
+    console.log("Data:", err.response.data);
+  }
+
+  setError("Invalid Email or Password");
+}finally {
       setLoading(false);
     }
   };

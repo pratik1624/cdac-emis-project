@@ -8,6 +8,8 @@ export const AuthProvider = ({ children }) => {
         JSON.parse(localStorage.getItem("user"))
     );
 
+const isAuthenticated = !!user;
+
     const loginUser = (data) => {
 
     localStorage.setItem("token", data.jwt);
@@ -37,6 +39,7 @@ export const AuthProvider = ({ children }) => {
         <AuthContext.Provider
             value={{
                 user,
+                isAuthenticated,
                 loginUser,
                 logout
             }}
