@@ -2,6 +2,8 @@ package com.emis.security;
 
 import com.emis.security.JwtVerificationFilter;
 import lombok.RequiredArgsConstructor;
+
+import java.util.List;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
