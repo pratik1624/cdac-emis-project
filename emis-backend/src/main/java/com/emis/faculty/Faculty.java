@@ -40,7 +40,7 @@ public class Faculty extends BaseEntity {
     @JoinColumn(name = "faculty_id",nullable = false)
     @MapsId
     User userDetails;
-    /*
+     /*
         faculty * -> 1 department
      */
 

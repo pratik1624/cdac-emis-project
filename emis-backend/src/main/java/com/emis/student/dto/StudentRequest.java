@@ -1,15 +1,14 @@
 package com.emis.student.dto;
 
-
 import com.emis.common.Gender;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 @Getter
 @Setter
-public class StudentProfileResponse {
+public class StudentRequest {
 
-    private Long Id;
     private String firstName;
     private String lastName;
     private String rollNumber;

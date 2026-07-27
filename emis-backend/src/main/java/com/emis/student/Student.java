@@ -1,6 +1,5 @@
 package com.emis.student;
 
-
 import com.emis.common.BaseEntity;
 import com.emis.common.Gender;
 import com.emis.department.Department;
@@ -41,6 +40,12 @@ public class Student extends BaseEntity {
 
     @Column(nullable = false)
     private Integer semester;
+
+    @Column(nullable = false)
+    private String dob;
+
+    @Column(nullable = false)
+    private String rollNumber;
 
     @OneToOne
     @JoinColumn(name = "student_id", nullable = false)

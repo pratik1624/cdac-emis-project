@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface ResultService {
 
-    List<ResultResponse> getResults(Long studentId);
+    List<ResultResponse> getResults();
 
 }

@@ -2,7 +2,11 @@ package com.emis.attendance;
 
 
 import com.emis.attendance.dto.AttendanceResponse;
+import com.emis.customexception.ResourceNotFoundException;
+import com.emis.student.Student;
+import com.emis.student.StudentRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,12 +18,22 @@ import java.util.List;
 public class AttendanceServiceImpl implements AttendanceService {
 
     private final AttendanceRepository attendanceRepository;
+    private final StudentRepository studentRepository;
 
     @Override
-    public List<AttendanceResponse> getAttendance(Long studentId) {
+    public List<AttendanceResponse> getAttendance() {
+
+        String email = SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getName();
+
+        Student student = studentRepository
+                .findByUserDetailsEmail(email)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Student Not Found"));
 
         List<Attendance> attendanceList =
-                attendanceRepository.findByStudentId(studentId);
+                attendanceRepository.findByStudentId(student.getId());
 
         return attendanceList.stream().map(attendance -> {
 
