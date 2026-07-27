@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 
 import Login from "../pages/auth/Login";
-
+import PublicRoute from "./PublicRoute";
 import AdminDashboard from "../pages/admin/Dashboard";
 import FacultyDashboard from "../pages/faculty/Dashboard";
 import StudentDashboard from "../pages/student/Dashboard";
@@ -14,7 +14,9 @@ export default function AppRoutes() {
     <Routes>
 
       {/* Public Route */}
-      <Route path="/" element={<Login />} />
+      <Route element={<PublicRoute />}>
+          <Route path="/" element={<Login />} />
+       </Route>
 
       {/* Protected Routes */}
       <Route element={<PrivateRoute />}>
