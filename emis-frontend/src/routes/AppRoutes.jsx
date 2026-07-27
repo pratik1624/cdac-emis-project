@@ -6,34 +6,45 @@ import AdminDashboard from "../pages/admin/Dashboard";
 import FacultyDashboard from "../pages/faculty/Dashboard";
 import StudentDashboard from "../pages/student/Dashboard";
 
-export default function AppRoutes() {
-  const isAuthenticated = !!localStorage.getItem("token");
+import PrivateRoute from "./PrivateRoute";
+import RoleRoute from "./RoleRoute";
 
+export default function AppRoutes() {
   return (
     <Routes>
-      {/* Login */}
 
-      if(!isAuthenticated) {
+      {/* Public Route */}
       <Route path="/" element={<Login />} />
-}
 
-      {/* Admin */}
-      <Route
-        path="/admin/dashboard"
-        element={<AdminDashboard />}
-      />
+      {/* Protected Routes */}
+      <Route element={<PrivateRoute />}>
 
-      {/* Faculty */}
-      <Route
-        path="/faculty/dashboard"
-        element={<FacultyDashboard />}
-      />
+        {/* Admin */}
+        <Route element={<RoleRoute allowedRoles={["ADMIN"]} />}>
+          <Route
+            path="/admin/dashboard"
+            element={<AdminDashboard />}
+          />
+        </Route>
 
-      {/* Student */}
-      <Route
-        path="/student/dashboard"
-        element={<StudentDashboard />}
-      />
+        {/* Faculty */}
+        <Route element={<RoleRoute allowedRoles={["FACULTY"]} />}>
+          <Route
+            path="/faculty/dashboard"
+            element={<FacultyDashboard />}
+          />
+        </Route>
+
+        {/* Student */}
+        <Route element={<RoleRoute allowedRoles={["STUDENT"]} />}>
+          <Route
+            path="/student/dashboard"
+            element={<StudentDashboard />}
+          />
+        </Route>
+
+      </Route>
+
     </Routes>
   );
 }
