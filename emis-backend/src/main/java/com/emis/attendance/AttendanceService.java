@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface AttendanceService {
 
-    List<AttendanceResponse> getAttendance(Long studentId);
+    List<AttendanceResponse> getAttendance();
 
 
     ApiResp uploadAttendance(AttendanceRequest request);

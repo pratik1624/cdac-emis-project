@@ -19,6 +19,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import java.util.List;
+
 @Configuration
 @EnableMethodSecurity
 @RequiredArgsConstructor
@@ -94,8 +96,10 @@ public class SecurityConfig {
 
         CorsConfiguration configuration = new CorsConfiguration();
 
+        // React Frontend URL
         configuration.setAllowedOrigins(List.of("http://localhost:5173"));
 
+        // Allowed HTTP Methods
         configuration.setAllowedMethods(List.of(
                 "GET",
                 "POST",
@@ -104,8 +108,10 @@ public class SecurityConfig {
                 "OPTIONS"
         ));
 
+        // Allowed Headers
         configuration.setAllowedHeaders(List.of("*"));
 
+        // Allow Authorization header & Cookies (if used)
         configuration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source =
