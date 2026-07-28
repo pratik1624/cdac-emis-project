@@ -1,6 +1,5 @@
 package com.emis.user;
 
-
 import com.emis.auth.dto.AuthRequest;
 import com.emis.auth.dto.AuthResponse;
 import com.emis.common.ApiResp;
@@ -51,6 +50,4 @@ public class UserServiceImpl implements UserService {
 		userrepository.save(user);
 		return new ApiResp("Success", "User Register Successfully");
 	}
-
-
 }

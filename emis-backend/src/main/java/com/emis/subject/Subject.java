@@ -20,9 +20,6 @@ public class Subject extends BaseEntity {
     private String subjectName;
 
     @Column(nullable = false)
-    private Integer credits;
-
-    @Column(nullable = false)
     private Integer semester;
 
     @ManyToOne(fetch = FetchType.LAZY)
