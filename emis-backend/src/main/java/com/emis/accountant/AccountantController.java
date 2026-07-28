@@ -1,7 +1,8 @@
-package com.emis.fee;
+package com.emis.accountant;
 
 import java.util.List;
 
+import com.emis.fee.FeeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,13 +17,13 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping("/api/fees")
 @RequiredArgsConstructor
-public class FeeController {
+public class AccountantController {
 
     private final FeeService feeService;
 
     @PostMapping
     public ResponseEntity<FeeResponse> addFee(@Valid @RequestBody FeeRequest request) {
-        System.out.println("******************Inside");
+
         FeeResponse response = feeService.addFee(request);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
@@ -55,3 +56,4 @@ public class FeeController {
         return ResponseEntity.ok("Fee record deleted successfully.");
     }
 }
+

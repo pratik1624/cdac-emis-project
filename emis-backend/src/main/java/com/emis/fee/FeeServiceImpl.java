@@ -22,7 +22,7 @@ public class FeeServiceImpl implements FeeService {
 
     @Override
     public FeeResponse addFee(FeeRequest request) {
-        System.out.println("******************Inside");
+
 
         if (feeRepository.existsByStudentId(request.getStudentId())) {
             throw new RuntimeException("Fee record already exists for this student.");
