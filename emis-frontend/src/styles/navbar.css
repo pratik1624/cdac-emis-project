@@ -1,0 +1,87 @@
+.student-navbar{
+
+    height:72px;
+
+    background:var(--navbar-color);
+
+    border-bottom:1px solid var(--border-color);
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:0 30px;
+}
+
+.search-box{
+
+    width:350px;
+}
+
+.search-box input{
+
+    width:100%;
+
+    border:none;
+
+    outline:none;
+
+    border-radius:12px;
+
+    padding:10px 16px;
+
+    background:var(--card-color);
+
+    color:var(--text-color);
+
+    border:1px solid var(--border-color);
+
+}
+
+.nav-actions{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:16px;
+
+}
+
+.icon-btn{
+
+    width:42px;
+
+    height:42px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:var(--card-color);
+
+    color:var(--text-color);
+
+    transition:.25s;
+
+}
+
+.icon-btn:hover{
+
+    background:var(--accent-color);
+
+    color:white;
+}
+
+.profile{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    cursor:pointer;
+}
