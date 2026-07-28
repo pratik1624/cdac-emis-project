@@ -5,7 +5,6 @@ import com.emis.auth.dto.AuthRequest;
 import com.emis.auth.dto.ChangePasswordRequest;
 import com.emis.user.User;
 import com.emis.user.UserService;
-import com.emis.user.dto.ProfileResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
