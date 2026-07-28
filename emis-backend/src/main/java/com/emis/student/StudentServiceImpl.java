@@ -11,6 +11,7 @@ import com.emis.user.User;
 import com.emis.user.UserRole;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -32,9 +33,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public StudentProfileResponse getStudentDetails() {
 
-        String email = SecurityContextHolder.getContext()
-                .getAuthentication()
-                .getName();
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
 
         Student student = studentRepository
                 .findByUserDetailsEmail(email)
