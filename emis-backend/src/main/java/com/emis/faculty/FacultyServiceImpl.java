@@ -1,11 +1,22 @@
 package com.emis.faculty;
 
+import com.emis.attendance.dto.LoadStudentRequest;
 import com.emis.customexception.ResourceNotFoundException;
 import com.emis.common.ApiResp;
 import com.emis.department.Department;
 import com.emis.department.DepartmentRepository;
 import com.emis.faculty.dto.FacultyProfileDto;
 import com.emis.faculty.dto.FacultyReq;
+import com.emis.faculty.dto.FacultyUpdateDto;
+import com.emis.facultysubject.FacultySubject;
+import com.emis.facultysubject.FacultySubjectRepository;
+import com.emis.student.Student;
+import com.emis.student.StudentRepository;
+import com.emis.student.dto.LoadStudentForAttendanceDto;
+import com.emis.student.dto.StudentProfileResponse;
+import com.emis.subject.Subject;
+import com.emis.subject.SubjectDto;
+import com.emis.subject.SubjectRepository;
 import com.emis.user.User;
 import com.emis.user.UserRole;
 import jakarta.transaction.Transactional;
@@ -15,6 +26,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 //import com.cdac.entities.Department;
@@ -25,28 +37,48 @@ import java.util.List;
 public class FacultyServiceImpl implements FacultyService {
 
     private final FacultyRepository facultyRepository;
-   // private final DepartmentRepository departmentRepository;
     private final ModelMapper mapper;
     private final PasswordEncoder encoder;
     private final DepartmentRepository departmentRepository;
+    private final StudentRepository studentRepository;
 
+
+
+    //----------------------------------------------FACULTY SELF-------------------------------------------
+    @Override
+    public ApiResp updateFacultyProfile(Long id, FacultyUpdateDto facultyUpdateDto) {
+        Faculty dbFaculty =  facultyRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Faculty Not Found....."));
+        dbFaculty.getUserDetails().setEmail(facultyUpdateDto.getEmail());
+        dbFaculty.getUserDetails().setMobileNo(facultyUpdateDto.getPhone());
+        facultyRepository.save(dbFaculty);
+        return new ApiResp("SUCCESS","Updated Successfully.....");
+    }
     //GET PROFILE
-    //ACCESS BY ADMIN AND FACULTY
+    //FACULTY
     @Override
     public FacultyProfileDto getProfile() {
         //geting username(email) from the SecurityContextHolder
+        System.out.println(">>>>>>Inside getProfile 1");
        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        System.out.println("Username = " + username);
 
        Faculty dbfaculty = facultyRepository.findByUserDetailsEmail(username).orElseThrow(() -> new ResourceNotFoundException("Faculty Not Found"));
 
+        System.out.println(">>>>>>Inside getProfile 2");
       FacultyProfileDto dto = mapper.map(dbfaculty, FacultyProfileDto.class);
 
+        System.out.println(">>>>>>Inside getProfile 3");
       dto.setDepartment(dbfaculty.getAssignedDepartment().getDeptName());
+        System.out.println(">>>>>>Inside getProfile 4");
       dto.setEmail(dbfaculty.getUserDetails().getEmail());
+        System.out.println(">>>>>>Inside getProfile 5");
       dto.setPhone(dbfaculty.getUserDetails().getMobileNo());
+      dto.setRole(dbfaculty.userDetails.getRole().name());
 
       return dto;
     }
+
+    //---------------------------------------ADMIN WORK-------------------------------------------
 
     //ADD
     //ONLY ADMIN
@@ -120,7 +152,7 @@ public class FacultyServiceImpl implements FacultyService {
     }
 
     //UPDATE BY ID
-    //ACCESS BY ADMIN AND FACULTY
+    //ACCESS BY ADMIN
     @Override
     public ApiResp updateFacultyById(Long id , FacultyProfileDto updateRequest) {
 
@@ -138,6 +170,8 @@ public class FacultyServiceImpl implements FacultyService {
         return new ApiResp("SUCCESS" , "Faculty Updated Successfully");
     }
 
+
+
     //DELETE BY ID
     //ONLY ADMIN
     @Override
@@ -150,12 +184,50 @@ public class FacultyServiceImpl implements FacultyService {
 
     }
 
+    //--------------------------------------------ATTENDANCE-----------------------------------------------
+    //LOADSTUDENTFORATTENDANCE
+    @Override
+    public List<LoadStudentForAttendanceDto> loadStudentsForAttendance(LoadStudentRequest loadStudentRequest) {
+        System.out.println(">>>>>>>inside loadStudentsForAttendance Service");
+       String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        System.out.println("username" + email);
+      Faculty dbFaculty = facultyRepository.findByUserDetailsEmail(email).orElseThrow(() -> new ResourceNotFoundException("Faculty Not Found....."));
+
+       Department department = dbFaculty.getAssignedDepartment();
+
+       List<Student> list = studentRepository.findByDepartmentAndSemester(department,loadStudentRequest.getSemester());
+       List<LoadStudentForAttendanceDto> studList = new ArrayList<>();
+       for(Student dbStudent : list){
+           LoadStudentForAttendanceDto studentDetails = new LoadStudentForAttendanceDto(dbStudent.getId() , dbStudent.getFirstName(),dbStudent.getLastName());
+           studList.add(studentDetails);
+       }
+       return studList;
+    }
 
 
+    //----------------------------------------Subject------------------------------------------
+    private final FacultySubjectRepository facultySubjectRepository;
+    private final SubjectRepository subjectRepository;
+    @Override
+    public List<SubjectDto> getAssignedSubject(Long userId) {
 
+        List<FacultySubject> assignedSubjectList = facultySubjectRepository.findByFacultyId(userId);
+        /*
+        id	faculty_id	subject_id
+        1	1	101 (Java)
+        2	1	102 (DBMS)
+        3	1	103 (OS)
+         */
+        System.out.println("***********************iNDISE SERVVICE");
 
-
-
+        List<SubjectDto> subjectDtoList = new ArrayList<>();
+        System.out.println("Size = " + assignedSubjectList.size());
+        for(FacultySubject fs : assignedSubjectList){
+          SubjectDto dto = new SubjectDto(fs.getSubject().getSubjectCode() , fs.getSubject().getSubjectName());
+           subjectDtoList.add(dto);
+        }
+        return subjectDtoList;
+    }
 
 
 }

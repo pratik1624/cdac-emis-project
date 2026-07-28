@@ -1,6 +1,7 @@
 package com.emis.attendance;
 
 
+import com.emis.attendance.dto.AttendanceRequest;
 import com.emis.attendance.dto.AttendanceResponse;
 import com.emis.customexception.ResourceNotFoundException;
 import com.emis.student.Student;
@@ -52,5 +53,41 @@ public class AttendanceServiceImpl implements AttendanceService {
             return dto;
 
         }).toList();
+    }
+
+    @Override
+    public ApiResp uploadAttendance(AttendanceRequest request) {
+
+        Subject subject = subjectRepository.findById(request.getSubjectId()).orElseThrow(() -> new ResourceNotFoundException("Subject not found........."));
+
+        for(StudentAttendanceDto dto : request.getStudents()){
+
+            Student student = studentRepository.findById(dto.getStudentId()).orElseThrow(()-> new ResourceNotFoundException("Student Not Found...."));
+
+            Attendance attendance = attendanceRepository.findByStudentAndSubject(student,subject).orElse(null);
+
+
+            if(attendance == null){
+                attendance = new Attendance();
+                attendance.setStudent(student);
+                attendance.setSubject(subject);
+                attendance.setTotalClasses(1);
+
+                attendance.setAttendedClasses(dto.getPresent() ? 1 : 0);
+
+
+            }
+            else{
+                if (dto.getPresent()){
+
+                    attendance.setAttendedClasses(attendance.getAttendedClasses()+1);
+                }
+                attendance.setTotalClasses(attendance.getTotalClasses()+1);
+
+            }
+
+            attendanceRepository.save(attendance);
+        }
+        return new ApiResp("SUCCESS" , "Attendance Added Successfully....");
     }
 }
