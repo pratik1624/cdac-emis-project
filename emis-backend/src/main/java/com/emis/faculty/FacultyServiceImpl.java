@@ -8,10 +8,15 @@ import com.emis.department.DepartmentRepository;
 import com.emis.faculty.dto.FacultyProfileDto;
 import com.emis.faculty.dto.FacultyReq;
 import com.emis.faculty.dto.FacultyUpdateDto;
+import com.emis.facultysubject.FacultySubject;
+import com.emis.facultysubject.FacultySubjectRepository;
 import com.emis.student.Student;
 import com.emis.student.StudentRepository;
 import com.emis.student.dto.LoadStudentForAttendanceDto;
 import com.emis.student.dto.StudentProfileResponse;
+import com.emis.subject.Subject;
+import com.emis.subject.SubjectDto;
+import com.emis.subject.SubjectRepository;
 import com.emis.user.User;
 import com.emis.user.UserRole;
 import jakarta.transaction.Transactional;
@@ -38,6 +43,16 @@ public class FacultyServiceImpl implements FacultyService {
     private final StudentRepository studentRepository;
 
 
+
+    //----------------------------------------------FACULTY SELF-------------------------------------------
+    @Override
+    public ApiResp updateFacultyProfile(Long id, FacultyUpdateDto facultyUpdateDto) {
+        Faculty dbFaculty =  facultyRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Faculty Not Found....."));
+        dbFaculty.getUserDetails().setEmail(facultyUpdateDto.getEmail());
+        dbFaculty.getUserDetails().setMobileNo(facultyUpdateDto.getPhone());
+        facultyRepository.save(dbFaculty);
+        return new ApiResp("SUCCESS","Updated Successfully.....");
+    }
     //GET PROFILE
     //FACULTY
     @Override
@@ -62,6 +77,8 @@ public class FacultyServiceImpl implements FacultyService {
 
       return dto;
     }
+
+    //---------------------------------------ADMIN WORK-------------------------------------------
 
     //ADD
     //ONLY ADMIN
@@ -167,16 +184,6 @@ public class FacultyServiceImpl implements FacultyService {
 
     }
 
-    //----------------------------------------------FACULTY-------------------------------------------
-    @Override
-    public ApiResp updateFacultyProfile(Long id, FacultyUpdateDto facultyUpdateDto) {
-       Faculty dbFaculty =  facultyRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Faculty Not Found....."));
-       dbFaculty.getUserDetails().setEmail(facultyUpdateDto.getEmail());
-       dbFaculty.getUserDetails().setMobileNo(facultyUpdateDto.getPhone());
-       facultyRepository.save(dbFaculty);
-       return new ApiResp("SUCCESS","Updated Successfully.....");
-    }
-
     //--------------------------------------------ATTENDANCE-----------------------------------------------
     //LOADSTUDENTFORATTENDANCE
     @Override
@@ -195,6 +202,31 @@ public class FacultyServiceImpl implements FacultyService {
            studList.add(studentDetails);
        }
        return studList;
+    }
+
+
+    //----------------------------------------Subject------------------------------------------
+    private final FacultySubjectRepository facultySubjectRepository;
+    private final SubjectRepository subjectRepository;
+    @Override
+    public List<SubjectDto> getAssignedSubject(Long userId) {
+
+        List<FacultySubject> assignedSubjectList = facultySubjectRepository.findByFacultyId(userId);
+        /*
+        id	faculty_id	subject_id
+        1	1	101 (Java)
+        2	1	102 (DBMS)
+        3	1	103 (OS)
+         */
+        System.out.println("***********************iNDISE SERVVICE");
+
+        List<SubjectDto> subjectDtoList = new ArrayList<>();
+        System.out.println("Size = " + assignedSubjectList.size());
+        for(FacultySubject fs : assignedSubjectList){
+          SubjectDto dto = new SubjectDto(fs.getSubject().getSubjectCode() , fs.getSubject().getSubjectName());
+           subjectDtoList.add(dto);
+        }
+        return subjectDtoList;
     }
 
 

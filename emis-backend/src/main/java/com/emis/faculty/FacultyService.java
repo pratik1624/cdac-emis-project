@@ -7,6 +7,7 @@ import com.emis.faculty.dto.FacultyReq;
 import com.emis.faculty.dto.FacultyUpdateDto;
 import com.emis.student.dto.LoadStudentForAttendanceDto;
 import com.emis.student.dto.StudentProfileResponse;
+import com.emis.subject.SubjectDto;
 
 import java.util.List;
 
@@ -31,4 +32,6 @@ public interface FacultyService {
        ApiResp updateFacultyById(Long id , FacultyProfileDto updateRequest);
 
        ApiResp deleteFacultyById(Long id);
+
+        List<SubjectDto> getAssignedSubject(Long userId);
 }

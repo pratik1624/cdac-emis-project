@@ -3,6 +3,7 @@ package com.emis.security;
 import java.io.IOException;
 import java.util.List;
 
+import com.emis.user.UserRole;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -49,12 +50,19 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
                 String roleName = payload.get("user_role", String.class);
                 String email = payload.getSubject();
 
+                CustomUserDetails userDetails = new CustomUserDetails(
+                        userId,
+                        email,
+                        null,
+                        UserRole.valueOf(roleName)
+                );
+
                 System.out.println("UserId = " + userId);
                 System.out.println("Role = " + roleName);
 
                 UsernamePasswordAuthenticationToken authentication =
                         new UsernamePasswordAuthenticationToken(
-                                email,
+                                userDetails,
                                 null,
                                 List.of(new SimpleGrantedAuthority("ROLE_" + roleName))
                         );

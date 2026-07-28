@@ -5,8 +5,10 @@ import com.emis.attendance.dto.AttendanceRequest;
 import com.emis.attendance.dto.LoadStudentRequest;
 import com.emis.faculty.dto.FacultyProfileDto;
 import com.emis.faculty.dto.FacultyUpdateDto;
+import com.emis.security.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,14 +20,16 @@ public class FacultyController {
     /*
     GET /faculty/profile-->DONE
     PUT /faculty/profile--->DONE
-    GET /faculty/courses
+    GET /faculty/courses--->DONE
+    POST /faculty/attendance-->DONE
     GET /faculty/students
-    POST /faculty/attendance
     PUT  /faculty/attendance
     POST /faculty/marks
     PUT  /faculty/marks
     GET  /faculty/notices
      */
+
+    //-------------------------------------------SELF----------------------------------------
     private final FacultyService facultyService;
 
     @GetMapping("/profile")
@@ -34,7 +38,7 @@ public class FacultyController {
     }
 
     //UPDATE PROFILE
-    @PutMapping("/profile/{id}")
+    @PutMapping("/profile/{id}")//---use security conext
     public ResponseEntity<?> updateProfile(@PathVariable Long id , @RequestBody FacultyUpdateDto updateRequest){
         return ResponseEntity.ok(facultyService.updateFacultyProfile(id , updateRequest));
     }
@@ -56,8 +60,22 @@ public class FacultyController {
         return ResponseEntity.ok(attendanceService.uploadAttendance(request));
     }
     //Load and Upload Done
-
     //GET ALL ATTENDANCE OF STUDENTS
+    @GetMapping("/attendance")
+    public ResponseEntity<?> getAttendance(){
+        return null;
+    }
+
+    //----------------------------------SUBJECTS--------------------------------------
+
+    //GET ALL SUBJECTS TAUGHT BY FACULTY
+
+    @GetMapping("/subjects")
+    public ResponseEntity<?> getAssignedSubjects(@AuthenticationPrincipal CustomUserDetails userDetails){
+        System.out.println("***********************iNDISE CONTROLLER");
+        return ResponseEntity.ok(facultyService.getAssignedSubject(userDetails.getUserId()));
+    }
+
 
 
 
