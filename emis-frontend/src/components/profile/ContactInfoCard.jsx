@@ -8,13 +8,13 @@ export default function ContactInfoCard({ student }) {
 
     return (
 
-        <div className="card shadow-sm border-0 rounded-4">
+        <div className="card profile-card">
 
             <div className="card-body">
 
                 <h5 className="fw-bold mb-4">
 
-                    <FaEnvelope className="text-success me-2" />
+                    <FaEnvelope className="profile-icon me-2" />
 
                     Contact Information
 
@@ -24,17 +24,17 @@ export default function ContactInfoCard({ student }) {
 
                     <div className="col-md-4 mb-3">
 
-                        <div className="border rounded-3 p-3 h-100">
+                        <div className="profile-info-box">
 
                             <FaEnvelope
-                                className="text-success mb-2"
+                                className="profile-icon mb-3"
                             />
 
-                            <div className="text-muted small">
+                            <div className="profile-label">
                                 Email
                             </div>
 
-                            <div className="fw-semibold">
+                            <div className="profile-value">
                                 {student.email}
                             </div>
 
@@ -44,17 +44,17 @@ export default function ContactInfoCard({ student }) {
 
                     <div className="col-md-4 mb-3">
 
-                        <div className="border rounded-3 p-3 h-100">
+                        <div className="profile-info-box">
 
                             <FaPhone
-                                className="text-success mb-2"
+                                className="profile-icon mb-3"
                             />
 
-                            <div className="text-muted small">
+                            <div className="profile-label">
                                 Phone
                             </div>
 
-                            <div className="fw-semibold">
+                            <div className="profile-value">
                                 {student.phone}
                             </div>
 
@@ -64,17 +64,17 @@ export default function ContactInfoCard({ student }) {
 
                     <div className="col-md-4 mb-3">
 
-                        <div className="border rounded-3 p-3 h-100">
+                        <div className="profile-info-box">
 
                             <FaMapMarkerAlt
-                                className="text-success mb-2"
+                                className="profile-icon mb-3"
                             />
 
-                            <div className="text-muted small">
+                            <div className="profile-label">
                                 Address
                             </div>
 
-                            <div className="fw-semibold">
+                            <div className="profile-value">
                                 {student.address}
                             </div>
 

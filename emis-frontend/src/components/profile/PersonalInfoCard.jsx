@@ -4,13 +4,13 @@ export default function PersonalInfoCard({ student }) {
 
     return (
 
-        <div className="card shadow-sm border-0 rounded-4 h-100">
+        <div className="card profile-card h-100">
 
             <div className="card-body">
 
                 <h5 className="fw-bold mb-4">
 
-                    <FaUser className="text-success me-2" />
+                    <FaUser className="profile-icon me-2" />
 
                     Personal Information
 
@@ -18,11 +18,11 @@ export default function PersonalInfoCard({ student }) {
 
                 <div className="row mb-3">
 
-                    <div className="col-5 text-muted">
+                   <div className="col-5 profile-label">
                         First Name
                     </div>
 
-                    <div className="col-7 fw-semibold">
+                    <div className="col-7 profile-value">
                         {student.firstName}
                     </div>
 
@@ -30,11 +30,11 @@ export default function PersonalInfoCard({ student }) {
 
                 <div className="row mb-3">
 
-                    <div className="col-5 text-muted">
+                    <div className="col-5 profile-label">
                         Last Name
                     </div>
 
-                    <div className="col-7 fw-semibold">
+                   <div className="col-7 profile-value">
                         {student.lastName}
                     </div>
 
@@ -42,11 +42,11 @@ export default function PersonalInfoCard({ student }) {
 
                 <div className="row mb-3">
 
-                    <div className="col-5 text-muted">
+                 <div className="col-5 profile-label">
                         Gender
                     </div>
 
-                    <div className="col-7 fw-semibold">
+                   <div className="col-7 profile-value">
                         {student.gender || "-"}
                     </div>
 
@@ -54,11 +54,11 @@ export default function PersonalInfoCard({ student }) {
 
                 <div className="row">
 
-                    <div className="col-5 text-muted">
+                   <div className="col-5 profile-label">
                         Date of Birth
                     </div>
 
-                    <div className="col-7 fw-semibold">
+                    <div className="col-7 profile-value">
                         {student.dob || "-"}
                     </div>
 

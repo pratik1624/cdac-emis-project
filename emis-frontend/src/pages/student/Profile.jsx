@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { getStudentProfile } from "../../api/studentApi";
+import {  getStudentProfile, updateStudentProfile,} from "../../api/studentApi";
 
 import ProfileHeader from "../../components/profile/ProfileHeader";
 import PersonalInfoCard from "../../components/profile/PersonalInfoCard";
 import AcademicInfoCard from "../../components/profile/AcademicInfoCard";
 import ContactInfoCard from "../../components/profile/ContactInfoCard";
 import EditProfileModal from "../../components/profile/EditProfileModal";
-
+import "../../styles/profile.css";
 export default function Profile() {
 
     const [student, setStudent] = useState(null);
@@ -47,19 +47,32 @@ export default function Profile() {
     // Save Edited Profile (Backend Later)
     // ===================================
 
-    const handleSave = (updatedData) => {
+const handleSave = async (updatedStudent) => {
 
-        console.log(updatedData);
+    try {
 
-        // Update UI immediately
-        setStudent((prev) => ({
-            ...prev,
-            ...updatedData,
-        }));
+        await updateStudentProfile(updatedStudent);
+
+        const latest = await getStudentProfile();
+
+        setStudent(latest);
 
         setShowEditModal(false);
 
-    };
+        alert("Profile Updated Successfully");
+
+    } catch (err) {
+
+        console.log("Full Error:", err);
+        console.log("Response:", err.response);
+        console.log("Status:", err.response?.status);
+        console.log("Data:", err.response?.data);
+
+        alert("Failed to update profile.");
+
+    }
+
+};
 
     if (loading) {
         return <h4>Loading Profile...</h4>;
@@ -71,7 +84,7 @@ export default function Profile() {
 
     return (
 
-        <div className="container-fluid">
+        <div className="container-fluid profile-page">
 
             <ProfileHeader
                 student={student}

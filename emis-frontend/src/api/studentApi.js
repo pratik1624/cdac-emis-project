@@ -19,3 +19,8 @@ export const getTimetable = async () => {
     const response = await api.get("/student/timetable");
     return response.data;
 };
+
+export const updateStudentProfile = async (data) => {
+    const response = await api.put("/student/profile", data);
+    return response.data;
+};
