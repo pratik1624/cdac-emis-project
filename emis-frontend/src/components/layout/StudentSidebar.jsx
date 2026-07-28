@@ -10,7 +10,7 @@ import {
 
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
-
+import { FaCog } from "react-icons/fa";
 export default function StudentSidebar() {
 
     const { logout } = useAuth();
@@ -51,6 +51,12 @@ export default function StudentSidebar() {
             title: "Notices",
             icon: <FaBullhorn />,
             path: "/student/notices"
+        },
+
+        {
+            title: "Settings",
+            icon: <FaCog />,
+            path: "/settings"
         }
 
     ];
