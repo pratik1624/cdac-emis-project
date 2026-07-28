@@ -2,10 +2,13 @@ package com.emis.auth;
 
 
 import com.emis.auth.dto.AuthRequest;
+import com.emis.auth.dto.ChangePasswordRequest;
 import com.emis.user.User;
 import com.emis.user.UserService;
+import com.emis.user.dto.ProfileResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -21,15 +24,27 @@ public class AuthController {
 		return ResponseEntity.ok(userservice.authenticateUser(request));
 		
 	}
-	
-	@PostMapping("/changepassword")
-	public ResponseEntity<?> changePassword(){
-		return null;
-	}
-	
 	@GetMapping("/profile")
-	public ResponseEntity<?> getUser(){
-		return null;
+	public ResponseEntity<ProfileResponse> getProfile() {
+
+		ProfileResponse response = userservice.getProfile();
+
+		System.out.println(response);
+
+		return ResponseEntity.ok(response);
+	}
+
+	@PostMapping("/changepassword")
+	public ResponseEntity<?> changePassword(
+			Authentication authentication,
+			@RequestBody ChangePasswordRequest request){
+
+		System.out.println("*************************inside changepasswod  " + authentication.getName());
+		userservice.changePassword(
+				authentication.getName(),
+				request);
+
+		return ResponseEntity.ok("Password Changed Successfully"+authentication.getName());
 	}
 
 	//for testing purpose
@@ -38,4 +53,5 @@ public class AuthController {
 		System.out.println("**********************inside Signup");
 		return ResponseEntity.ok(userservice.addUser(user));
 	}
+
 }
