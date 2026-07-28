@@ -47,13 +47,14 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
 
                 Long userId = payload.get("user_id", Long.class);
                 String roleName = payload.get("user_role", String.class);
+                String email = payload.getSubject();
 
                 System.out.println("UserId = " + userId);
                 System.out.println("Role = " + roleName);
 
                 UsernamePasswordAuthenticationToken authentication =
                         new UsernamePasswordAuthenticationToken(
-                                userId,
+                                email,
                                 null,
                                 List.of(new SimpleGrantedAuthority("ROLE_" + roleName))
                         );
