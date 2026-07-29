@@ -2,8 +2,11 @@ package com.emis.subject;
 
 import com.emis.common.BaseEntity;
 import com.emis.department.Department;
+import com.emis.faculty.Faculty;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "subjects")
@@ -25,4 +28,8 @@ public class Subject extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "department_id", nullable = false)
     private Department department;
+
+
+    @ManyToMany(mappedBy = "mySubjects")
+    private List<Faculty> faculties;
 }
