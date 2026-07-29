@@ -23,15 +23,7 @@ public class AuthController {
 		return ResponseEntity.ok(userservice.authenticateUser(request));
 		
 	}
-	@GetMapping("/profile")
-	public ResponseEntity<ProfileResponse> getProfile() {
 
-		ProfileResponse response = userservice.getProfile();
-
-		System.out.println(response);
-
-		return ResponseEntity.ok(response);
-	}
 
 	@PostMapping("/changepassword")
 	public ResponseEntity<?> changePassword(

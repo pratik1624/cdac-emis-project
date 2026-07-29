@@ -1,0 +1,11 @@
+.custom-card{
+
+    background: var(--card-color);
+
+    border: 1px solid var(--border-color);
+
+    border-radius: 16px;
+
+    color: var(--text-color);
+
+}

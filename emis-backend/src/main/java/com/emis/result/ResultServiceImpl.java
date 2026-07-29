@@ -1,9 +1,13 @@
 package com.emis.result;
 
 
+import com.emis.customexception.ResourceNotFoundException;
 import com.emis.result.dto.ResultResponse;
+import com.emis.student.Student;
+import com.emis.student.StudentRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,11 +20,20 @@ public class ResultServiceImpl implements ResultService {
 
     private final ResultRepository resultRepository;
     private final ModelMapper mapper;
-
+    private final StudentRepository studentRepository;
     @Override
-    public List<ResultResponse> getResults(Long studentId) {
+    public List<ResultResponse> getResults() {
 
-        List<Result> results = resultRepository.findByStudentId(studentId);
+        String email = SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getName();
+
+        Student student = studentRepository
+                .findByUserDetailsEmail(email)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Student Not Found"));
+
+        List<Result> results = resultRepository.findByStudentId(student.getId());
 
         return results.stream()
                 .map(result -> mapper.map(result, ResultResponse.class))
