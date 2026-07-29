@@ -55,6 +55,7 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
                         email,
                         null,
                         UserRole.valueOf(roleName)
+
                 );
 
                 System.out.println("UserId = " + userId);

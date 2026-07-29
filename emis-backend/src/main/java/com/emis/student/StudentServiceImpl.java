@@ -11,6 +11,7 @@ import com.emis.user.User;
 import com.emis.user.UserRole;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -28,13 +29,11 @@ public class StudentServiceImpl implements StudentService {
     private final DepartmentRepository departmentRepository;
     private final PasswordEncoder encoder;
 
-    //admin and student
+    //admin and faculty
     @Override
     public StudentProfileResponse getStudentDetails() {
 
-        String email = SecurityContextHolder.getContext()
-                .getAuthentication()
-                .getName();
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
 
         Student student = studentRepository
                 .findByUserDetailsEmail(email)
@@ -145,5 +144,34 @@ public class StudentServiceImpl implements StudentService {
         return new ApiResp("SUCCESS", "Student Deleted Successfully");
     }
 
+
+    @Override
+    public ApiResp updateProfile(StudentProfileResponse request) {
+
+        // Get logged-in user's email from JWT
+        String email = SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getName();
+
+        // Find student using email
+        Student student = studentRepository
+                .findByUserDetailsEmail(email)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Student Not Found"));
+
+        // Update only editable fields
+        student.getUserDetails().setEmail(request.getEmail());
+        student.getUserDetails().setMobileNo(request.getPhone());
+        student.setAddress(request.getAddress());
+
+
+        studentRepository.save(student);
+
+        return new ApiResp(
+                "SUCCESS",
+                "Profile Updated Successfully"
+        );
+    }
 
 }
