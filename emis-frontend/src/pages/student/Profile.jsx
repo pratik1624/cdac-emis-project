@@ -1,11 +1,19 @@
 import { useEffect, useState } from "react";
-import { getStudentProfile } from "../../api/studentApi";
+import {  getStudentProfile, updateStudentProfile,} from "../../api/studentApi";
 
+import ProfileHeader from "../../components/profile/ProfileHeader";
+import PersonalInfoCard from "../../components/profile/PersonalInfoCard";
+import AcademicInfoCard from "../../components/profile/AcademicInfoCard";
+import ContactInfoCard from "../../components/profile/ContactInfoCard";
+import EditProfileModal from "../../components/profile/EditProfileModal";
+import "../../styles/profile.css";
 export default function Profile() {
 
     const [student, setStudent] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
+
+    const [showEditModal, setShowEditModal] = useState(false);
 
     useEffect(() => {
 
@@ -14,11 +22,13 @@ export default function Profile() {
             try {
 
                 const data = await getStudentProfile();
+
                 setStudent(data);
 
             } catch (err) {
 
                 console.error(err);
+
                 setError("Unable to load profile.");
 
             } finally {
@@ -33,6 +43,37 @@ export default function Profile() {
 
     }, []);
 
+    // ===================================
+    // Save Edited Profile (Backend Later)
+    // ===================================
+
+const handleSave = async (updatedStudent) => {
+
+    try {
+
+        await updateStudentProfile(updatedStudent);
+
+        const latest = await getStudentProfile();
+
+        setStudent(latest);
+
+        setShowEditModal(false);
+
+        alert("Profile Updated Successfully");
+
+    } catch (err) {
+    
+        console.log("Full Error:", err);
+        console.log("Response:", err.response);
+        console.log("Status:", err.response?.status);
+        console.log("Data:", err.response?.data);
+
+        alert("Failed to update profile.");
+
+    }
+
+};
+
     if (loading) {
         return <h4>Loading Profile...</h4>;
     }
@@ -43,79 +84,37 @@ export default function Profile() {
 
     return (
 
-        <div className="container-fluid">
+        <div className="container-fluid profile-page">
+
+            <ProfileHeader
+                student={student}
+                onEdit={() => setShowEditModal(true)}
+            />
 
             <div className="row">
 
-                <div className="col-lg-8">
+                <div className="col-lg-6 mb-4">
 
-                    <div className="custom-card p-4">
+                    <PersonalInfoCard student={student} />
 
-                        <h3 className="mb-4">Student Profile</h3>
+                </div>
 
-                        <table className="table">
+                <div className="col-lg-6 mb-4">
 
-                            <tbody>
-
-                                <tr>
-                                    <th>First Name</th>
-                                    <td>{student.firstName}</td>
-                                </tr>
-
-                                <tr>
-                                    <th>Last Name</th>
-                                    <td>{student.lastName}</td>
-                                </tr>
-
-                                <tr>
-                                    <th>Roll Number</th>
-                                    <td>{student.rollNumber}</td>
-                                </tr>
-
-                                <tr>
-                                    <th>Email</th>
-                                    <td>{student.email}</td>
-                                </tr>
-
-                                <tr>
-                                    <th>Phone</th>
-                                    <td>{student.phone}</td>
-                                </tr>
-
-                                <tr>
-                                    <th>Gender</th>
-                                    <td>{student.gender}</td>
-                                </tr>
-
-                                <tr>
-                                    <th>Department</th>
-                                    <td>{student.department}</td>
-                                </tr>
-
-                                <tr>
-                                    <th>Semester</th>
-                                    <td>{student.semester}</td>
-                                </tr>
-
-                                <tr>
-                                    <th>Date of Birth</th>
-                                    <td>{student.dob}</td>
-                                </tr>
-
-                                <tr>
-                                    <th>Address</th>
-                                    <td>{student.address}</td>
-                                </tr>
-
-                            </tbody>
-
-                        </table>
-
-                    </div>
+                    <AcademicInfoCard student={student} />
 
                 </div>
 
             </div>
+
+            <ContactInfoCard student={student} />
+
+            <EditProfileModal
+                show={showEditModal}
+                student={student}
+                onClose={() => setShowEditModal(false)}
+                onSave={handleSave}
+            />
 
         </div>
 

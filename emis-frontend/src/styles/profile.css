@@ -1,0 +1,133 @@
+/* ===========================
+   PAGE
+=========================== */
+
+.profile-page{
+    background:#121212;
+    min-height:100vh;
+    padding:20px;
+}
+
+/* ===========================
+   CARDS
+=========================== */
+
+.profile-card{
+    background:#1b1b1b;
+    border:1px solid #2b2b2b;
+    border-radius:18px;
+    color:white;
+    box-shadow:0 5px 18px rgba(0,0,0,.25);
+}
+
+.profile-card .card-body{
+    color:white;
+}
+
+/* ===========================
+   HEADINGS
+=========================== */
+
+.profile-card h5{
+    color:#ffffff;
+    font-size:22px;
+    font-weight:700;
+}
+
+/* ===========================
+   LABELS
+=========================== */
+
+.profile-label{
+    color:#b5b5b5 !important;
+    font-size:15px;
+    font-weight:500;
+}
+
+/* ===========================
+   VALUES
+=========================== */
+
+.profile-value{
+    color:#ffffff !important;
+    font-size:18px;
+    font-weight:600;
+}
+/* ===========================
+   ICONS
+=========================== */
+
+.profile-icon{
+    color:#22c55e;
+}
+
+/* ===========================
+   HEADER
+=========================== */
+
+.profile-header{
+    background:#1b1b1b;
+    border:1px solid #2b2b2b;
+    border-radius:18px;
+    color:white;
+}
+
+/* ===========================
+   BUTTON
+=========================== */
+
+.btn-success{
+    background:#22c55e;
+    border:none;
+}
+
+.btn-success:hover{
+    background:#16a34a;
+}
+
+/* Labels */
+.profile-label{
+    color:#9ca3af !important;
+    font-size:15px;
+    font-weight:500;
+}
+
+/* Values */
+.profile-value{
+    color:#ffffff !important;
+    font-size:17px;
+    font-weight:600;
+}
+
+/* Section Titles */
+.profile-card h5{
+    color:#ffffff;
+    font-size:30px;
+    font-weight:700;
+}
+
+/* Main Name */
+.profile-header h2{
+    color:#ffffff;
+    font-size:42px;
+    font-weight:700;
+}
+
+/* Department */
+.profile-header p{
+    color:#b5b5b5 !important;
+    font-size:18px;
+}
+
+/* Email & Phone */
+.profile-header strong{
+    color:#ffffff;
+}
+
+.profile-header p strong{
+    color:#ffffff;
+}
+
+.profile-header p{
+    color:#e5e5e5;
+}
