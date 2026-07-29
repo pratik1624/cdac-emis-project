@@ -2,9 +2,7 @@ package com.emis.faculty;
 
 import com.emis.attendance.dto.LoadStudentRequest;
 import com.emis.common.ApiResp;
-import com.emis.faculty.dto.FacultyProfileDto;
-import com.emis.faculty.dto.FacultyReq;
-import com.emis.faculty.dto.FacultyUpdateDto;
+import com.emis.faculty.dto.*;
 import com.emis.student.dto.LoadStudentForAttendanceDto;
 import com.emis.student.dto.StudentProfileResponse;
 import com.emis.subject.SubjectDto;
@@ -20,18 +18,18 @@ public interface FacultyService {
 
        //load Students
        List<LoadStudentForAttendanceDto>loadStudentsForAttendance(LoadStudentRequest loadStudentRequest);
-       //ATTENDANCE
-     //  ApiResp uploadAttendance(LoadStudentRequest attendanceRequest);
 
 
+              ApiResp addFaculty(FacultyReq request);
+              List<FacultyProfileDto> getAllFaculty();
+              FacultyProfileDto getFacultyById(Long id);
+              ApiResp updateFacultyById(Long id , FacultyProfileDto updateRequest);
+              ApiResp deleteFacultyById(Long id);
 
+         List<SubjectDto> getAssignedSubject(Long userId);
 
-       ApiResp addFaculty(FacultyReq request);
-       List<FacultyProfileDto> getAllFaculty();
-       FacultyProfileDto getFacultyById(Long id);
-       ApiResp updateFacultyById(Long id , FacultyProfileDto updateRequest);
+         List<StudentListDto> getDepartmentStudents();
 
-       ApiResp deleteFacultyById(Long id);
-
-        List<SubjectDto> getAssignedSubject(Long userId);
+         //STUDENT PROFILE
+         StudentProfileDetails getStudentProfile(Long studentId);
 }

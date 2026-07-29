@@ -1,20 +1,22 @@
 package com.emis.faculty;
 
+import com.emis.attendance.Attendance;
+import com.emis.attendance.AttendanceRepository;
 import com.emis.attendance.dto.LoadStudentRequest;
 import com.emis.customexception.ResourceNotFoundException;
 import com.emis.common.ApiResp;
 import com.emis.department.Department;
 import com.emis.department.DepartmentRepository;
-import com.emis.faculty.dto.FacultyProfileDto;
-import com.emis.faculty.dto.FacultyReq;
-import com.emis.faculty.dto.FacultyUpdateDto;
+import com.emis.faculty.dto.*;
 import com.emis.facultysubject.FacultySubject;
 import com.emis.facultysubject.FacultySubjectRepository;
+import com.emis.result.Result;
+import com.emis.result.ResultRepository;
 import com.emis.student.Student;
 import com.emis.student.StudentRepository;
 import com.emis.student.dto.LoadStudentForAttendanceDto;
 import com.emis.student.dto.StudentProfileResponse;
-import com.emis.subject.Subject;
+import com.emis.student.dto.StudentRequest;
 import com.emis.subject.SubjectDto;
 import com.emis.subject.SubjectRepository;
 import com.emis.user.User;
@@ -41,6 +43,8 @@ public class FacultyServiceImpl implements FacultyService {
     private final PasswordEncoder encoder;
     private final DepartmentRepository departmentRepository;
     private final StudentRepository studentRepository;
+    private final AttendanceRepository attendanceRepository;
+    private final ResultRepository resultRepository;
 
 
 
@@ -228,6 +232,116 @@ public class FacultyServiceImpl implements FacultyService {
         }
         return subjectDtoList;
     }
+
+    //-----------------------------GET DEPARTMENT STUDENTS----------------------------
+    @Override
+    public List<StudentListDto> getDepartmentStudents() {
+
+        String email = SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getName();
+
+        Faculty faculty = facultyRepository
+                .findByUserDetailsEmail(email)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Faculty not found"));
+
+        List<Student> students = studentRepository
+                .findByDepartmentId(faculty.getAssignedDepartment().getId());
+
+        List<StudentListDto> studentList = new ArrayList<>();
+       for(Student dbstu : students){
+           String studentName = dbstu.getFirstName()+ " " + dbstu.getLastName();
+           StudentListDto dto = new StudentListDto(dbstu.getRollNumber(),studentName,dbstu.getSemester(),dbstu.getUserDetails().getEmail());
+           studentList.add(dto);
+       }
+        return  studentList;
+    }
+
+    //GET PROFILE
+    @Override
+    public StudentProfileDetails getStudentProfile(Long studentId) {
+
+        Student student = studentRepository.findById(studentId)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Student Not Found"));
+
+        StudentRequest studentDto = mapper.map(student, StudentRequest.class);
+
+        studentDto.setDepartment(student.getDepartment().getDeptName());
+
+        studentDto.setEmail(student.getUserDetails().getEmail());
+
+        List<Attendance> attendanceList =
+                attendanceRepository.findByStudentId(studentId);
+
+        List<AttendanceSummaryDto> attendanceDtos =
+                new ArrayList<>();
+
+        for (Attendance attendance : attendanceList) {
+
+            double percentage =
+                    attendance.getTotalClasses() == 0
+                            ? 0
+                            : (attendance.getAttendedClasses() * 100.0)
+                            / attendance.getTotalClasses();
+
+            AttendanceSummaryDto dto =
+                    new AttendanceSummaryDto();
+
+            dto.setSubjectName(
+                    attendance.getSubject().getSubjectName());
+
+            dto.setAttendedClasses(
+                    attendance.getAttendedClasses());
+
+            dto.setTotalClasses(
+                    attendance.getTotalClasses());
+
+            dto.setPercentage(
+                    Math.round(percentage * 100.0) / 100.0);
+
+            attendanceDtos.add(dto);
+        }
+
+        List<Result> resultList =
+                resultRepository.findByStudentId(studentId);
+
+        List<ResultResponse> resultDtos =
+                new ArrayList<>();
+
+        for (Result result : resultList) {
+
+            ResultResponse dto = new ResultResponse();
+
+            dto.setSubjectName(
+                    result.getSubject().getSubjectName());
+
+            dto.setObtainedMarks(
+                    result.getObtainedMarks());
+
+            dto.setTotalMarks(
+                    result.getTotalMarks());
+
+            dto.setGrade(
+                    result.getGrade());
+
+            resultDtos.add(dto);
+        }
+
+        StudentProfileDetails response =
+                new StudentProfileDetails();
+
+        response.setStudent(studentDto);
+
+        response.setAttendance(attendanceDtos);
+
+        response.setResults(resultDtos);
+
+        return response;
+    }
+
+
 
 
 }
