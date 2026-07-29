@@ -62,7 +62,7 @@ const handleSave = async (updatedStudent) => {
         alert("Profile Updated Successfully");
 
     } catch (err) {
-
+    
         console.log("Full Error:", err);
         console.log("Response:", err.response);
         console.log("Status:", err.response?.status);
