@@ -19,18 +19,6 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class FacultyController {
 
-    /*
-    GET /faculty/profile-->DONE
-    PUT /faculty/profile--->DONE
-    GET /faculty/courses--->DONE
-    POST /faculty/attendance-->DONE
-    GET /faculty/students
-    PUT  /faculty/attendance
-    POST /faculty/marks
-    PUT  /faculty/marks
-    GET  /faculty/notices
-     */
-
     //-------------------------------------------SELF----------------------------------------
     private final FacultyService facultyService;
 
@@ -68,27 +56,38 @@ public class FacultyController {
         return null;
     }
 
-    //----------------------------------SUBJECTS--------------------------------------
 
-    //GET ALL SUBJECTS TAUGHT BY FACULTY
-
-    @GetMapping("/subjects")
-    public ResponseEntity<?> getAssignedSubjects(@AuthenticationPrincipal CustomUserDetails userDetails){
-        System.out.println("***********************iNDISE CONTROLLER");
-        return ResponseEntity.ok(facultyService.getAssignedSubject(userDetails.getUserId()));
-    }
 
     //------------------------------GET /faculty/students------------------------------
     private final StudentService studentService;
 
     @GetMapping("/students")
-    public ResponseEntity<?> getDepartmentStudents(){
-        return ResponseEntity.ok(facultyService.getDepartmentStudents());
+    public ResponseEntity<?> getDepartmentStudents(Integer semester){
+        return ResponseEntity.ok(facultyService.getDepartmentStudents(semester));
     }
 
     @GetMapping("student/{id}")
     public ResponseEntity<?> getStudentProfileDetails(@PathVariable Long id){
         return ResponseEntity.ok(facultyService.getStudentProfile(id));
+    }
+
+    //----------------------------------SUBJECTS--------------------------------------
+
+    //my subject
+
+    @GetMapping("/subjects")
+    public ResponseEntity<?> getAssignedSubjects(){
+
+        return ResponseEntity.ok(
+                facultyService.getAssignedSubjects());
+    }
+
+    //-----------------------------NOTICES----------------------------------
+
+    @GetMapping("/notices")
+    public ResponseEntity<?> getNotices(){
+
+        return ResponseEntity.ok(facultyService.getNotices());
     }
 
 

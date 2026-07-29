@@ -8,15 +8,17 @@ import com.emis.common.ApiResp;
 import com.emis.department.Department;
 import com.emis.department.DepartmentRepository;
 import com.emis.faculty.dto.*;
-import com.emis.facultysubject.FacultySubject;
-import com.emis.facultysubject.FacultySubjectRepository;
+import com.emis.notices.NoticeRepository;
+import com.emis.notices.Notices;
 import com.emis.result.Result;
 import com.emis.result.ResultRepository;
+import com.emis.security.CustomUserDetails;
 import com.emis.student.Student;
 import com.emis.student.StudentRepository;
 import com.emis.student.dto.LoadStudentForAttendanceDto;
 import com.emis.student.dto.StudentProfileResponse;
 import com.emis.student.dto.StudentRequest;
+import com.emis.subject.Subject;
 import com.emis.subject.SubjectDto;
 import com.emis.subject.SubjectRepository;
 import com.emis.user.User;
@@ -29,7 +31,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 //import com.cdac.entities.Department;
 
@@ -45,6 +49,7 @@ public class FacultyServiceImpl implements FacultyService {
     private final StudentRepository studentRepository;
     private final AttendanceRepository attendanceRepository;
     private final ResultRepository resultRepository;
+    private final NoticeRepository noticeRepository;
 
 
 
@@ -188,6 +193,8 @@ public class FacultyServiceImpl implements FacultyService {
 
     }
 
+
+
     //--------------------------------------------ATTENDANCE-----------------------------------------------
     //LOADSTUDENTFORATTENDANCE
     @Override
@@ -197,7 +204,7 @@ public class FacultyServiceImpl implements FacultyService {
         System.out.println("username" + email);
       Faculty dbFaculty = facultyRepository.findByUserDetailsEmail(email).orElseThrow(() -> new ResourceNotFoundException("Faculty Not Found....."));
 
-       Department department = dbFaculty.getAssignedDepartment();
+       Long department = dbFaculty.getAssignedDepartment().getId();
 
        List<Student> list = studentRepository.findByDepartmentAndSemester(department,loadStudentRequest.getSemester());
        List<LoadStudentForAttendanceDto> studList = new ArrayList<>();
@@ -209,54 +216,9 @@ public class FacultyServiceImpl implements FacultyService {
     }
 
 
-    //----------------------------------------Subject------------------------------------------
-    private final FacultySubjectRepository facultySubjectRepository;
-    private final SubjectRepository subjectRepository;
-    @Override
-    public List<SubjectDto> getAssignedSubject(Long userId) {
 
-        List<FacultySubject> assignedSubjectList = facultySubjectRepository.findByFacultyId(userId);
-        /*
-        id	faculty_id	subject_id
-        1	1	101 (Java)
-        2	1	102 (DBMS)
-        3	1	103 (OS)
-         */
-        System.out.println("***********************iNDISE SERVVICE");
 
-        List<SubjectDto> subjectDtoList = new ArrayList<>();
-        System.out.println("Size = " + assignedSubjectList.size());
-        for(FacultySubject fs : assignedSubjectList){
-          SubjectDto dto = new SubjectDto(fs.getSubject().getSubjectCode() , fs.getSubject().getSubjectName());
-           subjectDtoList.add(dto);
-        }
-        return subjectDtoList;
-    }
 
-    //-----------------------------GET DEPARTMENT STUDENTS----------------------------
-    @Override
-    public List<StudentListDto> getDepartmentStudents() {
-
-        String email = SecurityContextHolder.getContext()
-                .getAuthentication()
-                .getName();
-
-        Faculty faculty = facultyRepository
-                .findByUserDetailsEmail(email)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("Faculty not found"));
-
-        List<Student> students = studentRepository
-                .findByDepartmentId(faculty.getAssignedDepartment().getId());
-
-        List<StudentListDto> studentList = new ArrayList<>();
-       for(Student dbstu : students){
-           String studentName = dbstu.getFirstName()+ " " + dbstu.getLastName();
-           StudentListDto dto = new StudentListDto(dbstu.getRollNumber(),studentName,dbstu.getSemester(),dbstu.getUserDetails().getEmail());
-           studentList.add(dto);
-       }
-        return  studentList;
-    }
 
     //GET PROFILE
     @Override
@@ -342,6 +304,71 @@ public class FacultyServiceImpl implements FacultyService {
     }
 
 
+
+
+
+
+    //-----29-07-2026
+    //my subject backend
+    @Override
+    public Set<SubjectResponse> getAssignedSubjects() {
+
+        CustomUserDetails userDetails = (CustomUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+         Long facultyId = userDetails.getUserId();
+
+         Faculty dbFaculty = facultyRepository.findById(facultyId).orElseThrow(() -> new ResourceNotFoundException("Faculty Not Found......"));
+
+         List<Subject> mySubject = dbFaculty.getMySubjects();
+         Set<SubjectResponse> response = new HashSet<>();
+         for(Subject sub : mySubject){
+
+             SubjectResponse dto = new SubjectResponse(sub.getSubjectCode(),sub.getSubjectName(),sub.getSemester());
+             response.add(dto);
+         }
+        return response;
+
+    }
+    //-----------------------------GET DEPARTMENT STUDENTS BY SEMESTER----------------------------
+    @Override
+    public List<StudentListDto> getDepartmentStudents(Integer semester) {
+        String email = SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getName();
+
+        Faculty faculty = facultyRepository
+                .findByUserDetailsEmail(email)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Faculty not found"));
+
+        Long departmentId = faculty.getAssignedDepartment().getId();
+
+        List<Student> students = studentRepository
+                .findByDepartmentAndSemester(departmentId, semester);
+
+        List<StudentListDto> response = new ArrayList<>();
+
+        for (Student student : students) {
+
+            StudentListDto dto = new StudentListDto();
+            dto.setRollNumber(student.getRollNumber());
+            dto.setStudentName(
+                    student.getFirstName() + " " + student.getLastName());
+
+            dto.setSemester(student.getSemester());
+
+            dto.setEmail(student.getUserDetails().getEmail());
+
+            response.add(dto);
+        }
+
+        return response;
+    }
+
+
+    @Override
+    public List<Notices> getNotices() {
+        return noticeRepository.findAll();
+    }
 
 
 }

@@ -3,6 +3,7 @@ package com.emis.faculty;
 import com.emis.common.BaseEntity;
 import com.emis.department.Department;
 import com.emis.common.Gender;
+import com.emis.subject.Subject;
 import com.emis.user.User;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -10,6 +11,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "faculty")
@@ -47,5 +49,13 @@ public class Faculty extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "dept_id")
     Department assignedDepartment;
+
+    @ManyToMany
+    @JoinTable(
+            name = "faculty_subject",
+            joinColumns = @JoinColumn(name = "faculty_id"),
+            inverseJoinColumns = @JoinColumn(name = "subject_id")
+    )
+    private List<Subject> mySubjects;
 
     }
