@@ -1,118 +1,260 @@
+import { useEffect, useState } from "react";
+
+import {
+    getStudentProfile,
+    getAttendance,
+    getResults
+} from "../../api/studentApi";
+
+import { getStudentNotices } from "../../api/noticeApi";
+
 import DashboardCard from "../../components/ui/DashboardCard";
 import WelcomeBanner from "../../components/ui/WelcomeBanner";
 import InfoCard from "../../components/ui/InfoCard";
 import NoticeCard from "../../components/ui/NoticeCard";
 
 import {
-
     FaClipboardCheck,
-
     FaChartLine,
-
-    FaMoneyBillWave,
-
+    FaCheckCircle,
     FaBullhorn
-
 } from "react-icons/fa";
 
-export default function Dashboard(){
+export default function Dashboard() {
 
-    return(
+    const [profile, setProfile] = useState(null);
+    const [attendance, setAttendance] = useState([]);
+    const [results, setResults] = useState([]);
+    const [notices, setNotices] = useState([]);
 
-        
-          
-    <>
+    const [loading, setLoading] = useState(true);
 
-        <WelcomeBanner />
+    useEffect(() => {
 
-        <div className="dashboard-grid">
+        const loadDashboard = async () => {
 
-            <DashboardCard
-                title="Attendance"
-                value="91%"
-                subtitle="Current Attendance"
-                icon={<FaClipboardCheck />}
-            />
+            try {
 
-            <DashboardCard
-                title="Results"
-                value="8.64"
-                subtitle="Current CGPA"
-                icon={<FaChartLine />}
-            />
+                const [
+                    profileData,
+                    attendanceData,
+                    resultData,
+                    noticeData
+                ] = await Promise.all([
+                    getStudentProfile(),
+                    getAttendance(),
+                    getResults(),
+                    getStudentNotices()
+                ]);
 
-            <DashboardCard
-                title="Fees"
-                value="Paid"
-                subtitle="Current Status"
-                icon={<FaMoneyBillWave />}
-            />
+                setProfile(profileData);
+                setAttendance(attendanceData);
+                setResults(resultData);
+                setNotices(noticeData);
 
-            <DashboardCard
-                title="Notices"
-                value="3"
-                subtitle="New Notices"
-                icon={<FaBullhorn />}
-            />
+            } catch (err) {
 
-        </div>
+                console.error(err);
 
-        <div className="info-grid">
+            } finally {
 
-            <InfoCard title="Recent Notices">
+                setLoading(false);
 
-                <NoticeCard
-                    title="Mid Semester Examination"
-                    date="15 Aug 2026"
-                    description="Mid semester examinations will begin next week."
+            }
+
+        };
+
+        loadDashboard();
+
+    }, []);
+
+    if (loading) {
+
+        return <h4>Loading Dashboard...</h4>;
+
+    }
+
+    // ==========================================
+    // Attendance Statistics
+    // ==========================================
+
+    const totalClasses = attendance.reduce(
+        (sum, item) => sum + item.totalClasses,
+        0
+    );
+
+    const attendedClasses = attendance.reduce(
+        (sum, item) => sum + item.attendedClasses,
+        0
+    );
+
+    const attendancePercentage =
+        totalClasses > 0
+            ? ((attendedClasses * 100) / totalClasses).toFixed(1)
+            : "0";
+
+    // ==========================================
+    // Result Statistics
+    // ==========================================
+
+    const totalObtained = results.reduce(
+        (sum, item) => sum + item.obtainedMarks,
+        0
+    );
+
+    const totalMarks = results.reduce(
+        (sum, item) => sum + item.totalMarks,
+        0
+    );
+
+    const percentage =
+        totalMarks > 0
+            ? ((totalObtained * 100) / totalMarks).toFixed(1)
+            : "0";
+
+    const passedSubjects = results.filter(
+        result => result.grade !== "F"
+    ).length;
+
+    const totalSubjects = results.length;
+
+    // ==========================================
+    // Latest Notices
+    // ==========================================
+
+    const latestNotices = [...notices]
+        .sort(
+            (a, b) =>
+                new Date(b.publishDate) -
+                new Date(a.publishDate)
+        )
+        .slice(0, 3);
+
+    return (
+
+        <>
+
+            <WelcomeBanner profile={profile} />
+
+            <div className="dashboard-grid">
+
+                <DashboardCard
+                    title="Attendance"
+                    value={`${attendancePercentage}%`}
+                    subtitle="Current Attendance"
+                    icon={<FaClipboardCheck />}
                 />
 
-                <NoticeCard
-                    title="Assignment Submission"
-                    date="18 Aug 2026"
-                    description="Submit your Java assignment before Friday."
+                <DashboardCard
+                    title="Results"
+                    value={`${percentage}%`}
+                    subtitle="Overall Percentage"
+                    icon={<FaChartLine />}
                 />
 
-                <NoticeCard
-                    title="Holiday Notice"
-                    date="22 Aug 2026"
-                    description="College will remain closed on Independence Day."
+                <DashboardCard
+                    title="Subjects Passed"
+                    value={`${passedSubjects}/${totalSubjects}`}
+                    subtitle="Current Semester"
+                    icon={<FaCheckCircle />}
                 />
 
-            </InfoCard>
+                <DashboardCard
+                    title="Notices"
+                    value={notices.length}
+                    subtitle="Published Notices"
+                    icon={<FaBullhorn />}
+                />
 
-            <InfoCard title="Student Information">
+            </div>
 
-                <div className="student-info">
+            <div className="info-grid">
 
-                    <div>
-                        <strong>Name</strong>
-                        <p>Bhagyesh Akhare</p>
+                <InfoCard title="Recent Notices">
+
+                    {
+
+                        latestNotices.map((notice, index) => (
+
+                            <NoticeCard
+                                key={index}
+                                title={notice.title}
+                                date={new Date(
+                                    notice.publishDate
+                                ).toLocaleDateString(
+                                    "en-GB",
+                                    {
+                                        day: "2-digit",
+                                        month: "short",
+                                        year: "numeric"
+                                    }
+                                )}
+                                description={notice.description}
+                            />
+
+                        ))
+
+                    }
+
+                </InfoCard>
+
+                <InfoCard title="Student Information">
+
+                    <div className="student-info">
+
+                        <div>
+
+                            <strong>Name</strong>
+
+                            <p>
+
+                                {profile?.firstName} {profile?.lastName}
+
+                            </p>
+
+                        </div>
+
+                        <div>
+
+                            <strong>Department</strong>
+
+                            <p>
+
+                                {profile?.department}
+
+                            </p>
+
+                        </div>
+
+                        <div>
+
+                            <strong>Semester</strong>
+
+                            <p>
+
+                                {profile?.semester}
+
+                            </p>
+
+                        </div>
+
+                        <div>
+
+                            <strong>Email</strong>
+
+                            <p>
+
+                                {profile?.email}
+
+                            </p>
+
+                        </div>
+
                     </div>
 
-                    <div>
-                        <strong>Department</strong>
-                        <p>Computer Science Engineering</p>
-                    </div>
+                </InfoCard>
 
-                    <div>
-                        <strong>Semester</strong>
-                        <p>6</p>
-                    </div>
-
-                    <div>
-                        <strong>Email</strong>
-                        <p>bhagyesh@example.com</p>
-                    </div>
-
-                </div>
-
-            </InfoCard>
-
-        </div>
-
-   
-
+            </div>
 
         </>
 
