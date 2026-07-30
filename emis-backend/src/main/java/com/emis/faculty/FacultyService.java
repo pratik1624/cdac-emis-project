@@ -2,36 +2,66 @@ package com.emis.faculty;
 
 import com.emis.attendance.dto.LoadStudentRequest;
 import com.emis.common.ApiResp;
-import com.emis.faculty.dto.FacultyProfileDto;
-import com.emis.faculty.dto.FacultyReq;
-import com.emis.faculty.dto.FacultyUpdateDto;
+import com.emis.faculty.dto.*;
+import com.emis.notices.Notices;
 import com.emis.student.dto.LoadStudentForAttendanceDto;
 import com.emis.student.dto.StudentProfileResponse;
 import com.emis.subject.SubjectDto;
 
 import java.util.List;
+import java.util.Set;
 
 public interface FacultyService {
 
 
-       //FACULTY
-       FacultyProfileDto getProfile();
+
        ApiResp updateFacultyProfile(Long id , FacultyUpdateDto facultyUpdateDto);
 
-       //load Students
-       List<LoadStudentForAttendanceDto>loadStudentsForAttendance(LoadStudentRequest loadStudentRequest);
-       //ATTENDANCE
-     //  ApiResp uploadAttendance(LoadStudentRequest attendanceRequest);
+
+
+
+              ApiResp addFaculty(FacultyReq request);
+              List<FacultyProfileDto> getAllFaculty();
+              FacultyProfileDto getFacultyById(Long id);
+              ApiResp updateFacultyById(Long id , FacultyProfileDto updateRequest);
+              ApiResp deleteFacultyById(Long id);
 
 
 
 
-       ApiResp addFaculty(FacultyReq request);
-       List<FacultyProfileDto> getAllFaculty();
-       FacultyProfileDto getFacultyById(Long id);
-       ApiResp updateFacultyById(Long id , FacultyProfileDto updateRequest);
 
-       ApiResp deleteFacultyById(Long id);
+         //STUDENT PROFILE
+         StudentProfileDetails getStudentProfile(Long studentId);
 
-        List<SubjectDto> getAssignedSubject(Long userId);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //29-07-2026
+
+         //SUBJECTRESPONSE (mysubject ui)
+         Set<SubjectResponse> getAssignedSubjects();
+
+         // Student navbarresponse
+         List<StudentListDto> getDepartmentStudents(Integer semester);
+
+         //notice navbarresponse
+         List<Notices> getNotices();
+
+         //FACULTY profile navbar
+         FacultyProfileDto getProfile();
+
+        //load Students attendance navbar
+        List<LoadStudentForAttendanceDto>loadStudentsForAttendance(LoadStudentRequest loadStudentRequest);
 }

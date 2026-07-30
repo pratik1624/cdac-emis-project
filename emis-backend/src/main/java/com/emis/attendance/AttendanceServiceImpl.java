@@ -3,13 +3,9 @@ package com.emis.attendance;
 
 import com.emis.attendance.dto.AttendanceRequest;
 import com.emis.attendance.dto.AttendanceResponse;
-import com.emis.attendance.dto.StudentAttendanceDto;
-import com.emis.common.ApiResp;
 import com.emis.customexception.ResourceNotFoundException;
 import com.emis.student.Student;
 import com.emis.student.StudentRepository;
-import com.emis.subject.Subject;
-import com.emis.subject.SubjectRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -24,8 +20,6 @@ public class AttendanceServiceImpl implements AttendanceService {
 
     private final AttendanceRepository attendanceRepository;
     private final StudentRepository studentRepository;
-    private final SubjectRepository subjectRepository;
-
 
     @Override
     public List<AttendanceResponse> getAttendance() {

@@ -9,9 +9,9 @@ import java.util.Optional;
 
 public interface StudentRepository extends JpaRepository<Student, Long> {
 
-    List<Student> findByDepartmentAndSemester(Department department , Integer semester);
+    List<Student> findByDepartmentAndSemester(Long department , Integer semester);
     Optional<Student> findByUserDetailsEmail(String email);
-
+    List<Student> findByDepartmentId(Long id);
 }
 
 
