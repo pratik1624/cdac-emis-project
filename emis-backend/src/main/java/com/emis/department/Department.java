@@ -18,7 +18,6 @@ public class Department extends BaseEntity {
     @Column(name = "department_name", nullable = false, unique = true, length = 100)
     private String deptName;
 
-    public void setDeptName(String department) {
-    }
+
 }
 
