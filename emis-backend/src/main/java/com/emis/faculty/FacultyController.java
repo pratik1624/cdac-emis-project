@@ -5,6 +5,7 @@ import com.emis.attendance.dto.AttendanceRequest;
 import com.emis.attendance.dto.LoadStudentRequest;
 import com.emis.faculty.dto.FacultyProfileDto;
 import com.emis.faculty.dto.FacultyUpdateDto;
+import com.emis.faculty.dto.MarksRequest;
 import com.emis.security.CustomUserDetails;
 import com.emis.student.StudentRepository;
 import com.emis.student.StudentService;
@@ -13,6 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/faculty")
@@ -80,6 +83,19 @@ public class FacultyController {
 
         return ResponseEntity.ok(
                 facultyService.getAssignedSubjects());
+    }
+
+    //manage marks
+    @GetMapping("/subjects/{subjectId}/marks")
+    public ResponseEntity<?> getStudentMarks(@PathVariable Long subjectId){
+        return ResponseEntity.ok(facultyService.getSubjectMarks(subjectId));
+    }
+
+    //save marks
+    @PutMapping("/subjects/{subjectId}/marks")
+    public ResponseEntity<?> saveMarks(@PathVariable  Long subjectId , @RequestBody List<MarksRequest> markRequest){
+        System.out.println("Inside saveMarks");
+        return ResponseEntity.ok(facultyService.saveMarks(subjectId,markRequest));
     }
 
     //-----------------------------NOTICES----------------------------------

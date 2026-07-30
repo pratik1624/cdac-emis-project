@@ -64,4 +64,9 @@ public interface FacultyService {
 
         //load Students attendance navbar
         List<LoadStudentForAttendanceDto>loadStudentsForAttendance(LoadStudentRequest loadStudentRequest);
+
+        //load Subject marks
+        List<SubjectMarksResponse> getSubjectMarks(Long subjectId);
+        //Save Marks
+         ApiResp saveMarks(Long subjectId, List<MarksRequest> markRequest);
 }
