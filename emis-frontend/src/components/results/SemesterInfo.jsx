@@ -5,7 +5,7 @@ import {
     FaClock
 } from "react-icons/fa";
 
-export default function SemesterInfo({ semester }) {
+export default function SemesterInfo({ results })  {
 
     return (
 

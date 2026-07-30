@@ -4,7 +4,33 @@ import {
     FaStar
 } from "react-icons/fa";
 
-export default function RemarksCard() {
+export default function RemarksCard({ results }) {
+
+    const totalObtained = results.reduce(
+        (sum, result) => sum + result.obtainedMarks,
+        0
+    );
+
+    const totalMarks = results.reduce(
+        (sum, result) => sum + result.totalMarks,
+        0
+    );
+
+    const percentage =
+        totalMarks > 0
+            ? ((totalObtained * 100) / totalMarks).toFixed(1)
+            : 0;
+
+    const passedAll = results.every(
+        result => result.grade !== "F"
+    );
+
+    const performance =
+        percentage >= 75
+            ? "Excellent Performance"
+            : percentage >= 60
+            ? "Good Performance"
+            : "Needs Improvement";
 
     return (
 
@@ -20,13 +46,17 @@ export default function RemarksCard() {
 
                         <h4 className="card-title mb-1">
 
-                            Excellent Performance
+                            {performance}
 
                         </h4>
 
                         <p className="card-subtitle mb-0">
 
-                            Congratulations! You have successfully passed all subjects.
+                            {
+                                passedAll
+                                    ? "Congratulations! You have successfully passed all subjects."
+                                    : "Some subjects require improvement."
+                            }
 
                         </p>
 
@@ -44,7 +74,8 @@ export default function RemarksCard() {
 
                         <span>
 
-                            Overall Percentage : <strong>89%</strong>
+                            Overall Percentage :
+                            <strong> {percentage}%</strong>
 
                         </span>
 
@@ -56,7 +87,15 @@ export default function RemarksCard() {
 
                         <span>
 
-                            Current CGPA : <strong>8.64</strong>
+                            Subjects Cleared :
+                            <strong>
+                                {" "}
+                                {
+                                    results.filter(r => r.grade !== "F").length
+                                }
+                                {" / "}
+                                {results.length}
+                            </strong>
 
                         </span>
 
@@ -68,7 +107,11 @@ export default function RemarksCard() {
 
                         <span>
 
-                            All subjects cleared successfully.
+                            {
+                                passedAll
+                                    ? "All subjects cleared successfully."
+                                    : "Please clear the failed subjects."
+                            }
 
                         </span>
 

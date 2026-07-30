@@ -1,66 +1,23 @@
-export default function ResultTable({ semester }) {
+export default function ResultTable({ results }) {
 
-    const results = [
+    const totalObtained = results.reduce(
+        (sum, item) => sum + item.obtainedMarks,
+        0
+    );
 
-        {
-            code: "CST601",
-            subject: "Advanced Java",
-            credits: 4,
-            grade: "A+",
-            points: 10,
-            status: "Pass"
-        },
+    const totalMarks = results.reduce(
+        (sum, item) => sum + item.totalMarks,
+        0
+    );
 
-        {
-            code: "CST602",
-            subject: "Web Programming Technologies",
-            credits: 4,
-            grade: "A",
-            points: 9,
-            status: "Pass"
-        },
-
-        {
-            code: "CST603",
-            subject: "Database Technologies",
-            credits: 4,
-            grade: "A+",
-            points: 10,
-            status: "Pass"
-        },
-
-        {
-            code: "CST604",
-            subject: "Operating Systems",
-            credits: 4,
-            grade: "B+",
-            points: 8,
-            status: "Pass"
-        },
-
-        {
-            code: "CST605",
-            subject: "Computer Networks",
-            credits: 4,
-            grade: "A",
-            points: 9,
-            status: "Pass"
-        },
-
-        {
-            code: "CST606",
-            subject: "Software Engineering",
-            credits: 4,
-            grade: "A+",
-            points: 10,
-            status: "Pass"
-        }
-
-    ];
+    const overallPercentage =
+        totalMarks > 0
+            ? ((totalObtained * 100) / totalMarks).toFixed(1)
+            : 0;
 
     return (
 
-       <div className="card app-card results-table-card mb-4">
+        <div className="card app-card results-table-card mb-4">
 
             <div className="card-body">
 
@@ -76,7 +33,7 @@ export default function ResultTable({ semester }) {
 
                         <p className="card-subtitle">
 
-                            Semester 6 • Overall Percentage 89%
+                            Overall Percentage <strong>{overallPercentage}%</strong>
 
                         </p>
 
@@ -100,7 +57,7 @@ export default function ResultTable({ semester }) {
 
                                 <th>Grade</th>
 
-                                <th>Points</th>
+                                <th>Marks</th>
 
                                 <th>Status</th>
 
@@ -116,19 +73,19 @@ export default function ResultTable({ semester }) {
 
                                     <td>
 
-                                        {result.code}
+                                        {result.subjectCode}
 
                                     </td>
 
                                     <td>
 
-                                        {result.subject}
+                                        {result.subjectName}
 
                                     </td>
 
                                     <td>
 
-                                        {result.credits}
+                                        4
 
                                     </td>
 
@@ -144,15 +101,21 @@ export default function ResultTable({ semester }) {
 
                                     <td>
 
-                                        {result.points}
+                                        {result.obtainedMarks} / {result.totalMarks}
 
                                     </td>
 
                                     <td>
 
-                                        <span className="badge bg-success">
+                                        <span
+                                            className={
+                                                result.grade === "F"
+                                                    ? "badge bg-danger"
+                                                    : "badge bg-success"
+                                            }
+                                        >
 
-                                            {result.status}
+                                            {result.grade === "F" ? "Fail" : "Pass"}
 
                                         </span>
 

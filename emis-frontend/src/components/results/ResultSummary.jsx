@@ -5,7 +5,32 @@ import {
     FaPercentage
 } from "react-icons/fa";
 
-export default function ResultSummary() {
+export default function ResultSummary({ results }) {
+
+    const totalSubjects = results.length;
+
+    const passedSubjects = results.filter(
+        result => result.grade !== "F"
+    ).length;
+
+    const failedSubjects = totalSubjects - passedSubjects;
+
+    const creditsEarned = passedSubjects * 4;
+
+    const totalObtained = results.reduce(
+        (sum, result) => sum + result.obtainedMarks,
+        0
+    );
+
+    const totalMarks = results.reduce(
+        (sum, result) => sum + result.totalMarks,
+        0
+    );
+
+    const percentage =
+        totalMarks > 0
+            ? ((totalObtained * 100) / totalMarks).toFixed(1)
+            : 0;
 
     return (
 
@@ -29,7 +54,7 @@ export default function ResultSummary() {
 
                     </div>
 
-                    <strong>6</strong>
+                    <strong>{totalSubjects}</strong>
 
                 </div>
 
@@ -43,7 +68,7 @@ export default function ResultSummary() {
 
                     </div>
 
-                    <strong>6</strong>
+                    <strong>{passedSubjects}</strong>
 
                 </div>
 
@@ -57,7 +82,7 @@ export default function ResultSummary() {
 
                     </div>
 
-                    <strong>0</strong>
+                    <strong>{failedSubjects}</strong>
 
                 </div>
 
@@ -71,7 +96,7 @@ export default function ResultSummary() {
 
                     </div>
 
-                    <strong>24</strong>
+                    <strong>{creditsEarned}</strong>
 
                 </div>
 
@@ -85,7 +110,7 @@ export default function ResultSummary() {
 
                     </div>
 
-                    <strong>89%</strong>
+                    <strong>{percentage}%</strong>
 
                 </div>
 
