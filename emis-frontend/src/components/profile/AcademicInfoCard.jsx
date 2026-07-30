@@ -19,11 +19,15 @@ export default function AcademicInfoCard({ student }) {
                 <div className="row mb-3">
 
                     <div className="col-5 profile-label">
+
                         Roll Number
+
                     </div>
 
                     <div className="col-7 profile-value">
+
                         {student.rollNumber || "-"}
+
                     </div>
 
                 </div>
@@ -31,11 +35,15 @@ export default function AcademicInfoCard({ student }) {
                 <div className="row mb-3">
 
                     <div className="col-5 profile-label">
+
                         Department
+
                     </div>
 
                     <div className="col-7 profile-value">
+
                         {student.department}
+
                     </div>
 
                 </div>
@@ -43,11 +51,15 @@ export default function AcademicInfoCard({ student }) {
                 <div className="row">
 
                     <div className="col-5 profile-label">
+
                         Semester
+
                     </div>
 
                     <div className="col-7 profile-value">
-                        {student.semester}
+
+                        Semester {student.semester}
+
                     </div>
 
                 </div>

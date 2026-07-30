@@ -8,11 +8,11 @@ export default function ContactInfoCard({ student }) {
 
     return (
 
-        <div className="card profile-card">
+        <div className="card app-card profile-card">
 
             <div className="card-body">
 
-                <h5 className="fw-bold mb-4">
+                <h5 className="section-title mb-4">
 
                     <FaEnvelope className="profile-icon me-2" />
 
@@ -22,13 +22,13 @@ export default function ContactInfoCard({ student }) {
 
                 <div className="row">
 
+                    {/* Email */}
+
                     <div className="col-md-4 mb-3">
 
                         <div className="profile-info-box">
 
-                            <FaEnvelope
-                                className="profile-icon mb-3"
-                            />
+                            <FaEnvelope className="profile-icon mb-3" />
 
                             <div className="profile-label">
                                 Email
@@ -42,13 +42,13 @@ export default function ContactInfoCard({ student }) {
 
                     </div>
 
+                    {/* Phone */}
+
                     <div className="col-md-4 mb-3">
 
                         <div className="profile-info-box">
 
-                            <FaPhone
-                                className="profile-icon mb-3"
-                            />
+                            <FaPhone className="profile-icon mb-3" />
 
                             <div className="profile-label">
                                 Phone
@@ -62,13 +62,13 @@ export default function ContactInfoCard({ student }) {
 
                     </div>
 
+                    {/* Address */}
+
                     <div className="col-md-4 mb-3">
 
                         <div className="profile-info-box">
 
-                            <FaMapMarkerAlt
-                                className="profile-icon mb-3"
-                            />
+                            <FaMapMarkerAlt className="profile-icon mb-3" />
 
                             <div className="profile-label">
                                 Address

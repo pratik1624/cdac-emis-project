@@ -9,6 +9,7 @@ import "./styles/navbar.css";
 import "./styles/layout.css";
 import "./styles/dashboard.css";
 import "./styles/global.css";
+import "./styles/attendance.css";
 
 
 import App from "./App";
