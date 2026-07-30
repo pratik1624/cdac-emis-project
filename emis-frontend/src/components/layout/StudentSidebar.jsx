@@ -53,11 +53,11 @@ export default function StudentSidebar() {
             path: "/student/notices"
         },
 
-        {
-            title: "Settings",
-            icon: <FaCog />,
-            path: "/settings"
-        }
+        // {
+        //     title: "Settings",
+        //     icon: <FaCog />,
+        //     path: "/settings"
+        // }
 
     ];
 
