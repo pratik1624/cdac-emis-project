@@ -5,7 +5,36 @@ import {
     FaCalendarAlt
 } from "react-icons/fa";
 
-export default function NoticeSummaryCards() {
+export default function NoticeSummaryCards({ notices }) {
+
+    const totalNotices = notices.length;
+
+    const currentMonth = new Date().getMonth();
+    const currentYear = new Date().getFullYear();
+
+    const thisMonth = notices.filter(notice => {
+
+        const date = new Date(notice.publishDate);
+
+        return (
+            date.getMonth() === currentMonth &&
+            date.getFullYear() === currentYear
+        );
+
+    }).length;
+
+    const latestDate =
+        notices.length > 0
+            ? new Date(
+                  Math.max(
+                      ...notices.map(notice => new Date(notice.publishDate))
+                  )
+              ).toLocaleDateString("en-GB", {
+                  day: "2-digit",
+                  month: "short",
+                  year: "numeric"
+              })
+            : "-";
 
     return (
 
@@ -23,7 +52,7 @@ export default function NoticeSummaryCards() {
 
                     <h2 className="dashboard-value">
 
-                        25
+                        {totalNotices}
 
                     </h2>
 
@@ -55,19 +84,19 @@ export default function NoticeSummaryCards() {
 
                     <h2 className="dashboard-value">
 
-                        3
+                        {latestDate}
 
                     </h2>
 
                     <h6 className="dashboard-title">
 
-                        Unread
+                        Latest Notice
 
                     </h6>
 
                     <small className="dashboard-subtitle">
 
-                        New Announcements
+                        Most Recent Announcement
 
                     </small>
 
@@ -87,19 +116,19 @@ export default function NoticeSummaryCards() {
 
                     <h2 className="dashboard-value">
 
-                        5
+                        {totalNotices}
 
                     </h2>
 
                     <h6 className="dashboard-title">
 
-                        Important
+                        Active Notices
 
                     </h6>
 
                     <small className="dashboard-subtitle">
 
-                        High Priority
+                        Currently Available
 
                     </small>
 
@@ -119,7 +148,7 @@ export default function NoticeSummaryCards() {
 
                     <h2 className="dashboard-value">
 
-                        8
+                        {thisMonth}
 
                     </h2>
 
@@ -131,7 +160,7 @@ export default function NoticeSummaryCards() {
 
                     <small className="dashboard-subtitle">
 
-                        Recent Notices
+                        Published This Month
 
                     </small>
 

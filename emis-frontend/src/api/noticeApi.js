@@ -1,5 +1,11 @@
 import api from "./axios";
 
+export const getStudentNotices = async () => {
+    const response = await api.get("/student/notices");
+    return response.data;
+};
+
+// Admin APIs
 export const getAllNotices = async () => {
     const response = await api.get("/notice");
     return response.data;

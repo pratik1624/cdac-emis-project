@@ -1,3 +1,7 @@
+import { useEffect, useState } from "react";
+
+import { getStudentNotices } from "../../api/noticeApi";
+
 import NoticeSummaryCards from "../../components/notices/NoticeSummaryCards";
 import NoticeList from "../../components/notices/NoticeList";
 import ImportantNotice from "../../components/notices/ImportantNotice";
@@ -6,6 +10,52 @@ import NoticeArchive from "../../components/notices/NoticeArchive";
 import "../../styles/notices.css";
 
 export default function Notices() {
+
+    const [notices, setNotices] = useState([]);
+
+    const [loading, setLoading] = useState(true);
+
+    const [error, setError] = useState("");
+
+    useEffect(() => {
+
+        const fetchNotices = async () => {
+
+            try {
+
+                const data = await getStudentNotices();
+
+                setNotices(data);
+
+            } catch (err) {
+
+                console.error(err);
+
+                setError("Unable to load notices.");
+
+            } finally {
+
+                setLoading(false);
+
+            }
+
+        };
+
+        fetchNotices();
+
+    }, []);
+
+    if (loading) {
+
+        return <h4>Loading Notices...</h4>;
+
+    }
+
+    if (error) {
+
+        return <h4>{error}</h4>;
+
+    }
 
     return (
 
@@ -31,7 +81,7 @@ export default function Notices() {
 
             {/* Summary */}
 
-            <NoticeSummaryCards />
+            <NoticeSummaryCards notices={notices} />
 
             {/* Main Section */}
 
@@ -39,15 +89,15 @@ export default function Notices() {
 
                 <div className="notice-main">
 
-                    <NoticeList />
+                    <NoticeList notices={notices} />
 
                 </div>
 
                 <div className="notice-side">
 
-                    <ImportantNotice />
+                    <ImportantNotice notices={notices} />
 
-                    <NoticeArchive />
+                    <NoticeArchive notices={notices} />
 
                 </div>
 

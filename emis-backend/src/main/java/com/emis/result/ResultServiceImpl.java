@@ -35,8 +35,22 @@ public class ResultServiceImpl implements ResultService {
 
         List<Result> results = resultRepository.findByStudentId(student.getId());
 
-        return results.stream()
-                .map(result -> mapper.map(result, ResultResponse.class))
-                .toList();
+        return results.stream().map(result -> {
+
+            ResultResponse dto = new ResultResponse();
+
+            dto.setSubjectCode(result.getSubject().getSubjectCode());
+
+            dto.setSubjectName(result.getSubject().getSubjectName());
+
+            dto.setObtainedMarks(result.getObtainedMarks());
+
+            dto.setTotalMarks(result.getTotalMarks());
+
+            dto.setGrade(result.getGrade());
+
+            return dto;
+
+        }).toList();
     }
 }

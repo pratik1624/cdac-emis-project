@@ -4,7 +4,21 @@ import {
     FaArrowRight
 } from "react-icons/fa";
 
-export default function ImportantNotice() {
+export default function ImportantNotice({ notices }) {
+
+    const importantNotice = notices.length > 0 ? notices[0] : null;
+
+    if (!importantNotice) {
+
+        return (
+            <div className="card app-card important-notice-card">
+                <div className="card-body">
+                    <h5>No Important Notice</h5>
+                </div>
+            </div>
+        );
+
+    }
 
     return (
 
@@ -26,7 +40,7 @@ export default function ImportantNotice() {
 
                         <small>
 
-                            High Priority
+                            Latest Announcement
 
                         </small>
 
@@ -38,7 +52,7 @@ export default function ImportantNotice() {
 
                 <h6>
 
-                    Fee Payment Deadline Extended
+                    {importantNotice.title}
 
                 </h6>
 
@@ -48,7 +62,14 @@ export default function ImportantNotice() {
 
                     <span>
 
-                        20 Aug 2026
+                        {new Date(importantNotice.publishDate).toLocaleDateString(
+                            "en-GB",
+                            {
+                                day: "2-digit",
+                                month: "short",
+                                year: "numeric",
+                            }
+                        )}
 
                     </span>
 
@@ -56,9 +77,7 @@ export default function ImportantNotice() {
 
                 <p>
 
-                    The last date for fee payment has been extended till
-                    <strong> 20 August 2026.</strong>
-                    Students are requested to complete the payment before the deadline.
+                    {importantNotice.description}
 
                 </p>
 

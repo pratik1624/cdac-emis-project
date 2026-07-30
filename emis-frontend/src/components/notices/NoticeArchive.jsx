@@ -4,31 +4,29 @@ import {
     FaArrowRight
 } from "react-icons/fa";
 
-export default function NoticeArchive() {
+export default function NoticeArchive({ notices }) {
 
-    const archives = [
+    const archiveMap = {};
 
-        {
-            month: "July 2026",
-            notices: 12
-        },
+    notices.forEach((notice) => {
 
-        {
-            month: "June 2026",
-            notices: 18
-        },
+        const date = new Date(notice.publishDate);
 
-        {
-            month: "May 2026",
-            notices: 15
-        },
+        const month = date.toLocaleString("en-US", {
+            month: "long",
+            year: "numeric"
+        });
 
-        {
-            month: "April 2026",
-            notices: 10
-        }
+        archiveMap[month] = (archiveMap[month] || 0) + 1;
 
-    ];
+    });
+
+    const archives = Object.entries(archiveMap).map(
+        ([month, count]) => ({
+            month,
+            notices: count
+        })
+    );
 
     return (
 
@@ -52,48 +50,60 @@ export default function NoticeArchive() {
 
                 {
 
-                    archives.map((archive, index) => (
+                    archives.length > 0 ? (
 
-                        <div
-                            key={index}
-                            className="archive-item"
-                        >
+                        archives.map((archive) => (
 
-                            <div className="archive-left">
+                            <div
+                                key={archive.month}
+                                className="archive-item"
+                            >
 
-                                <FaFolderOpen />
+                                <div className="archive-left">
 
-                                <div>
+                                    <FaFolderOpen />
 
-                                    <h6>
+                                    <div>
 
-                                        {archive.month}
+                                        <h6>
 
-                                    </h6>
+                                            {archive.month}
 
-                                    <small>
+                                        </h6>
 
-                                        {archive.notices} Notices
+                                        <small>
 
-                                    </small>
+                                            {archive.notices} Notice{archive.notices > 1 ? "s" : ""}
+
+                                        </small>
+
+                                    </div>
 
                                 </div>
 
+                                <button
+                                    className="btn btn-sm btn-outline-primary"
+                                >
+
+                                    View
+
+                                    <FaArrowRight className="ms-1" />
+
+                                </button>
+
                             </div>
 
-                            <button
-                                className="btn btn-sm btn-outline-primary"
-                            >
+                        ))
 
-                                View
+                    ) : (
 
-                                <FaArrowRight className="ms-1" />
+                        <p className="text-center text-secondary mb-0">
 
-                            </button>
+                            No archived notices available.
 
-                        </div>
+                        </p>
 
-                    ))
+                    )
 
                 }
 
