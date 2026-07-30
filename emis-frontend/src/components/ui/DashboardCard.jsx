@@ -12,7 +12,7 @@ export default function DashboardCard({
 
     return (
 
-        <div className="dashboard-card">
+        <div className="dashboard-card app-card">
 
             <div className="dashboard-icon">
 

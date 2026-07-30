@@ -25,7 +25,6 @@ public class AttendanceServiceImpl implements AttendanceService {
     private final AttendanceRepository attendanceRepository;
     private final StudentRepository studentRepository;
     private final SubjectRepository subjectRepository;
-
     @Override
     public List<AttendanceResponse> getAttendance() {
 

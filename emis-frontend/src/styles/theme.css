@@ -137,3 +137,168 @@ a{
     background:#666;
     border-radius:20px;
 }
+
+/* ==========================
+   APP COMPONENTS
+========================== */
+
+/* Common Card */
+
+.app-card{
+    background:var(--card-color);
+    border:1px solid var(--border-color);
+    border-radius:18px;
+    box-shadow:0 4px 15px rgba(0,0,0,.06);
+    transition:.3s ease;
+}
+
+.app-card:hover{
+    transform:translateY(-5px);
+    box-shadow:0 12px 28px rgba(0,0,0,.12);
+}
+
+/* Page Title */
+
+.page-title{
+    font-size:34px;
+    font-weight:700;
+    color:var(--text-color);
+}
+
+/* Page Subtitle */
+
+.page-subtitle{
+    color:var(--text-secondary);
+    font-size:15px;
+    margin-top:-8px;
+    margin-bottom:25px;
+}
+
+/* Icons */
+
+.app-icon{
+    color:var(--accent-color);
+}
+
+/* Section Title */
+
+.section-title{
+    font-size:26px;
+    font-weight:600;
+    color:var(--text-color);
+}
+
+/* Labels */
+
+.app-label{
+    color:var(--text-secondary);
+    font-size:14px;
+}
+
+/* Values */
+
+.app-value{
+    color:var(--text-color);
+    font-weight:600;
+}
+
+/* Table */
+
+.app-table thead th{
+    color:var(--accent-color);
+    font-weight:600;
+}
+
+.app-table td{
+    color:var(--text-color);
+}
+
+/* Buttons */
+
+.btn-success{
+    background:var(--accent-color);
+    border:none;
+}
+
+.btn-success:hover{
+    filter:brightness(.95);
+}
+
+/* ==========================================
+   TYPOGRAPHY SYSTEM
+========================================== */
+
+.page-title{
+    font-size:2rem;
+    font-weight:700;
+    color:var(--text-color);
+    margin-bottom:8px;
+}
+
+.page-subtitle{
+    font-size:1rem;
+    color:var(--text-secondary);
+    margin-bottom:32px;
+}
+
+.section-title{
+    display:flex;
+    align-items:center;
+    gap:12px;
+
+    font-size:1.8rem;
+    font-weight:700;
+
+    color:var(--text-color);
+
+    margin-bottom:24px;
+}
+
+.section-icon{
+    color:var(--accent-color);
+}
+
+.field-label{
+    font-size:.95rem;
+    font-weight:500;
+    color:var(--text-secondary);
+}
+
+.field-value{
+    font-size:1.08rem;
+    font-weight:600;
+    color:var(--text-color);
+}
+
+.card-title{
+    font-size:1.7rem;
+    font-weight:700;
+    color:var(--text-color);
+    margin-bottom:24px;
+}
+
+.card-subtitle{
+    color:var(--text-secondary);
+}
+
+.app-card{
+
+    background:var(--card-color);
+
+    border:1px solid var(--border-color);
+
+    border-radius:18px;
+
+    padding:24px;
+
+    transition:.25s;
+
+}
+
+.app-card:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:0 10px 25px rgba(0,0,0,.20);
+
+}

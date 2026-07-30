@@ -13,7 +13,7 @@ import AdminLayout from "../layouts/AdminLayout";
 import StudentDashboard from "../pages/student/Dashboard";
 import Profile from "../pages/student/Profile";
 import Attendance from "../pages/student/Attendance";
-import Results from "../pages/student/Results";
+import AcademicResults from "../pages/student/AcademicResults";
 import Fees from "../pages/student/Fees";
 import Notices from "../pages/student/Notices";
 
@@ -24,124 +24,57 @@ import AdminDashboard from "../pages/admin/Dashboard";
 import Settings from "../pages/settings/Settings";
 
 export default function AppRoutes() {
+  return (
+    <Routes>
+      {/* ================= PUBLIC ROUTES ================= */}
 
-    return (
+      <Route element={<PublicRoute />}>
+        <Route path="/" element={<Login />} />
+      </Route>
 
-        <Routes>
+      {/* ================= PRIVATE ROUTES ================= */}
 
-            {/* ================= PUBLIC ROUTES ================= */}
+      <Route element={<PrivateRoute />}>
+        {/* ================= STUDENT ================= */}
 
-            <Route element={<PublicRoute />}>
+        <Route element={<RoleRoute allowedRoles={["STUDENT"]} />}>
+          <Route path="/student" element={<StudentLayout />}>
+            <Route path="dashboard" element={<StudentDashboard />} />
 
-                <Route
-                    path="/"
-                    element={<Login />}
-                />
+            <Route path="profile" element={<Profile />} />
 
-            </Route>
+            <Route path="attendance" element={<Attendance />} />
 
-            {/* ================= PRIVATE ROUTES ================= */}
+            <Route path="results" element={<AcademicResults />} />
 
-            <Route element={<PrivateRoute />}>
+            <Route path="fees" element={<Fees />} />
 
-                {/* ================= STUDENT ================= */}
+            <Route path="notices" element={<Notices />} />
 
-                <Route element={<RoleRoute allowedRoles={["STUDENT"]} />}>
+            <Route path="settings" element={<Settings />} />
+          </Route>
+        </Route>
 
-                    <Route
-                        path="/student"
-                        element={<StudentLayout />}
-                    >
+        {/* ================= FACULTY ================= */}
 
-                        <Route
-                            path="dashboard"
-                            element={<StudentDashboard />}
-                        />
+        <Route element={<RoleRoute allowedRoles={["FACULTY"]} />}>
+          <Route path="/faculty" element={<FacultyLayout />}>
+            <Route path="dashboard" element={<FacultyDashboard />} />
 
-                        <Route
-                            path="profile"
-                            element={<Profile />}
-                        />
+            <Route path="settings" element={<Settings />} />
+          </Route>
+        </Route>
 
-                        <Route
-                            path="attendance"
-                            element={<Attendance />}
-                        />
+        {/* ================= ADMIN ================= */}
 
-                        <Route
-                            path="results"
-                            element={<Results />}
-                        />
+        <Route element={<RoleRoute allowedRoles={["ADMIN"]} />}>
+          <Route path="/admin" element={<AdminLayout />}>
+            <Route path="dashboard" element={<AdminDashboard />} />
 
-                        <Route
-                            path="fees"
-                            element={<Fees />}
-                        />
-
-                        <Route
-                            path="notices"
-                            element={<Notices />}
-                        />
-
-                        <Route
-                            path="settings"
-                            element={<Settings />}
-                        />
-
-                    </Route>
-
-                </Route>
-
-                {/* ================= FACULTY ================= */}
-
-                <Route element={<RoleRoute allowedRoles={["FACULTY"]} />}>
-
-                    <Route
-                        path="/faculty"
-                        element={<FacultyLayout />}
-                    >
-
-                        <Route
-                            path="dashboard"
-                            element={<FacultyDashboard />}
-                        />
-
-                        <Route
-                            path="settings"
-                            element={<Settings />}
-                        />
-
-                    </Route>
-
-                </Route>
-
-                {/* ================= ADMIN ================= */}
-
-                <Route element={<RoleRoute allowedRoles={["ADMIN"]} />}>
-
-                    <Route
-                        path="/admin"
-                        element={<AdminLayout />}
-                    >
-
-                        <Route
-                            path="dashboard"
-                            element={<AdminDashboard />}
-                        />
-
-                        <Route
-                            path="settings"
-                            element={<Settings />}
-                        />
-
-                    </Route>
-
-                </Route>
-
-            </Route>
-
-        </Routes>
-
-    );
-
+            <Route path="settings" element={<Settings />} />
+          </Route>
+        </Route>
+      </Route>
+    </Routes>
+  );
 }
