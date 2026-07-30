@@ -218,8 +218,6 @@ public class FacultyServiceImpl implements FacultyService {
 
 
 
-
-
     //GET PROFILE
     @Override
     public StudentProfileDetails getStudentProfile(Long studentId) {
@@ -363,6 +361,97 @@ public class FacultyServiceImpl implements FacultyService {
 
         return response;
     }
+
+    //------------------GET SUBJECT MARKS OF STUDENTS----------------------------
+    @Override
+    public List<SubjectMarksResponse> getSubjectMarks(Long subjectId) {
+
+      CustomUserDetails userDetails =  (CustomUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Long facultyId = userDetails.getUserId();
+
+        Faculty dbFaculty = facultyRepository
+                .findById(facultyId)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Faculty not found"));
+        facultyRepository.findByIdAndMySubjects_Id(facultyId,subjectId).orElseThrow(() -> new ResourceNotFoundException("Subject is not assigned to this faculty"));
+
+        List<Result> results =
+                resultRepository.findBySubjectId(subjectId);
+
+        List<SubjectMarksResponse> response =
+                new ArrayList<>();
+
+        for(Result result : results){
+
+            Student student = result.getStudent();
+
+            SubjectMarksResponse dto =
+                    new SubjectMarksResponse();
+
+            mapper.map(result,dto);
+            dto.setResultId(result.getId());
+            dto.setRollNumber(result.getStudent().getRollNumber());
+            dto.setStudentName(
+                    student.getFirstName()
+                            +" "
+                            +student.getLastName());
+
+            dto.setStudentId(student.getId());
+
+            response.add(dto);
+        }
+
+        return response;
+    }
+    private final SubjectRepository subjectRepository;
+    @Override
+    public ApiResp saveMarks(Long subjectId, List<MarksRequest> markRequest) {
+        Result saveResult;
+
+        Subject subject = subjectRepository.findById(subjectId).orElseThrow(()-> new ResourceNotFoundException("Subject Not Found...."));
+        System.out.println("Loop Started");
+        for(MarksRequest dto : markRequest){
+            System.out.println("Student Id = " + dto.getStudentId());
+            Student student = studentRepository.findById(dto.getStudentId()).orElseThrow(() -> new ResourceNotFoundException("Student Not Found...."));
+
+            System.out.println("Student Found");
+            Result dbResult = resultRepository.findBySubjectIdAndStudentId(subjectId,student.getId()).orElse(null);
+            System.out.println("Result Checked");
+            if(dbResult != null){
+                saveResult = dbResult;
+            }
+            else{
+                saveResult = new Result();
+                saveResult.setSubject(subject);
+                saveResult.setStudent(student);
+            }
+
+            saveResult.setObtainedMarks(dto.getObtainedMarks());
+            saveResult.setTotalMarks(dto.getTotalMarks());
+
+
+            double percentage  = (dto.getObtainedMarks() * 100) / dto.getTotalMarks();
+
+            if(percentage >= 90)
+                saveResult.setGrade("A+");
+            else if(percentage >= 80)
+                saveResult.setGrade("A");
+            else if (percentage >= 70)
+                saveResult.setGrade("B+");
+            else if (percentage >= 60)
+                saveResult.setGrade("B");
+            else if (percentage >= 50)
+                saveResult.setGrade("C");
+            else
+                saveResult.setGrade("F");
+
+                resultRepository.save(saveResult);
+            }
+
+         return new ApiResp("SUCCESS" , "Marks Uploaded Successfully");
+        }
+
+
 
 
     @Override
