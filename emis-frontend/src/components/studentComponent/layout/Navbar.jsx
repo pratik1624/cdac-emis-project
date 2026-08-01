@@ -1,6 +1,6 @@
 import { FaBell, FaMoon, FaSun, FaUserCircle } from "react-icons/fa";
-import { useTheme } from "../../context/ThemeContext";
-import { useAuth } from "../../context/AuthContext";
+import { useTheme } from "../../../context/ThemeContext";
+import { useAuth } from "../../../context/AuthContext";
 
 export default function Navbar() {
 

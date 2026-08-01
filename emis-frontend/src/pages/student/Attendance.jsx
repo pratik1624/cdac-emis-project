@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 
 import { getAttendance } from "../../api/attendanceApi";
 
-import DashboardCard from "../../components/ui/DashboardCard";
-import InfoCard from "../../components/ui/InfoCard";
+import DashboardCard from "../../components/studentComponent/ui/DashboardCard";
+import InfoCard from "../../components/studentComponent/ui/InfoCard";
 
-import AttendanceTable from "../../components/attendance/AttendanceTable";
-import AttendanceOverview from "../../components/attendance/AttendanceOverview";
-import AttendancePolicy from "../../components/attendance/AttendancePolicy";
+import AttendanceTable from "../../components/studentComponent/attendance/AttendanceTable";
+import AttendanceOverview from "../../components/studentComponent/attendance/AttendanceOverview";
+import AttendancePolicy from "../../components/studentComponent/attendance/AttendancePolicy";
 
 import {
   FaClipboardCheck,

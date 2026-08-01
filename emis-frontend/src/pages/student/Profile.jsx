@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import {  getStudentProfile, updateStudentProfile,} from "../../api/studentApi";
 
-import ProfileHeader from "../../components/profile/ProfileHeader";
-import PersonalInfoCard from "../../components/profile/PersonalInfoCard";
-import AcademicInfoCard from "../../components/profile/AcademicInfoCard";
-import ContactInfoCard from "../../components/profile/ContactInfoCard";
-import EditProfileModal from "../../components/profile/EditProfileModal";
+import ProfileHeader from "../../components/studentComponent/profile/ProfileHeader";
+import PersonalInfoCard from "../../components/studentComponent/profile/PersonalInfoCard";
+import AcademicInfoCard from "../../components/studentComponent/profile/AcademicInfoCard";
+import ContactInfoCard from "../../components/studentComponent/profile/ContactInfoCard";
+import EditProfileModal from "../../components/studentComponent/profile/EditProfileModal";
 import "../../styles/profile.css";
 export default function Profile() {
 

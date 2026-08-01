@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 
 import { getStudentNotices } from "../../api/noticeApi";
 
-import NoticeSummaryCards from "../../components/notices/NoticeSummaryCards";
-import NoticeList from "../../components/notices/NoticeList";
-import ImportantNotice from "../../components/notices/ImportantNotice";
-import NoticeArchive from "../../components/notices/NoticeArchive";
+import NoticeSummaryCards from "../../components/studentComponent/notices/NoticeSummaryCards";
+import NoticeList from "../../components/studentComponent/notices/NoticeList";
+import ImportantNotice from "../../components/studentComponent/notices/ImportantNotice";
+import NoticeArchive from "../../components/studentComponent/notices/NoticeArchive";
 
 import "../../styles/notices.css";
 
