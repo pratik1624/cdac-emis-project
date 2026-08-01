@@ -4,7 +4,7 @@ import TransactionHistory from "../../components/studentComponent/fees/Transacti
 import PaymentSummary from "../../components/studentComponent/fees/PaymentSummary";
 import FeeInstructions from "../../components/studentComponent/fees/FeeInstructions";
 
-import "../../styles/fees.css";
+import "../../styles/studentStyles/fees.css";
 
 export default function Fees() {
   return (

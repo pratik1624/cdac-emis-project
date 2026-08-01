@@ -7,7 +7,7 @@ import ResultSummary from "../../components/studentComponent/results/ResultSumma
 import SemesterInfo from "../../components/studentComponent/results/SemesterInfo";
 import RemarksCard from "../../components/studentComponent/results/RemarksCard";
 
-import "../../styles/results.css";
+import "../../styles/studentStyles/results.css";
 
 export default function AcademicResults() {
   const [results, setResults] = useState([]);

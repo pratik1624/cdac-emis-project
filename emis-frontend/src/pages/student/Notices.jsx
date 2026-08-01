@@ -7,7 +7,7 @@ import NoticeList from "../../components/studentComponent/notices/NoticeList";
 import ImportantNotice from "../../components/studentComponent/notices/ImportantNotice";
 import NoticeArchive from "../../components/studentComponent/notices/NoticeArchive";
 
-import "../../styles/notices.css";
+import "../../styles/studentStyles/notices.css";
 
 export default function Notices() {
 

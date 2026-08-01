@@ -6,7 +6,7 @@ import PersonalInfoCard from "../../components/studentComponent/profile/Personal
 import AcademicInfoCard from "../../components/studentComponent/profile/AcademicInfoCard";
 import ContactInfoCard from "../../components/studentComponent/profile/ContactInfoCard";
 import EditProfileModal from "../../components/studentComponent/profile/EditProfileModal";
-import "../../styles/profile.css";
+import "../../styles/studentStyles/profile.css";
 export default function Profile() {
 
     const [student, setStudent] = useState(null);
