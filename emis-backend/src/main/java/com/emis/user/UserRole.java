@@ -1,5 +1,7 @@
 package com.emis.user;
 
 public enum UserRole {
-	STUDENT,FACULTY,ADMIN
+	STUDENT,FACULTY,ACCOUNTANT,ADMIN
 }
+
+// Accountant Updated
