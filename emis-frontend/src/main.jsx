@@ -5,10 +5,11 @@ import "./styles/theme.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "./styles/sidebar.css";
-import "./styles/navbar.css";
-import "./styles/layout.css";
-import "./styles/dashboard.css";
+import "./styles/studentStyles/navbar.css";
+import "./styles/studentStyles/layout.css";
+import "./styles/studentStyles/dashboard.css";
 import "./styles/global.css";
+import "./styles/theme.css";
 
 
 import App from "./App";

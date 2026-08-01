@@ -1,8 +1,4 @@
-import { useAuth } from "../../context/AuthContext";
-
-export default function WelcomeBanner() {
-
-    const { user } = useAuth();
+export default function WelcomeBanner({ profile }) {
 
     const hour = new Date().getHours();
 
@@ -10,7 +6,6 @@ export default function WelcomeBanner() {
 
     if (hour < 12)
         greeting = "Good Morning";
-
     else if (hour < 18)
         greeting = "Good Afternoon";
 
@@ -26,7 +21,11 @@ export default function WelcomeBanner() {
 
             <h4>
 
-                {user?.name}
+                {
+                    profile
+                        ? `${profile.firstName} ${profile.lastName}`
+                        : "Student"
+                }
 
             </h4>
 

@@ -1,0 +1,156 @@
+/* ======================================================
+   FEES PAGE
+====================================================== */
+
+.fees-header{
+
+    margin-bottom:30px;
+
+}
+
+/* ======================================================
+   FEE TABLE
+====================================================== */
+
+.fee-table-card,
+.transaction-table-card{
+
+    background:var(--card-color);
+
+    border:1px solid var(--border-color);
+
+}
+
+.fees-table{
+
+    margin-bottom:0;
+
+}
+
+.fees-table thead th{
+
+    color:var(--text-secondary);
+
+    border-color:var(--border-color);
+
+    font-weight:600;
+
+    padding:15px;
+
+    background:transparent;
+
+}
+
+.fees-table tbody td{
+
+    color:var(--text-color);
+
+    border-color:var(--border-color);
+
+    padding:18px 15px;
+
+    background:transparent;
+
+    vertical-align:middle;
+
+}
+
+.fees-table tbody tr{
+
+    transition:.25s;
+
+}
+
+.fees-table tbody tr:hover td{
+
+    background:rgba(255,255,255,.04);
+
+}
+
+.fees-table.table{
+
+    --bs-table-bg:transparent;
+
+    --bs-table-color:var(--text-color);
+
+    --bs-table-border-color:var(--border-color);
+
+    --bs-table-hover-bg:rgba(255,255,255,.04);
+
+    --bs-table-hover-color:var(--text-color);
+
+}
+
+/* ======================================================
+   BOTTOM SECTION
+====================================================== */
+
+.fees-bottom{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:24px;
+
+    margin-top:24px;
+
+    margin-bottom:20px;
+
+}
+
+/* ======================================================
+   CARD TITLES
+====================================================== */
+
+.fee-table-card .card-title,
+.transaction-table-card .card-title{
+
+    color:var(--text-color);
+
+}
+
+.fee-table-card .card-subtitle,
+.transaction-table-card .card-subtitle{
+
+    color:var(--text-secondary);
+
+}
+
+/* ======================================================
+   BADGES
+====================================================== */
+
+.fees-table .badge{
+
+    min-width:80px;
+
+    font-weight:600;
+
+    padding:7px 12px;
+
+}
+
+/* ======================================================
+   MOBILE
+====================================================== */
+
+@media(max-width:992px){
+
+.fees-bottom{
+
+grid-template-columns:1fr;
+
+}
+
+}
+
+@media(max-width:768px){
+
+.fees-table{
+
+font-size:.9rem;
+
+}
+
+}

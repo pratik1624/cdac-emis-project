@@ -5,29 +5,22 @@ import com.emis.attendance.dto.AttendanceRequest;
 import com.emis.attendance.dto.LoadStudentRequest;
 import com.emis.faculty.dto.FacultyProfileDto;
 import com.emis.faculty.dto.FacultyUpdateDto;
+import com.emis.faculty.dto.MarksRequest;
 import com.emis.security.CustomUserDetails;
+import com.emis.student.StudentRepository;
+import com.emis.student.StudentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/faculty")
 @RequiredArgsConstructor
 public class FacultyController {
-
-    /*
-    GET /faculty/profile-->DONE
-    PUT /faculty/profile--->DONE
-    GET /faculty/courses--->DONE
-    POST /faculty/attendance-->DONE
-    GET /faculty/students
-    PUT  /faculty/attendance
-    POST /faculty/marks
-    PUT  /faculty/marks
-    GET  /faculty/notices
-     */
 
     //-------------------------------------------SELF----------------------------------------
     private final FacultyService facultyService;
@@ -45,7 +38,7 @@ public class FacultyController {
 
 
     //------------------------------ATTENDANCE-----------------------------------
-
+    private final AttendanceService attendanceService;
     //Load and Upload
     //GetAll students for Attendance
     @PostMapping("/attendance/loadstudents")
@@ -54,7 +47,7 @@ public class FacultyController {
         return ResponseEntity.ok(facultyService.loadStudentsForAttendance(loadRequest));
     }
 
-    private final AttendanceService attendanceService;
+
     @PostMapping("/attendance/upload")
     public ResponseEntity<?> uploadAttendance(@RequestBody AttendanceRequest request){
         return ResponseEntity.ok(attendanceService.uploadAttendance(request));
@@ -66,14 +59,51 @@ public class FacultyController {
         return null;
     }
 
+
+
+    //------------------------------GET /faculty/students------------------------------
+    private final StudentService studentService;
+
+    @GetMapping("/students")
+    public ResponseEntity<?> getDepartmentStudents(Integer semester){
+        return ResponseEntity.ok(facultyService.getDepartmentStudents(semester));
+    }
+
+    @GetMapping("student/{id}")
+    public ResponseEntity<?> getStudentProfileDetails(@PathVariable Long id){
+        return ResponseEntity.ok(facultyService.getStudentProfile(id));
+    }
+
     //----------------------------------SUBJECTS--------------------------------------
 
-    //GET ALL SUBJECTS TAUGHT BY FACULTY
+    //my subject
 
     @GetMapping("/subjects")
-    public ResponseEntity<?> getAssignedSubjects(@AuthenticationPrincipal CustomUserDetails userDetails){
-        System.out.println("***********************iNDISE CONTROLLER");
-        return ResponseEntity.ok(facultyService.getAssignedSubject(userDetails.getUserId()));
+    public ResponseEntity<?> getAssignedSubjects(){
+
+        return ResponseEntity.ok(
+                facultyService.getAssignedSubjects());
+    }
+
+    //manage marks
+    @GetMapping("/subjects/{subjectId}/marks")
+    public ResponseEntity<?> getStudentMarks(@PathVariable Long subjectId){
+        return ResponseEntity.ok(facultyService.getSubjectMarks(subjectId));
+    }
+
+    //save marks
+    @PutMapping("/subjects/{subjectId}/marks")
+    public ResponseEntity<?> saveMarks(@PathVariable  Long subjectId , @RequestBody List<MarksRequest> markRequest){
+        System.out.println("Inside saveMarks");
+        return ResponseEntity.ok(facultyService.saveMarks(subjectId,markRequest));
+    }
+
+    //-----------------------------NOTICES----------------------------------
+
+    @GetMapping("/notices")
+    public ResponseEntity<?> getNotices(){
+
+        return ResponseEntity.ok(facultyService.getNotices());
     }
 
 

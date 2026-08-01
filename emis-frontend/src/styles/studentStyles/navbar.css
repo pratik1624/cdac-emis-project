@@ -85,3 +85,12 @@
 
     cursor:pointer;
 }
+
+.navbar-role {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+}
+
+.profile .fw-semibold {
+    color: var(--text-color);
+}

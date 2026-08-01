@@ -1,30 +1,14 @@
 
-   //this all are for students apis
-/*
-   GET /students/profile
-   PUT /students/profile
-   GET /students/notice
-   GET /students/results
-   GET /students/attendance
-   GET /studnets/fees
-    */
-
-
-
-
-
-
 package com.emis.student;
 
 
    import com.emis.attendance.AttendanceService;
    import com.emis.notices.NoticeService;
    import com.emis.result.ResultService;
+   import com.emis.student.dto.StudentProfileResponse;
    import lombok.RequiredArgsConstructor;
    import org.springframework.http.ResponseEntity;
-   import org.springframework.web.bind.annotation.GetMapping;
-   import org.springframework.web.bind.annotation.RequestMapping;
-   import org.springframework.web.bind.annotation.RestController;
+   import org.springframework.web.bind.annotation.*;
 
    @RestController
    @RequestMapping("/student")
@@ -54,6 +38,15 @@ package com.emis.student;
        @GetMapping("/notices")
        public ResponseEntity<?> getNotices() {
            return ResponseEntity.ok(noticeService.getAllNotices());
+       }
+
+       @PutMapping("/profile")
+       public ResponseEntity<?> updateProfile(
+               @RequestBody StudentProfileResponse request) {
+
+           return ResponseEntity.ok(
+                   studentService.updateProfile(request)
+           );
        }
    }
 

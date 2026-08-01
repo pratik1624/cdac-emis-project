@@ -1,19 +1,23 @@
 package com.emis.faculty;
 
+import com.emis.attendance.Attendance;
+import com.emis.attendance.AttendanceRepository;
 import com.emis.attendance.dto.LoadStudentRequest;
 import com.emis.customexception.ResourceNotFoundException;
 import com.emis.common.ApiResp;
 import com.emis.department.Department;
 import com.emis.department.DepartmentRepository;
-import com.emis.faculty.dto.FacultyProfileDto;
-import com.emis.faculty.dto.FacultyReq;
-import com.emis.faculty.dto.FacultyUpdateDto;
-import com.emis.facultysubject.FacultySubject;
-import com.emis.facultysubject.FacultySubjectRepository;
+import com.emis.faculty.dto.*;
+import com.emis.notices.NoticeRepository;
+import com.emis.notices.Notices;
+import com.emis.result.Result;
+import com.emis.result.ResultRepository;
+import com.emis.security.CustomUserDetails;
 import com.emis.student.Student;
 import com.emis.student.StudentRepository;
 import com.emis.student.dto.LoadStudentForAttendanceDto;
 import com.emis.student.dto.StudentProfileResponse;
+import com.emis.student.dto.StudentRequest;
 import com.emis.subject.Subject;
 import com.emis.subject.SubjectDto;
 import com.emis.subject.SubjectRepository;
@@ -27,7 +31,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 //import com.cdac.entities.Department;
 
@@ -41,6 +47,9 @@ public class FacultyServiceImpl implements FacultyService {
     private final PasswordEncoder encoder;
     private final DepartmentRepository departmentRepository;
     private final StudentRepository studentRepository;
+    private final AttendanceRepository attendanceRepository;
+    private final ResultRepository resultRepository;
+    private final NoticeRepository noticeRepository;
 
 
 
@@ -184,6 +193,8 @@ public class FacultyServiceImpl implements FacultyService {
 
     }
 
+
+
     //--------------------------------------------ATTENDANCE-----------------------------------------------
     //LOADSTUDENTFORATTENDANCE
     @Override
@@ -193,7 +204,7 @@ public class FacultyServiceImpl implements FacultyService {
         System.out.println("username" + email);
       Faculty dbFaculty = facultyRepository.findByUserDetailsEmail(email).orElseThrow(() -> new ResourceNotFoundException("Faculty Not Found....."));
 
-       Department department = dbFaculty.getAssignedDepartment();
+       Long department = dbFaculty.getAssignedDepartment().getId();
 
        List<Student> list = studentRepository.findByDepartmentAndSemester(department,loadStudentRequest.getSemester());
        List<LoadStudentForAttendanceDto> studList = new ArrayList<>();
@@ -205,28 +216,247 @@ public class FacultyServiceImpl implements FacultyService {
     }
 
 
-    //----------------------------------------Subject------------------------------------------
-    private final FacultySubjectRepository facultySubjectRepository;
+
+
+    //GET PROFILE
+    @Override
+    public StudentProfileDetails getStudentProfile(Long studentId) {
+
+        Student student = studentRepository.findById(studentId)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Student Not Found"));
+
+        StudentRequest studentDto = mapper.map(student, StudentRequest.class);
+
+        studentDto.setDepartment(student.getDepartment().getDeptName());
+
+        studentDto.setEmail(student.getUserDetails().getEmail());
+
+        List<Attendance> attendanceList =
+                attendanceRepository.findByStudentId(studentId);
+
+        List<AttendanceSummaryDto> attendanceDtos =
+                new ArrayList<>();
+
+        for (Attendance attendance : attendanceList) {
+
+            double percentage =
+                    attendance.getTotalClasses() == 0
+                            ? 0
+                            : (attendance.getAttendedClasses() * 100.0)
+                            / attendance.getTotalClasses();
+
+            AttendanceSummaryDto dto =
+                    new AttendanceSummaryDto();
+
+            dto.setSubjectName(
+                    attendance.getSubject().getSubjectName());
+
+            dto.setAttendedClasses(
+                    attendance.getAttendedClasses());
+
+            dto.setTotalClasses(
+                    attendance.getTotalClasses());
+
+            dto.setPercentage(
+                    Math.round(percentage * 100.0) / 100.0);
+
+            attendanceDtos.add(dto);
+        }
+
+        List<Result> resultList =
+                resultRepository.findByStudentId(studentId);
+
+        List<ResultResponse> resultDtos =
+                new ArrayList<>();
+
+        for (Result result : resultList) {
+
+            ResultResponse dto = new ResultResponse();
+
+            dto.setSubjectName(
+                    result.getSubject().getSubjectName());
+
+            dto.setObtainedMarks(
+                    result.getObtainedMarks());
+
+            dto.setTotalMarks(
+                    result.getTotalMarks());
+
+            dto.setGrade(
+                    result.getGrade());
+
+            resultDtos.add(dto);
+        }
+
+        StudentProfileDetails response =
+                new StudentProfileDetails();
+
+        response.setStudent(studentDto);
+
+        response.setAttendance(attendanceDtos);
+
+        response.setResults(resultDtos);
+
+        return response;
+    }
+
+
+
+
+
+
+    //-----29-07-2026
+    //my subject backend
+    @Override
+    public Set<SubjectResponse> getAssignedSubjects() {
+
+        CustomUserDetails userDetails = (CustomUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+         Long facultyId = userDetails.getUserId();
+
+         Faculty dbFaculty = facultyRepository.findById(facultyId).orElseThrow(() -> new ResourceNotFoundException("Faculty Not Found......"));
+
+         List<Subject> mySubject = dbFaculty.getMySubjects();
+         Set<SubjectResponse> response = new HashSet<>();
+         for(Subject sub : mySubject){
+
+             SubjectResponse dto = new SubjectResponse(sub.getSubjectCode(),sub.getSubjectName(),sub.getSemester());
+             response.add(dto);
+         }
+        return response;
+
+    }
+    //-----------------------------GET DEPARTMENT STUDENTS BY SEMESTER----------------------------
+    @Override
+    public List<StudentListDto> getDepartmentStudents(Integer semester) {
+        String email = SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getName();
+
+        Faculty faculty = facultyRepository
+                .findByUserDetailsEmail(email)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Faculty not found"));
+
+        Long departmentId = faculty.getAssignedDepartment().getId();
+
+        List<Student> students = studentRepository
+                .findByDepartmentAndSemester(departmentId, semester);
+
+        List<StudentListDto> response = new ArrayList<>();
+
+        for (Student student : students) {
+
+            StudentListDto dto = new StudentListDto();
+            dto.setRollNumber(student.getRollNumber());
+            dto.setStudentName(
+                    student.getFirstName() + " " + student.getLastName());
+
+            dto.setSemester(student.getSemester());
+
+            dto.setEmail(student.getUserDetails().getEmail());
+
+            response.add(dto);
+        }
+
+        return response;
+    }
+
+    //------------------GET SUBJECT MARKS OF STUDENTS----------------------------
+    @Override
+    public List<SubjectMarksResponse> getSubjectMarks(Long subjectId) {
+
+      CustomUserDetails userDetails =  (CustomUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Long facultyId = userDetails.getUserId();
+
+        Faculty dbFaculty = facultyRepository
+                .findById(facultyId)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Faculty not found"));
+        facultyRepository.findByIdAndMySubjects_Id(facultyId,subjectId).orElseThrow(() -> new ResourceNotFoundException("Subject is not assigned to this faculty"));
+
+        List<Result> results =
+                resultRepository.findBySubjectId(subjectId);
+
+        List<SubjectMarksResponse> response =
+                new ArrayList<>();
+
+        for(Result result : results){
+
+            Student student = result.getStudent();
+
+            SubjectMarksResponse dto =
+                    new SubjectMarksResponse();
+
+            mapper.map(result,dto);
+            dto.setResultId(result.getId());
+            dto.setRollNumber(result.getStudent().getRollNumber());
+            dto.setStudentName(
+                    student.getFirstName()
+                            +" "
+                            +student.getLastName());
+
+            dto.setStudentId(student.getId());
+
+            response.add(dto);
+        }
+
+        return response;
+    }
     private final SubjectRepository subjectRepository;
     @Override
-    public List<SubjectDto> getAssignedSubject(Long userId) {
+    public ApiResp saveMarks(Long subjectId, List<MarksRequest> markRequest) {
+        Result saveResult;
 
-        List<FacultySubject> assignedSubjectList = facultySubjectRepository.findByFacultyId(userId);
-        /*
-        id	faculty_id	subject_id
-        1	1	101 (Java)
-        2	1	102 (DBMS)
-        3	1	103 (OS)
-         */
-        System.out.println("***********************iNDISE SERVVICE");
+        Subject subject = subjectRepository.findById(subjectId).orElseThrow(()-> new ResourceNotFoundException("Subject Not Found...."));
+        System.out.println("Loop Started");
+        for(MarksRequest dto : markRequest){
+            System.out.println("Student Id = " + dto.getStudentId());
+            Student student = studentRepository.findById(dto.getStudentId()).orElseThrow(() -> new ResourceNotFoundException("Student Not Found...."));
 
-        List<SubjectDto> subjectDtoList = new ArrayList<>();
-        System.out.println("Size = " + assignedSubjectList.size());
-        for(FacultySubject fs : assignedSubjectList){
-          SubjectDto dto = new SubjectDto(fs.getSubject().getSubjectCode() , fs.getSubject().getSubjectName());
-           subjectDtoList.add(dto);
+            System.out.println("Student Found");
+            Result dbResult = resultRepository.findBySubjectIdAndStudentId(subjectId,student.getId()).orElse(null);
+            System.out.println("Result Checked");
+            if(dbResult != null){
+                saveResult = dbResult;
+            }
+            else{
+                saveResult = new Result();
+                saveResult.setSubject(subject);
+                saveResult.setStudent(student);
+            }
+
+            saveResult.setObtainedMarks(dto.getObtainedMarks());
+            saveResult.setTotalMarks(dto.getTotalMarks());
+
+
+            double percentage  = (dto.getObtainedMarks() * 100) / dto.getTotalMarks();
+
+            if(percentage >= 90)
+                saveResult.setGrade("A+");
+            else if(percentage >= 80)
+                saveResult.setGrade("A");
+            else if (percentage >= 70)
+                saveResult.setGrade("B+");
+            else if (percentage >= 60)
+                saveResult.setGrade("B");
+            else if (percentage >= 50)
+                saveResult.setGrade("C");
+            else
+                saveResult.setGrade("F");
+
+                resultRepository.save(saveResult);
+            }
+
+         return new ApiResp("SUCCESS" , "Marks Uploaded Successfully");
         }
-        return subjectDtoList;
+
+
+
+
+    @Override
+    public List<Notices> getNotices() {
+        return noticeRepository.findAll();
     }
 
 
