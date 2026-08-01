@@ -1,10 +1,10 @@
-import FeeSummaryCards from "../../components/fees/FeeSummaryCards";
-import FeeDetailsTable from "../../components/fees/FeeDetailsTable";
-import TransactionHistory from "../../components/fees/TransactionHistory";
-import PaymentSummary from "../../components/fees/PaymentSummary";
-import FeeInstructions from "../../components/fees/FeeInstructions";
+import FeeSummaryCards from "../../components/studentComponent/fees/FeeSummaryCards";
+import FeeDetailsTable from "../../components/studentComponent/fees/FeeDetailsTable";
+import TransactionHistory from "../../components/studentComponent/fees/TransactionHistory";
+import PaymentSummary from "../../components/studentComponent/fees/PaymentSummary";
+import FeeInstructions from "../../components/studentComponent/fees/FeeInstructions";
 
-import "../../styles/fees.css";
+import "../../styles/studentStyles/fees.css";
 
 export default function Fees() {
   return (

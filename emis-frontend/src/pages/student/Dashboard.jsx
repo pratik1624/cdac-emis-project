@@ -8,10 +8,10 @@ import {
 
 import { getStudentNotices } from "../../api/noticeApi";
 
-import DashboardCard from "../../components/ui/DashboardCard";
-import WelcomeBanner from "../../components/ui/WelcomeBanner";
-import InfoCard from "../../components/ui/InfoCard";
-import NoticeCard from "../../components/ui/NoticeCard";
+import DashboardCard from "../../components/studentComponent/ui/DashboardCard";
+import WelcomeBanner from "../../components/studentComponent/ui/WelcomeBanner";
+import InfoCard from "../../components/studentComponent/ui/InfoCard";
+import NoticeCard from "../../components/studentComponent/ui/NoticeCard";
 
 import {
     FaClipboardCheck,

@@ -9,7 +9,7 @@ import {
 } from "react-icons/fa";
 
 import { NavLink } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../../context/AuthContext";
 import { FaCog } from "react-icons/fa";
 export default function StudentSidebar() {
 

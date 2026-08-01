@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { getResults } from "../../api/resultApi";
 
-import ResultSummaryCards from "../../components/results/ResultSummaryCards";
-import ResultTable from "../../components/results/ResultTable";
-import ResultSummary from "../../components/results/ResultSummary";
-import SemesterInfo from "../../components/results/SemesterInfo";
-import RemarksCard from "../../components/results/RemarksCard";
+import ResultSummaryCards from "../../components/studentComponent/results/ResultSummaryCards";
+import ResultTable from "../../components/studentComponent/results/ResultTable";
+import ResultSummary from "../../components/studentComponent/results/ResultSummary";
+import SemesterInfo from "../../components/studentComponent/results/SemesterInfo";
+import RemarksCard from "../../components/studentComponent/results/RemarksCard";
 
-import "../../styles/results.css";
+import "../../styles/studentStyles/results.css";
 
 export default function AcademicResults() {
   const [results, setResults] = useState([]);
