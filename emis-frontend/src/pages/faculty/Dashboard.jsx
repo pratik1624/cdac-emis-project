@@ -1,44 +1,102 @@
-// export default function Dashboard() {
-//   return (
-//     <div className="container mt-5">
-//       <h1>Faculty Dashboard</h1>
-//     </div>
-//   );
-// }
+import { useEffect, useState } from "react";
 
+import { getFacultyDashboard } from "../../api/facultyApi";
 
+import FacultyStats from "../../components/facultyComponent/dashboard/FacultyStats";
+import FacultyInfoCard from "../../components/facultyComponent/dashboard/FacultyInfoCard";
+import PendingAttendance from "../../components/facultyComponent/dashboard/PendingAttendance";
+import PendingResults from "../../components/facultyComponent/dashboard/PendingResults";
+import TodaysClasses from "../../components/facultyComponent/dashboard/TodaysClasses";
+import QuickActions from "../../components/facultyComponent/dashboard/QuickActions";
 
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext";
+import "../../styles/facultyStyles/dashboard.css";
 
-export default function FacultyDashboard() {
+export default function Dashboard() {
 
-    const { user, logout } = useAuth();
+    const [dashboard, setDashboard] = useState(null);
 
-    const navigate = useNavigate();
+    useEffect(() => {
 
-    const handleLogout = () => {
+        loadDashboard();
 
-        logout();
+    }, []);
 
-        navigate("/", { replace: true });
+    const loadDashboard = async () => {
+
+        try {
+
+            const data = await getFacultyDashboard();
+
+            setDashboard(data);
+
+        }
+
+        catch (err) {
+
+            console.error(err);
+
+        }
 
     };
 
+    if (!dashboard) {
+
+        return <h4>Loading...</h4>;
+
+    }
+
     return (
 
-        <div>
+        <div className="container-fluid">
 
-            <h2>Welcome {user.name}</h2>
+            <h2 className="page-title mb-4">
 
-            <button
-                className="btn btn-danger"
-                onClick={handleLogout}
-            >
-                Logout
-            </button>
+                Faculty Dashboard
+
+            </h2>
+
+            <FacultyStats dashboard={dashboard} />
+
+            <div className="row mt-4">
+
+                <div className="col-lg-8">
+
+                    <TodaysClasses />
+
+                </div>
+
+                <div className="col-lg-4">
+
+                    <FacultyInfoCard />
+
+                </div>
+
+            </div>
+
+            <div className="row mt-4">
+
+                <div className="col-lg-6">
+
+                    <PendingAttendance />
+
+                </div>
+
+                <div className="col-lg-6">
+
+                    <PendingResults />
+
+                </div>
+
+            </div>
+
+            <div className="mt-4">
+
+                <QuickActions />
+
+            </div>
 
         </div>
-        
+
     );
+
 }

@@ -1,17 +1,17 @@
 import {
     FaHome,
     FaUser,
+    FaUsers,
+    FaBook,
     FaClipboardCheck,
-    FaChartLine,
-    FaMoneyBillWave,
-    FaBullhorn,
+    FaCog,
     FaSignOutAlt
 } from "react-icons/fa";
 
 import { NavLink } from "react-router-dom";
-import { useAuth } from "../../../context/AuthContext";
-import { FaCog } from "react-icons/fa";
-export default function StudentSidebar() {
+import { useAuth } from "../../context/AuthContext";
+
+export default function FacultySidebar() {
 
     const { logout } = useAuth();
 
@@ -20,44 +20,38 @@ export default function StudentSidebar() {
         {
             title: "Dashboard",
             icon: <FaHome />,
-            path: "/student/dashboard"
+            path: "/faculty/dashboard"
         },
 
         {
             title: "Profile",
             icon: <FaUser />,
-            path: "/student/profile"
+            path: "/faculty/profile"
+        },
+
+        {
+            title: "Students",
+            icon: <FaUsers />,
+            path: "/faculty/students"
+        },
+
+        {
+            title: "Subjects",
+            icon: <FaBook />,
+            path: "/faculty/subjects"
         },
 
         {
             title: "Attendance",
             icon: <FaClipboardCheck />,
-            path: "/student/attendance"
+            path: "/faculty/attendance"
         },
 
         {
-            title: "Results",
-            icon: <FaChartLine />,
-            path: "/student/results"
-        },
-
-        {
-            title: "Fees",
-            icon: <FaMoneyBillWave />,
-            path: "/student/fees"
-        },
-
-        {
-            title: "Notices",
-            icon: <FaBullhorn />,
-            path: "/student/notices"
-        },
-
-        // {
-        //     title: "Settings",
-        //     icon: <FaCog />,
-        //     path: "/settings"
-        // }
+            title: "Settings",
+            icon: <FaCog />,
+            path: "/faculty/settings"
+        }
 
     ];
 
@@ -69,7 +63,7 @@ export default function StudentSidebar() {
 
                 <h3>🎓 EMIS</h3>
 
-                <p>Student Portal</p>
+                <p>Faculty Portal</p>
 
             </div>
 
@@ -87,7 +81,9 @@ export default function StudentSidebar() {
                         }
                     >
 
-                        {item.icon}
+                        <span className="me-2">
+                            {item.icon}
+                        </span>
 
                         {item.title}
 
@@ -100,11 +96,14 @@ export default function StudentSidebar() {
             <div className="sidebar-footer">
 
                 <button
-                    className="btn btn-light w-100 rounded-3"
+                    className="btn btn-light w-100"
                     onClick={logout}
                 >
+
                     <FaSignOutAlt className="me-2" />
+
                     Logout
+
                 </button>
 
             </div>

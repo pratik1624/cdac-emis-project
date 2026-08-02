@@ -1,0 +1,36 @@
+.page-title {
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.card {
+    background: var(--card-bg);
+    border: none;
+}
+
+.card h6 {
+    color: var(--text-secondary);
+}
+
+.card h2 {
+    color: var(--text-primary);
+}
+
+.card h5{
+    color: var(--text-primary);
+}
+
+.card h6{
+    color: var(--text-primary);
+}
+
+.badge{
+    font-size: .75rem;
+    padding: .55rem .8rem;
+}
+
+.btn-warning{
+
+    font-weight:600;
+
+}
