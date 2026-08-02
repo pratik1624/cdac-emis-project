@@ -1,6 +1,6 @@
 import { FaBell, FaMoon, FaSun, FaUserCircle } from "react-icons/fa";
-import { useTheme } from "../../../context/ThemeContext";
-import { useAuth } from "../../../context/AuthContext";
+import { useTheme } from "../../context/ThemeContext";
+import { useAuth } from "../../context/AuthContext";
 
 export default function Navbar() {
 
@@ -41,12 +41,12 @@ export default function Navbar() {
                     <div>
 
                         <div className="fw-semibold">
-                            {user?.name}
+                            {user?.firstName} {user?.lastName}
                         </div>
 
-                        <small className="text-secondary">
-                            Student
-                        </small>
+                      <small className="text-secondary">
+                    {user?.role}
+                    </small>
 
                     </div>
 

@@ -1,16 +1,17 @@
 import {
     FaHome,
-    FaUserGraduate,
+    FaUser,
     FaClipboardCheck,
-    FaChartBar,
-    FaCog,
+    FaChartLine,
+    FaMoneyBillWave,
+    FaBullhorn,
     FaSignOutAlt
 } from "react-icons/fa";
 
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
-
-export default function FacultySidebar() {
+import { FaCog } from "react-icons/fa";
+export default function StudentSidebar() {
 
     const { logout } = useAuth();
 
@@ -19,26 +20,44 @@ export default function FacultySidebar() {
         {
             title: "Dashboard",
             icon: <FaHome />,
-            path: "/faculty/dashboard"
+            path: "/student/dashboard"
+        },
+
+        {
+            title: "Profile",
+            icon: <FaUser />,
+            path: "/student/profile"
         },
 
         {
             title: "Attendance",
             icon: <FaClipboardCheck />,
-            path: "/faculty/attendance"
+            path: "/student/attendance"
         },
 
         {
             title: "Results",
-            icon: <FaChartBar />,
-            path: "/faculty/results"
+            icon: <FaChartLine />,
+            path: "/student/results"
         },
 
         {
-            title: "Settings",
-            icon: <FaCog />,
-            path: "/faculty/settings"
-        }
+            title: "Fees",
+            icon: <FaMoneyBillWave />,
+            path: "/student/fees"
+        },
+
+        {
+            title: "Notices",
+            icon: <FaBullhorn />,
+            path: "/student/notices"
+        },
+
+        // {
+        //     title: "Settings",
+        //     icon: <FaCog />,
+        //     path: "/settings"
+        // }
 
     ];
 
@@ -50,26 +69,22 @@ export default function FacultySidebar() {
 
                 <h3>🎓 EMIS</h3>
 
-                <p>Faculty Portal</p>
+                <p>Student Portal</p>
 
             </div>
 
             <div className="sidebar-menu">
 
-                {menu.map(item => (
+                {menu.map((item) => (
 
                     <NavLink
-
                         key={item.path}
-
                         to={item.path}
-
                         className={({ isActive }) =>
                             isActive
                                 ? "sidebar-link active"
                                 : "sidebar-link"
                         }
-
                     >
 
                         {item.icon}
@@ -85,14 +100,11 @@ export default function FacultySidebar() {
             <div className="sidebar-footer">
 
                 <button
-                    className="btn btn-light w-100"
+                    className="btn btn-light w-100 rounded-3"
                     onClick={logout}
                 >
-
-                    <FaSignOutAlt className="me-2"/>
-
+                    <FaSignOutAlt className="me-2" />
                     Logout
-
                 </button>
 
             </div>
