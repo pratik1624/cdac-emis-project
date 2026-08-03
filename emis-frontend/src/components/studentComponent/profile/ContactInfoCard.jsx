@@ -8,11 +8,11 @@ export default function ContactInfoCard({ student }) {
 
     return (
 
-        <div className="card app-card profile-card">
+        <div className="profile-card">
 
-            <div className="card-body">
+            <div className="profile-card-body">
 
-                <h5 className="section-title mb-4">
+                <h5>
 
                     <FaEnvelope className="profile-icon me-2" />
 
@@ -21,8 +21,6 @@ export default function ContactInfoCard({ student }) {
                 </h5>
 
                 <div className="row">
-
-                    {/* Email */}
 
                     <div className="col-md-4 mb-3">
 
@@ -42,8 +40,6 @@ export default function ContactInfoCard({ student }) {
 
                     </div>
 
-                    {/* Phone */}
-
                     <div className="col-md-4 mb-3">
 
                         <div className="profile-info-box">
@@ -61,8 +57,6 @@ export default function ContactInfoCard({ student }) {
                         </div>
 
                     </div>
-
-                    {/* Address */}
 
                     <div className="col-md-4 mb-3">
 

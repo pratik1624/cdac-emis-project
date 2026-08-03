@@ -14,29 +14,37 @@ export default function DashboardCard({
 
         <div className="dashboard-card app-card">
 
-            <div className="dashboard-icon">
+            <div className="dashboard-card-top">
 
-                {icon}
+                <div className="dashboard-icon">
+
+                    {icon}
+
+                </div>
 
             </div>
 
-            <h2 className="dashboard-value">
+            <div className="dashboard-card-body">
 
-                {value}
+                <h2 className="dashboard-value">
 
-            </h2>
+                    {value}
 
-            <h6 className="dashboard-title">
+                </h2>
 
-                {title}
+                <h6 className="dashboard-title">
 
-            </h6>
+                    {title}
 
-            <small className="dashboard-subtitle">
+                </h6>
 
-                {subtitle}
+                <p className="dashboard-subtitle">
 
-            </small>
+                    {subtitle}
+
+                </p>
+
+            </div>
 
         </div>
 

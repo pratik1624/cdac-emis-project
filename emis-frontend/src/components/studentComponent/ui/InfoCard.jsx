@@ -2,23 +2,43 @@ export default function InfoCard({
 
     title,
 
+    subtitle,
+
     children
 
-}){
+}) {
 
-    return(
+    return (
 
-        <div className="info-card">
+        <div className="app-card info-card">
 
-            <h5>
+            <div className="info-card-header">
 
-                {title}
+                <h4 className="info-card-title">
 
-            </h5>
+                    {title}
 
-            <hr/>
+                </h4>
 
-            {children}
+                {
+
+                    subtitle &&
+
+                    <p className="info-card-subtitle">
+
+                        {subtitle}
+
+                    </p>
+
+                }
+
+            </div>
+
+            <div className="info-card-body">
+
+                {children}
+
+            </div>
 
         </div>
 

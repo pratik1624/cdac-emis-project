@@ -5,11 +5,11 @@ import {
     updateFacultyProfile
 } from "../../api/facultyApi";
 
-import ProfileHeader from "../../components/profile/ProfileHeader";
-import PersonalInfoCard from "../../components/profile/PersonalInfoCard";
-import ContactInfoCard from "../../components/profile/ContactInfoCard";
+import FacultyProfileHeader from "../../components/facultyComponent/profile/FacultyProfileHeader";
+import PersonalInfoCard from "../../components/facultyComponent/profile/PersonalInfoCard";
+import ContactInfoCard from "../../components/facultyComponent/profile/ContactInfoCard";
 import ProfessionalInfoCard from "../../components/facultyComponent/profile/ProfessionalInfoCard";
-import EditProfileModal from "../../components/profile/EditProfileModal";
+import EditProfileModal from "../../components/facultyComponent/profile/EditProfileModal";
 
 import "../../styles/facultyStyles/profile.css";
 
@@ -74,7 +74,7 @@ export default function Profile() {
 
         <div className="container-fluid">
 
-            <ProfileHeader
+            <FacultyProfileHeader
 
                 student={faculty}
 

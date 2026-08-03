@@ -2,87 +2,373 @@
    FEES PAGE
 ====================================================== */
 
+.fees-page{
+    display:flex;
+    flex-direction:column;
+    gap:28px;
+}
+
 .fees-header{
+    margin-bottom:6px;
+}
 
-    margin-bottom:30px;
+.fees-header h2{
+    font-size:2rem;
+    font-weight:700;
+    color:var(--text-color);
+    margin-bottom:8px;
+}
 
+.fees-header p{
+    color:var(--text-secondary);
+    margin:0;
 }
 
 /* ======================================================
-   FEE TABLE
+   SECTION
 ====================================================== */
 
-.fee-table-card,
-.transaction-table-card{
+.fees-section{
+    width:100%;
+}
 
+/* ======================================================
+   CARD
+====================================================== */
+
+.custom-card{
     background:var(--card-color);
-
     border:1px solid var(--border-color);
+    border-radius:18px;
+    overflow:hidden;
+}
+
+.card-header-custom{
+    padding:24px;
+    border-bottom:1px solid var(--border-color);
+}
+
+.card-header-custom h4{
+    color:var(--text-color);
+    font-size:1.25rem;
+    font-weight:700;
+    margin-bottom:6px;
+}
+
+.card-header-custom p{
+    color:var(--text-secondary);
+    margin:0;
+    font-size:.9rem;
+}
+
+/* ======================================================
+   FEE LIST
+====================================================== */
+
+.fee-list-header,
+.fee-item{
+
+    display:grid;
+
+    grid-template-columns:
+        2fr
+        1fr
+        1fr
+        1fr
+        1fr;
+
+    align-items:center;
 
 }
 
-.fees-table{
+.fee-list-header{
 
-    margin-bottom:0;
-
-}
-
-.fees-table thead th{
+    padding:18px 24px;
 
     color:var(--text-secondary);
 
-    border-color:var(--border-color);
-
     font-weight:600;
 
-    padding:15px;
-
-    background:transparent;
+    border-bottom:1px solid var(--border-color);
 
 }
 
-.fees-table tbody td{
+.fee-item{
+
+    padding:18px 24px;
 
     color:var(--text-color);
 
-    border-color:var(--border-color);
-
-    padding:18px 15px;
-
-    background:transparent;
-
-    vertical-align:middle;
-
-}
-
-.fees-table tbody tr{
+    border-bottom:1px solid var(--border-color);
 
     transition:.25s;
 
 }
 
-.fees-table tbody tr:hover td{
+.fee-item:last-child{
 
-    background:rgba(255,255,255,.04);
+    border-bottom:none;
 
 }
 
-.fees-table.table{
+.fee-item:hover{
 
-    --bs-table-bg:transparent;
+    background:rgba(255,255,255,.03);
 
-    --bs-table-color:var(--text-color);
+}
 
-    --bs-table-border-color:var(--border-color);
+.fee-name{
 
-    --bs-table-hover-bg:rgba(255,255,255,.04);
-
-    --bs-table-hover-color:var(--text-color);
+    font-weight:600;
 
 }
 
 /* ======================================================
-   BOTTOM SECTION
+   TRANSACTION
+====================================================== */
+
+.transaction-list-header,
+.transaction-item{
+
+    display:grid;
+
+    grid-template-columns:
+        1.6fr
+        1.2fr
+        1.2fr
+        1fr
+        1fr;
+
+    align-items:center;
+
+}
+
+.transaction-list-header{
+
+    padding:18px 24px;
+
+    color:var(--text-secondary);
+
+    font-weight:600;
+
+    border-bottom:1px solid var(--border-color);
+
+}
+
+.transaction-item{
+
+    padding:18px 24px;
+
+    color:var(--text-color);
+
+    border-bottom:1px solid var(--border-color);
+
+    transition:.25s;
+
+}
+
+.transaction-item:last-child{
+
+    border-bottom:none;
+
+}
+
+.transaction-item:hover{
+
+    background:rgba(255,255,255,.03);
+
+}
+
+.transaction-id{
+
+    font-weight:600;
+
+}
+
+/* ======================================================
+   STATUS
+====================================================== */
+
+.status-badge{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    padding:7px 14px;
+
+    border-radius:30px;
+
+    font-size:.82rem;
+
+    font-weight:600;
+
+}
+
+.status-badge.success{
+
+    background:rgba(34,197,94,.15);
+
+    color:#22c55e;
+
+}
+
+.status-badge.warning{
+
+    background:rgba(245,158,11,.15);
+
+    color:#f59e0b;
+
+}
+
+/* ======================================================
+   PAYMENT SUMMARY
+====================================================== */
+
+.payment-progress{
+
+    padding:24px;
+
+}
+
+.payment-progress span{
+
+    display:block;
+
+    margin-top:12px;
+
+    color:var(--text-secondary);
+
+}
+
+.payment-summary-list{
+
+    padding:0 24px 24px;
+
+}
+
+.payment-summary-item{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:15px 0;
+
+    border-bottom:1px solid var(--border-color);
+
+}
+
+.payment-summary-item:last-child{
+
+    border-bottom:none;
+
+}
+
+.summary-left{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+}
+
+.summary-icon{
+
+    font-size:18px;
+
+}
+
+.summary-icon.primary{
+
+    color:#3b82f6;
+
+}
+
+.summary-icon.success{
+
+    color:#22c55e;
+
+}
+
+.summary-icon.warning{
+
+    color:#f59e0b;
+
+}
+
+/* ======================================================
+   INSTRUCTIONS
+====================================================== */
+
+.instructions-list{
+
+    padding:24px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:20px;
+
+}
+
+.instruction-item{
+
+    display:flex;
+
+    gap:16px;
+
+}
+
+.instruction-icon{
+
+    width:42px;
+
+    height:42px;
+
+    border-radius:12px;
+
+    background:rgba(255,255,255,.05);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    color:var(--accent-color);
+
+    flex-shrink:0;
+
+}
+
+.instruction-item h6{
+
+    color:var(--text-color);
+
+    margin-bottom:6px;
+
+}
+
+.instruction-item p{
+
+    color:var(--text-secondary);
+
+    margin:0;
+
+    line-height:1.6;
+
+}
+
+/* ======================================================
+   BOTTOM
 ====================================================== */
 
 .fees-bottom{
@@ -93,42 +379,6 @@
 
     gap:24px;
 
-    margin-top:24px;
-
-    margin-bottom:20px;
-
-}
-
-/* ======================================================
-   CARD TITLES
-====================================================== */
-
-.fee-table-card .card-title,
-.transaction-table-card .card-title{
-
-    color:var(--text-color);
-
-}
-
-.fee-table-card .card-subtitle,
-.transaction-table-card .card-subtitle{
-
-    color:var(--text-secondary);
-
-}
-
-/* ======================================================
-   BADGES
-====================================================== */
-
-.fees-table .badge{
-
-    min-width:80px;
-
-    font-weight:600;
-
-    padding:7px 12px;
-
 }
 
 /* ======================================================
@@ -137,20 +387,32 @@
 
 @media(max-width:992px){
 
-.fees-bottom{
+    .fees-bottom{
 
-grid-template-columns:1fr;
+        grid-template-columns:1fr;
 
-}
+    }
 
 }
 
 @media(max-width:768px){
 
-.fees-table{
+    .fee-list-header,
+    .transaction-list-header{
 
-font-size:.9rem;
+        display:none;
 
-}
+    }
+
+    .fee-item,
+    .transaction-item{
+
+        grid-template-columns:1fr;
+
+        gap:12px;
+
+        padding:20px;
+
+    }
 
 }

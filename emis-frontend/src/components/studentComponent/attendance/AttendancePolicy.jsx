@@ -1,79 +1,155 @@
 import {
     FaCheckCircle,
-    FaExclamationTriangle
+    FaExclamationTriangle,
+    FaPercentage,
+    FaUserCheck
 } from "react-icons/fa";
 
 export default function AttendancePolicy({ overallAttendance }) {
 
-    const eligible = overallAttendance >= 75;
+    const percentage = Number(overallAttendance);
+
+    const eligible = percentage >= 75;
 
     return (
 
         <div className="attendance-policy">
 
-            <h4 className="attendance-card-title">
+            <div className="attendance-policy-header">
 
-                Attendance Policy
+                <h4 className="attendance-card-title">
 
-            </h4>
+                    Attendance Policy
 
-            <ul className="attendance-policy-list">
+                </h4>
 
-                <li>
+                <p className="attendance-policy-subtitle">
 
-                    <FaCheckCircle className="policy-icon success" />
+                    College attendance rules and your current eligibility.
 
-                    <span>
+                </p>
 
-                        Minimum Required : <strong>75%</strong>
+            </div>
 
-                    </span>
+            <div className="attendance-policy-list">
 
-                </li>
+                <div className="attendance-policy-item">
 
-                <li>
+                    <div className="policy-icon-wrapper">
 
-                    <FaCheckCircle className="policy-icon success" />
+                        <FaPercentage className="policy-icon primary" />
 
-                    <span>
+                    </div>
 
-                        Current Attendance : <strong>{overallAttendance}%</strong>
+                    <div className="policy-content">
 
-                    </span>
+                        <h6>
 
-                </li>
+                            Minimum Attendance
 
-                <li>
+                        </h6>
 
-                    <FaCheckCircle
-                        className={`policy-icon ${
-                            eligible ? "success" : "warning"
-                        }`}
-                    />
+                        <p>
 
-                    <span>
+                            Students must maintain at least <strong>75%</strong> attendance during the semester.
 
-                        {eligible
-                            ? "Eligible to appear in examinations"
-                            : "Not eligible to appear in examinations"}
+                        </p>
 
-                    </span>
+                    </div>
 
-                </li>
+                </div>
 
-                <li>
+                <div className="attendance-policy-item">
 
-                    <FaExclamationTriangle className="policy-icon warning" />
+                    <div className="policy-icon-wrapper">
 
-                    <span>
+                        <FaCheckCircle className="policy-icon success" />
 
-                        Continue maintaining attendance above <strong>75%</strong>
+                    </div>
 
-                    </span>
+                    <div className="policy-content">
 
-                </li>
+                        <h6>
 
-            </ul>
+                            Current Attendance
+
+                        </h6>
+
+                        <p>
+
+                            Your attendance is currently <strong>{overallAttendance}%</strong>.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div className="attendance-policy-item">
+
+                    <div className="policy-icon-wrapper">
+
+                        <FaUserCheck
+                            className={`policy-icon ${
+                                eligible ? "success" : "danger"
+                            }`}
+                        />
+
+                    </div>
+
+                    <div className="policy-content">
+
+                        <h6>
+
+                            Examination Eligibility
+
+                        </h6>
+
+                        <p>
+
+                            {
+
+                                eligible
+
+                                    ? "You are eligible to appear for examinations."
+
+                                    : "Your attendance is below the required limit."
+
+                            }
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div className="attendance-policy-item">
+
+                    <div className="policy-icon-wrapper">
+
+                        <FaExclamationTriangle className="policy-icon warning" />
+
+                    </div>
+
+                    <div className="policy-content">
+
+                        <h6>
+
+                            Recommendation
+
+                        </h6>
+
+                        <p>
+
+                            Attend all upcoming lectures to maintain attendance above <strong>75%</strong>.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
 
         </div>
 
