@@ -15,4 +15,5 @@ public class StudentListDto {
     private String studentName;
     private Integer semester;
     private String email;
+    private Long studentId;
 }

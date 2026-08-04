@@ -11,7 +11,12 @@ import lombok.Setter;
 @AllArgsConstructor
 public class SubjectResponse {
 
+    private Long subjectId;
+
     private String subjectCode;
+
     private String subjectName;
+
     private Integer semester;
+
 }

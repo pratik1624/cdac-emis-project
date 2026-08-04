@@ -44,7 +44,7 @@ public interface FacultyService {
 
 
 
-
+    FacultyDashboardDto getDashboard();
 
 
 

@@ -209,7 +209,7 @@ public class FacultyServiceImpl implements FacultyService {
        List<Student> list = studentRepository.findByDepartmentAndSemester(department,loadStudentRequest.getSemester());
        List<LoadStudentForAttendanceDto> studList = new ArrayList<>();
        for(Student dbStudent : list){
-           LoadStudentForAttendanceDto studentDetails = new LoadStudentForAttendanceDto(dbStudent.getId() , dbStudent.getFirstName(),dbStudent.getLastName());
+           LoadStudentForAttendanceDto studentDetails = new LoadStudentForAttendanceDto(dbStudent.getId(),dbStudent.getRollNumber() , dbStudent.getFirstName(),dbStudent.getLastName());
            studList.add(studentDetails);
        }
        return studList;
@@ -301,9 +301,52 @@ public class FacultyServiceImpl implements FacultyService {
         return response;
     }
 
+    @Override
+    public FacultyDashboardDto getDashboard() {
 
+        String email = SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getName();
 
+        Faculty faculty = facultyRepository
+                .findByUserDetailsEmail(email)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Faculty Not Found"));
 
+        int totalStudents = studentRepository
+                .findByDepartmentId(
+                        faculty.getAssignedDepartment().getId()
+                )
+                .size();
+
+        int totalSubjects = faculty
+                .getMySubjects()
+                .size();
+
+        int pendingAttendance = 0;
+
+        int pendingResults = 0;
+
+        return new FacultyDashboardDto(
+
+                faculty.getFirstName() + " " + faculty.getLastName(),
+
+                faculty.getEmployeeCode(),
+
+                faculty.getAssignedDepartment().getDeptName(),
+
+                faculty.getUserDetails().getEmail(),
+
+                totalStudents,
+
+                totalSubjects,
+
+                pendingAttendance,
+
+                pendingResults
+        );
+    }
 
 
     //-----29-07-2026
@@ -320,7 +363,7 @@ public class FacultyServiceImpl implements FacultyService {
          Set<SubjectResponse> response = new HashSet<>();
          for(Subject sub : mySubject){
 
-             SubjectResponse dto = new SubjectResponse(sub.getSubjectCode(),sub.getSubjectName(),sub.getSemester());
+             SubjectResponse dto = new SubjectResponse(sub.getId(),sub.getSubjectCode(),sub.getSubjectName(),sub.getSemester());
              response.add(dto);
          }
         return response;
@@ -348,6 +391,7 @@ public class FacultyServiceImpl implements FacultyService {
         for (Student student : students) {
 
             StudentListDto dto = new StudentListDto();
+            dto.setStudentId(student.getId());
             dto.setRollNumber(student.getRollNumber());
             dto.setStudentName(
                     student.getFirstName() + " " + student.getLastName());
