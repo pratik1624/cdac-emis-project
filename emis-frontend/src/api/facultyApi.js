@@ -64,6 +64,8 @@ export const uploadAttendance = async (data) => {
     return response.data;
 };
 
+
+// ---------------- dashboard ----------------
 export const getFacultyDashboard = async () => {
 
     const response = await axiosInstance.get(

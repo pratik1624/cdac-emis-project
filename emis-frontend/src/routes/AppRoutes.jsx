@@ -16,8 +16,6 @@ import Attendance from "../pages/student/Attendance";
 import AcademicResults from "../pages/student/AcademicResults";
 import Fees from "../pages/student/Fees";
 
-
-
 import FacultyDashboard from "../pages/faculty/Dashboard";
 import FacultyProfile from "../pages/faculty/Profile";
 import FacultyAttendance from "../pages/faculty/Attendance";
@@ -25,9 +23,6 @@ import FacultyStudents from "../pages/faculty/Students";
 import StudentDetails from "../pages/faculty/StudentDetails";
 import FacultySubjects from "../pages/faculty/Subjects";
 import SubjectMarks from "../pages/faculty/SubjectMarks";
-
-
-
 
 import AdminDashboard from "../pages/admin/Dashboard";
 
@@ -67,38 +62,25 @@ export default function AppRoutes() {
 
         {/* ================= FACULTY ================= */}
 
-       <Route element={<RoleRoute allowedRoles={["FACULTY"]} />}>
+        <Route element={<RoleRoute allowedRoles={["FACULTY"]} />}>
+          <Route path="/faculty" element={<FacultyLayout />}>
+            <Route path="dashboard" element={<FacultyDashboard />} />
 
-    <Route path="/faculty" element={<FacultyLayout />}>
+            <Route path="profile" element={<FacultyProfile />} />
 
-        <Route path="dashboard" element={<FacultyDashboard />} />
+            <Route path="students" element={<FacultyStudents />} />
 
-        <Route path="profile" element={<FacultyProfile />} />
+            <Route path="students/:id" element={<StudentDetails />} />
 
-        <Route path="students" element={<FacultyStudents />} />
+            <Route path="subjects" element={<FacultySubjects />} />
 
-        <Route path="students/:id" element={<StudentDetails />} />
+            <Route path="subjects/:subjectId" element={<SubjectMarks />} />
 
-        <Route path="subjects" element={<FacultySubjects />} />
+            <Route path="attendance" element={<FacultyAttendance />} />
 
-        <Route
-            path="subjects/:subjectId"
-            element={<SubjectMarks />}
-        />
-
-        <Route
-            path="attendance"
-            element={<FacultyAttendance />}
-        />
-
-        <Route
-            path="settings"
-            element={<Settings />}
-        />
-
-    </Route>
-
-</Route>
+            <Route path="settings" element={<Settings />} />
+          </Route>
+        </Route>
 
         {/* ================= ADMIN ================= */}
 
