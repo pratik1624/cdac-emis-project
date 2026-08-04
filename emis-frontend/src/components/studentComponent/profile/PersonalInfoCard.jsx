@@ -2,16 +2,13 @@ import { FaUser } from "react-icons/fa";
 
 export default function PersonalInfoCard({ student }) {
   return (
-    <div className="card profile-card h-100">
+    <div className="profile-card h-100">
 
-      <div className="card-body">
+      <div className="profile-card-body">
 
-        <h5 className="fw-bold mb-4">
-
+        <h5>
           <FaUser className="profile-icon me-2" />
-
           Personal Information
-
         </h5>
 
         <div className="row mb-3">
@@ -58,7 +55,6 @@ export default function PersonalInfoCard({ student }) {
 
           <div className="col-7 profile-value">
             {student.dob || "-"}
-
           </div>
 
         </div>

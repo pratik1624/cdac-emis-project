@@ -4,11 +4,11 @@ export default function AcademicInfoCard({ student }) {
 
     return (
 
-        <div className="card profile-card h-100">
+        <div className="profile-card h-100">
 
-            <div className="card-body">
+            <div className="profile-card-body">
 
-                <h5 className="fw-bold mb-4">
+                <h5>
 
                     <FaGraduationCap className="profile-icon me-2" />
 
@@ -19,15 +19,11 @@ export default function AcademicInfoCard({ student }) {
                 <div className="row mb-3">
 
                     <div className="col-5 profile-label">
-
                         Roll Number
-
                     </div>
 
                     <div className="col-7 profile-value">
-
                         {student.rollNumber || "-"}
-
                     </div>
 
                 </div>
@@ -35,15 +31,11 @@ export default function AcademicInfoCard({ student }) {
                 <div className="row mb-3">
 
                     <div className="col-5 profile-label">
-
                         Department
-
                     </div>
 
                     <div className="col-7 profile-value">
-
                         {student.department}
-
                     </div>
 
                 </div>
@@ -51,15 +43,11 @@ export default function AcademicInfoCard({ student }) {
                 <div className="row">
 
                     <div className="col-5 profile-label">
-
                         Semester
-
                     </div>
 
                     <div className="col-7 profile-value">
-
                         Semester {student.semester}
-
                     </div>
 
                 </div>

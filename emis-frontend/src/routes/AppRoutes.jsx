@@ -15,7 +15,7 @@ import Profile from "../pages/student/Profile";
 import Attendance from "../pages/student/Attendance";
 import AcademicResults from "../pages/student/AcademicResults";
 import Fees from "../pages/student/Fees";
-
+import Notices from "../pages/student/Notices";
 
 
 import FacultyDashboard from "../pages/faculty/Dashboard";

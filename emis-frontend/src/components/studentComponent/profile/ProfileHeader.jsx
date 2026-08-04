@@ -2,14 +2,16 @@ import {
   FaUserCircle,
   FaEdit,
   FaEnvelope,
-  FaPhone
+  FaPhone,
+  FaGraduationCap,
+  FaBuilding
 } from "react-icons/fa";
 
 export default function ProfileHeader({ student, onEdit }) {
   return (
-    <div className="card profile-header shadow-sm mb-4">
+    <div className="profile-card profile-header mb-4">
 
-      <div className="card-body p-4">
+      <div className="profile-card-body">
 
         <div className="row align-items-center">
 
@@ -18,12 +20,12 @@ export default function ProfileHeader({ student, onEdit }) {
           <div className="col-lg-2 text-center">
 
             <FaUserCircle
-              size={130}
-              className="profile-icon mb-3"
+              size={120}
+              className="profile-avatar-icon"
             />
 
             <button
-              className="btn btn-outline-success btn-sm w-100"
+              className="btn btn-outline-success btn-sm w-100 mt-3"
               disabled
             >
               Upload Photo
@@ -31,25 +33,25 @@ export default function ProfileHeader({ student, onEdit }) {
 
           </div>
 
-          {/* Student Details */}
+          {/* Details */}
 
-          <div className="col-lg-7">
+          <div className="col-lg-7 mt-4 mt-lg-0">
 
-            <h2 className="fw-bold mb-2">
+            <h2 className="profile-name">
 
               {student.firstName} {student.lastName}
 
             </h2>
 
-            <p className="text-secondary fs-5 mb-3">
+            <p className="profile-department">
 
               {student.department}
 
             </p>
 
-            <div className="mb-3">
+            <div className="profile-badges">
 
-              <span className="badge bg-success me-2">
+              <span className="badge bg-success">
 
                 Student
 
@@ -63,29 +65,53 @@ export default function ProfileHeader({ student, onEdit }) {
 
             </div>
 
-            <div className="row">
+            <div className="row mt-4">
 
-              <div className="col-md-6">
+              <div className="col-md-6 mb-3">
 
-                <p className="mb-2">
+                <div className="profile-contact">
 
-                  <FaEnvelope className="text-success me-2" />
+                  <FaEnvelope className="profile-contact-icon" />
 
-                  {student.email}
+                  <span>{student.email}</span>
 
-                </p>
+                </div>
+
+              </div>
+
+              <div className="col-md-6 mb-3">
+
+                <div className="profile-contact">
+
+                  <FaPhone className="profile-contact-icon" />
+
+                  <span>{student.phone || "-"}</span>
+
+                </div>
 
               </div>
 
               <div className="col-md-6">
 
-                <p className="mb-2">
+                <div className="profile-contact">
 
-                  <FaPhone className="text-success me-2" />
+                  <FaBuilding className="profile-contact-icon" />
 
-                  {student.phone}
+                  <span>{student.department}</span>
 
-                </p>
+                </div>
+
+              </div>
+
+              <div className="col-md-6">
+
+                <div className="profile-contact">
+
+                  <FaGraduationCap className="profile-contact-icon" />
+
+                  <span>Semester {student.semester}</span>
+
+                </div>
 
               </div>
 
@@ -93,12 +119,12 @@ export default function ProfileHeader({ student, onEdit }) {
 
           </div>
 
-          {/* Edit Button */}
+          {/* Button */}
 
-          <div className="col-lg-3 text-end">
+          <div className="col-lg-3 text-lg-end text-center mt-4 mt-lg-0">
 
             <button
-              className="btn btn-success px-4"
+              className="btn btn-success px-4 py-2"
               onClick={onEdit}
             >
 
