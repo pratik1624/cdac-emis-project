@@ -8,8 +8,8 @@ import "../../styles/studentStyles/fees.css";
 
 export default function Fees() {
   return (
-    <div className="container-fluid">
-      {/* Page Header */}
+    <div className="container-fluid fees-page">
+      {/* Header */}
 
       <div className="fees-header">
         <h2 className="page-title">Fees</h2>
@@ -23,41 +23,19 @@ export default function Fees() {
 
       <FeeSummaryCards />
 
-      <ul className="nav nav-tabs fees-tabs mb-3" id="feesTabs" role="tablist">
-        <li className="nav-item">
-          <button
-            className="nav-link active"
-            data-bs-toggle="tab"
-            data-bs-target="#fee-details"
-            type="button"
-          >
-            Fee Details
-          </button>
-        </li>
+      {/* Fee Details */}
 
-        <li className="nav-item">
-          <button
-            className="nav-link"
-            data-bs-toggle="tab"
-            data-bs-target="#transactions"
-            type="button"
-          >
-            Transaction History
-          </button>
-        </li>
-      </ul>
-
-      <div className="tab-content mb-4">
-        <div className="tab-pane fade show active" id="fee-details">
-          <FeeDetailsTable />
-        </div>
-
-        <div className="tab-pane fade" id="transactions">
-          <TransactionHistory />
-        </div>
+      <div className="fees-section">
+        <FeeDetailsTable />
       </div>
 
-      {/* Bottom Cards */}
+      {/* Transaction History */}
+
+      <div className="fees-section">
+        <TransactionHistory />
+      </div>
+
+      {/* Bottom */}
 
       <div className="fees-bottom">
         <PaymentSummary />

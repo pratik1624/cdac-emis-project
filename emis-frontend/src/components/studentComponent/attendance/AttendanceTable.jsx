@@ -2,13 +2,21 @@ export default function AttendanceTable({ attendance }) {
 
     const getStatus = (percentage) => {
 
-        if (percentage >= 90)
-            return "Excellent";
+        if (percentage >= 90) return "Excellent";
 
-        if (percentage >= 75)
-            return "Good";
+        if (percentage >= 75) return "Good";
 
         return "Low";
+
+    };
+
+    const getStatusClass = (percentage) => {
+
+        if (percentage >= 90) return "excellent";
+
+        if (percentage >= 75) return "good";
+
+        return "low";
 
     };
 
@@ -22,7 +30,7 @@ export default function AttendanceTable({ attendance }) {
 
                 <div>Attendance</div>
 
-                <div>%</div>
+                <div>Percentage</div>
 
                 <div>Status</div>
 
@@ -30,61 +38,99 @@ export default function AttendanceTable({ attendance }) {
 
             {
 
-                attendance.map((item, index) => (
+                attendance.length === 0 ?
 
-                    <div
-                        key={index}
-                        className="attendance-row"
-                    >
+                    (
 
-                        <div className="attendance-subject">
+                        <div className="attendance-empty">
 
-                            {item.subjectName}
+                            No attendance records available.
 
                         </div>
 
-                        <div className="attendance-progress">
+                    )
 
-                            <div className="progress">
+                    :
 
-                                <div
-                                    className="progress-bar bg-success"
-                                    style={{
-                                        width: `${item.attendancePercentage}%`
-                                    }}
-                                />
+                    (
+
+                        attendance.map((item, index) => (
+
+                            <div
+                                key={index}
+                                className="attendance-row"
+                            >
+
+                                {/* Subject */}
+
+                                <div className="attendance-subject">
+
+                                    <div className="subject-name">
+
+                                        {item.subjectName}
+
+                                    </div>
+
+                                    <small>
+
+                                        {item.attendedClasses} / {item.totalClasses} Classes
+
+                                    </small>
+
+                                </div>
+
+                                {/* Progress */}
+
+                                <div className="attendance-progress">
+
+                                    <div className="progress">
+
+                                        <div
+                                            className={`progress-bar ${
+                                                item.attendancePercentage >= 90
+                                                    ? "bg-success"
+                                                    : item.attendancePercentage >= 75
+                                                    ? "bg-primary"
+                                                    : "bg-danger"
+                                            }`}
+                                            style={{
+                                                width: `${item.attendancePercentage}%`
+                                            }}
+                                        />
+
+                                    </div>
+
+                                </div>
+
+                                {/* Percentage */}
+
+                                <div className="attendance-percent">
+
+                                    {item.attendancePercentage.toFixed(1)}%
+
+                                </div>
+
+                                {/* Status */}
+
+                                <div className="attendance-status-cell">
+
+                                    <span
+                                        className={`status-pill ${getStatusClass(
+                                            item.attendancePercentage
+                                        )}`}
+                                    >
+
+                                        {getStatus(item.attendancePercentage)}
+
+                                    </span>
+
+                                </div>
 
                             </div>
 
-                        </div>
+                        ))
 
-                        <div className="attendance-percent">
-
-                            {item.attendancePercentage.toFixed(1)}%
-
-                        </div>
-
-                        <div>
-
-                            <span
-                                className={
-                                    item.attendancePercentage >= 90
-                                        ? "status-pill excellent"
-                                        : item.attendancePercentage >= 75
-                                        ? "status-pill good"
-                                        : "status-pill low"
-                                }
-                            >
-
-                                {getStatus(item.attendancePercentage)}
-
-                            </span>
-
-                        </div>
-
-                    </div>
-
-                ))
+                    )
 
             }
 

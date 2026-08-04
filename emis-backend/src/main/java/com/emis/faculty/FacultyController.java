@@ -107,6 +107,17 @@ public class FacultyController {
     }
 
 
+    @GetMapping("/dashboard")
+    public ResponseEntity<?> getDashboard() {
+
+        return ResponseEntity.ok(
+
+                facultyService.getDashboard()
+
+        );
+
+    }
+
 
 
 

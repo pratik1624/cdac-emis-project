@@ -1,4 +1,4 @@
-import axiosInstance from "./axiosInstance";
+import api from "./axios";
 
 // ---------------- PROFILE ----------------
 
