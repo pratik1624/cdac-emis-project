@@ -8,62 +8,111 @@ import FacultyInfo from "../../components/facultyComponent/dashboard/FacultyInfo
 import "../../styles/facultyStyles/dashboard.css";
 
 export default function Dashboard() {
-  const [dashboard, setDashboard] = useState(null);
 
-  const [loading, setLoading] = useState(true);
+    const [dashboard, setDashboard] = useState(null);
 
-  const [error, setError] = useState("");
+    const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    loadDashboard();
-  }, []);
+    const [error, setError] = useState("");
 
-  const loadDashboard = async () => {
-    try {
-      const data = await getFacultyDashboard();
+    useEffect(() => {
 
-      setDashboard(data);
-    } catch (err) {
-      console.log(err);
+        loadDashboard();
 
-      setError("Unable to load dashboard.");
-    } finally {
-      setLoading(false);
+    }, []);
+
+    const loadDashboard = async () => {
+
+        try {
+
+            const data = await getFacultyDashboard();
+
+            setDashboard(data);
+
+        }
+
+        catch (err) {
+
+            console.log(err);
+
+            setError("Unable to load dashboard.");
+
+        }
+
+        finally {
+
+            setLoading(false);
+
+        }
+
+    };
+
+    if (loading) {
+
+        return (
+
+            <div className="faculty-dashboard">
+
+                <h4>Loading Dashboard...</h4>
+
+            </div>
+
+        );
+
     }
-  };
 
-  if (loading) {
+    if (error) {
+
+        return (
+
+            <div className="faculty-dashboard">
+
+                <h4>{error}</h4>
+
+            </div>
+
+        );
+
+    }
+
     return (
-      <div className="faculty-dashboard">
-        <h4>Loading Dashboard...</h4>
-      </div>
+
+        <div className="faculty-dashboard">
+
+            <div className="dashboard-header">
+
+                <h2>
+
+                    Dashboard
+
+                </h2>
+
+                <p>
+
+                    Welcome back,
+
+                    <strong>
+
+                        {" "}
+
+                        {dashboard.facultyName}
+
+                    </strong>
+
+                </p>
+
+            </div>
+
+            <SummaryCards dashboard={dashboard} />
+
+            <div className="dashboard-bottom">
+
+                <FacultyInfo dashboard={dashboard} />
+
+            </div>
+
+        </div>
+
     );
-  }
 
-  if (error) {
-    return (
-      <div className="faculty-dashboard">
-        <h4>{error}</h4>
-      </div>
-    );
-  }
-
-  return (
-    <div className="faculty-dashboard">
-      <div className="dashboard-header">
-        <h2>Dashboard</h2>
-
-        <p>
-          Welcome back,
-          <strong> {dashboard.facultyName}</strong>
-        </p>
-      </div>
-
-      <SummaryCards dashboard={dashboard} />
-
-      <div className="dashboard-bottom">
-        <FacultyInfo dashboard={dashboard} />
-      </div>
-    </div>
-  );
 }
