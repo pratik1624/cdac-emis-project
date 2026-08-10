@@ -20,4 +20,6 @@ public interface DepartmentService {
 
     void deleteDepartment(Long id);
 
+    Long countDepartments();
+
 }

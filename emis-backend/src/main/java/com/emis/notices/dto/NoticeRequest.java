@@ -11,8 +11,9 @@ import java.time.LocalDate;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class NoticeDto {
+public class NoticeRequest {
 
+    private Long id;
     private String title;
     private String description;
     private LocalDate publishDate;

@@ -27,9 +27,13 @@ import FacultySubjects from "../pages/faculty/Subjects";
 import SubjectMarks from "../pages/faculty/SubjectMarks";
 
 import AdminDashboard from "../pages/admin/Dashboard";
+import AdminStudents from "../pages/admin/Students";
+import AdminFaculty from "../pages/admin/Faculty";
+import AdminDepartments from "../pages/admin/Departments";
+import AdminSubjects from "../pages/admin/Subjects";
+import AdminNotices from "../pages/admin/Notices";
 
-import Settings from "../pages/settings/Settings";
-
+import Settings from "../pages/admin/Settings";
 export default function AppRoutes() {
   return (
     <Routes>
@@ -85,10 +89,23 @@ export default function AppRoutes() {
         </Route>
 
         {/* ================= ADMIN ================= */}
+        {/* ================= ADMIN ================= */}
 
         <Route element={<RoleRoute allowedRoles={["ADMIN"]} />}>
           <Route path="/admin" element={<AdminLayout />}>
             <Route path="dashboard" element={<AdminDashboard />} />
+
+            <Route path="students" element={<AdminStudents />} />
+
+            <Route path="faculties" element={<AdminFaculty />} />
+
+            <Route path="departments" element={<AdminDepartments />} />
+
+            <Route path="subjects" element={<AdminSubjects />} />
+
+    
+
+            <Route path="notices" element={<AdminNotices />} />
 
             <Route path="settings" element={<Settings />} />
           </Route>

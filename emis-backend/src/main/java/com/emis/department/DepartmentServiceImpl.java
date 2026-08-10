@@ -109,4 +109,9 @@ public class DepartmentServiceImpl implements DepartmentService {
 
         departmentRepository.delete(department);
     }
+
+    @Override
+    public Long countDepartments() {
+        return departmentRepository.count();
+    }
 }

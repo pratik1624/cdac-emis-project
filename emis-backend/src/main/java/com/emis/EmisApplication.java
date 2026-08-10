@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
-public class EmisApplication {
+public class 	EmisApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(EmisApplication.class, args);

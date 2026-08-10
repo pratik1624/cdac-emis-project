@@ -10,12 +10,13 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+//@AttributeOverride(name = "Id" , column = @Column(name = "dept_id"))
 public class Department extends BaseEntity {
 
     @Column(name = "department_code", nullable = false, unique = true, length = 10)
     private String departmentCode;
 
-    @Column(name = "department_name", nullable = false, unique = true, length = 100)
+    @Column(name = "department_name", nullable = false, unique = true, length = 50)
     private String deptName;
 
 

@@ -16,10 +16,8 @@ import com.emis.security.CustomUserDetails;
 import com.emis.student.Student;
 import com.emis.student.StudentRepository;
 import com.emis.student.dto.LoadStudentForAttendanceDto;
-import com.emis.student.dto.StudentProfileResponse;
 import com.emis.student.dto.StudentRequest;
 import com.emis.subject.Subject;
-import com.emis.subject.SubjectDto;
 import com.emis.subject.SubjectRepository;
 import com.emis.user.User;
 import com.emis.user.UserRole;
@@ -173,7 +171,9 @@ public class FacultyServiceImpl implements FacultyService {
 
         //departmentDetails
       //  MAJOR ISSUE :- Department dept = D -->find dept through db and assign to dbfaculty pending
-        dbFaculty.getAssignedDepartment().setDeptName(updateRequest.getDepartment());
+       Department dbDept = departmentRepository.findByDeptName(updateRequest.getDepartment()).orElseThrow(() -> new ResourceNotFoundException("Not Found"));
+       // dbFaculty.getAssignedDepartment().setDeptName(updateRequest.getDepartment());
+        dbFaculty.setAssignedDepartment(dbDept);
 
         facultyRepository.save(dbFaculty);
         return new ApiResp("SUCCESS" , "Faculty Updated Successfully");
@@ -495,13 +495,19 @@ public class FacultyServiceImpl implements FacultyService {
          return new ApiResp("SUCCESS" , "Marks Uploaded Successfully");
         }
 
-
+    @Override
+    public Long countFaculty() {
+        return facultyRepository.count();
+    }
 
 
     @Override
     public List<Notices> getNotices() {
         return noticeRepository.findAll();
     }
+
+
+    //ADMIN DASHBOARD
 
 
 }

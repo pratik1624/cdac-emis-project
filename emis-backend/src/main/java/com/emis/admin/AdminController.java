@@ -3,21 +3,24 @@ package com.emis.admin;
 
 import com.emis.accountant.AccountantService;
 import com.emis.accountant.CreateAccountantRequest;
+import com.emis.admin.dto.AdminDashboardResponse;
 import com.emis.department.DepartmentService;
 import com.emis.department.dto.DepartmentRequest;
 import com.emis.department.dto.DepartmentResponse;
 import com.emis.faculty.FacultyService;
 import com.emis.faculty.dto.FacultyProfileDto;
 import com.emis.faculty.dto.FacultyReq;
-import com.emis.notices.dto.NoticeDto;
+import com.emis.notices.dto.NoticeRequest;
 import com.emis.result.dto.ResultResponse;
-import com.emis.notices.NoticeService;
 import com.emis.notices.NoticeService;
 import com.emis.common.ApiResp;
 import com.emis.result.ResultService;
 import com.emis.student.StudentService;
 import com.emis.student.dto.StudentProfileResponse;
 import com.emis.student.dto.StudentRequest;
+import com.emis.subject.SubjectService;
+import com.emis.subject.dto.SubjectRequest;
+import com.emis.subject.dto.SubjectResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -37,10 +40,19 @@ public class AdminController {
     private final DepartmentService departmentService;
     private final FacultyService facultyService;
     private final ResultService resultService;
+    private final AdminService adminService;
+    private final SubjectService subjectService;
 
     @GetMapping("/hello")
     public String hello() {
         return "Hello Admin";
+    }
+
+    @GetMapping("/dashboard")
+    public ResponseEntity<AdminDashboardResponse> getDashboard() {
+
+        return ResponseEntity.ok(
+                adminService.getDashboardData());
     }
 
      //---------------- Accountant APIs ----------------
@@ -61,7 +73,7 @@ public class AdminController {
 
     @PostMapping("/notices")
     public ResponseEntity<ApiResp> addNotice(
-            @Valid @RequestBody NoticeDto request) {
+            @Valid @RequestBody NoticeRequest request) {
 
         return new ResponseEntity<>(
                 noticeService.addNotice(request),
@@ -69,14 +81,14 @@ public class AdminController {
     }
 
     @GetMapping("/notices")
-    public ResponseEntity<List<NoticeDto>> getAllNotices() {
+    public ResponseEntity<List<NoticeRequest>> getAllNotices() {
 
         return ResponseEntity.ok(
                 noticeService.getAllNotices());
     }
 
     @GetMapping("/notices/{id}")
-    public ResponseEntity<NoticeDto> getNoticeById(
+    public ResponseEntity<NoticeRequest> getNoticeById(
             @PathVariable Long id) {
 
         return ResponseEntity.ok(
@@ -86,7 +98,7 @@ public class AdminController {
     @PutMapping("/notices/{id}")
     public ResponseEntity<ApiResp> updateNotice(
             @PathVariable Long id,
-            @Valid @RequestBody NoticeDto updateRequest) {
+            @Valid @RequestBody NoticeRequest updateRequest) {
 
         return ResponseEntity.ok(
                 noticeService.updateNotice(id, updateRequest));
@@ -242,5 +254,54 @@ public class AdminController {
         return ResponseEntity.ok(
                 resultService.getResults());
     }
+
+    // ---------------- Subject APIs ----------------
+
+    @PostMapping("/subjects")
+    public ResponseEntity<?> addSubject(
+            @Valid @RequestBody SubjectRequest request) {
+
+        return new ResponseEntity<>(
+
+                subjectService.addSubject(request),
+
+                HttpStatus.CREATED);
+
+    }
+
+    @GetMapping("/subjects")
+    public ResponseEntity<?> getSubjects() {
+
+        return ResponseEntity.ok(
+
+                subjectService.getAllSubjects());
+
+    }
+
+    @PutMapping("/subjects/{id}")
+    public ResponseEntity<?> updateSubject(
+
+            @PathVariable Long id,
+
+            @Valid @RequestBody SubjectRequest request) {
+
+        return ResponseEntity.ok(
+
+                subjectService.updateSubject(id, request));
+
+    }
+
+    @DeleteMapping("/subjects/{id}")
+    public ResponseEntity<?> deleteSubject(
+
+            @PathVariable Long id) {
+
+        subjectService.deleteSubject(id);
+
+        return ResponseEntity.noContent().build();
+
+    }
+
+
 
 }
