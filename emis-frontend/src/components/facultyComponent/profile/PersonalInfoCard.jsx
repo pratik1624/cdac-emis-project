@@ -8,81 +8,85 @@ export default function PersonalInfoCard({ faculty }) {
 
     return (
 
-        <div className="card profile-card h-100">
+        <div className="profile-card h-100">
 
-            <div className="card-body">
+            <div className="profile-card-body">
 
-                <h5 className="fw-bold mb-4">
+                <h5 className="profile-card-title">
 
-                    <FaUser className="profile-icon me-2" />
+                    <FaUser className="profile-title-icon" />
 
                     Personal Information
 
                 </h5>
 
-                <div className="row mb-3">
+                <div className="profile-info-list">
 
-                    <div className="col-5 profile-label">
+                    <div className="profile-info-row">
 
-                        First Name
+                        <span className="profile-label">
 
-                    </div>
+                            First Name
 
-                    <div className="col-7 profile-value">
+                        </span>
 
-                        {faculty.firstName}
+                        <strong>
 
-                    </div>
+                            {faculty.firstName}
 
-                </div>
-
-                <div className="row mb-3">
-
-                    <div className="col-5 profile-label">
-
-                        Last Name
+                        </strong>
 
                     </div>
 
-                    <div className="col-7 profile-value">
+                    <div className="profile-info-row">
 
-                        {faculty.lastName}
+                        <span className="profile-label">
 
-                    </div>
+                            Last Name
 
-                </div>
+                        </span>
 
-                <div className="row mb-3">
+                        <strong>
 
-                    <div className="col-5 profile-label">
+                            {faculty.lastName}
 
-                        Gender
-
-                    </div>
-
-                    <div className="col-7 profile-value">
-
-                        <FaVenusMars className="me-2 profile-icon" />
-
-                        {faculty.gender}
+                        </strong>
 
                     </div>
 
-                </div>
+                    <div className="profile-info-row">
 
-                <div className="row">
+                        <span className="profile-label">
 
-                    <div className="col-5 profile-label">
+                            <FaVenusMars className="me-2" />
 
-                        Date of Birth
+                            Gender
+
+                        </span>
+
+                        <strong>
+
+                            {faculty.gender}
+
+                        </strong>
 
                     </div>
 
-                    <div className="col-7 profile-value">
+                    <div className="profile-info-row">
 
-                        <FaCalendarAlt className="me-2 profile-icon" />
+                        <span className="profile-label">
 
-                        {faculty.dob || faculty.DOB || "-"}
+                            <FaCalendarAlt className="me-2" />
+
+                            Date of Birth
+
+                        </span>
+
+                        <strong>
+
+                            {faculty.DOB}
+
+                        </strong>
 
                     </div>
 

@@ -1,17 +1,26 @@
 import { useEffect, useState } from "react";
 
 export default function EditProfileModal({
+
     show,
+
     faculty,
+
     onClose,
+
     onSave
+
 }) {
 
     const [formData, setFormData] = useState({
 
-        email: "",
+        firstName: "",
 
-        phone: ""
+        lastName: "",
+
+        phone: "",
+
+        designation: ""
 
     });
 
@@ -21,9 +30,13 @@ export default function EditProfileModal({
 
             setFormData({
 
-                email: faculty.email || "",
+                firstName: faculty.firstName || "",
 
-                phone: faculty.phone || ""
+                lastName: faculty.lastName || "",
+
+                phone: faculty.phone || "",
+
+                designation: faculty.designation || ""
 
             });
 
@@ -43,24 +56,27 @@ export default function EditProfileModal({
 
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = (e) => {
+
+        e.preventDefault();
 
         onSave(formData);
 
     };
 
-    if (!show) return null;
+    if (!show) {
+
+        return null;
+
+    }
 
     return (
 
-        <div
-            className="modal fade show d-block"
-            style={{ background: "rgba(0,0,0,.5)" }}
-        >
+        <div className="modal fade show d-block">
 
-            <div className="modal-dialog modal-dialog-centered">
+            <div className="modal-dialog modal-lg modal-dialog-centered">
 
-                <div className="modal-content border-0 rounded-4">
+                <div className="modal-content">
 
                     <div className="modal-header">
 
@@ -71,73 +87,156 @@ export default function EditProfileModal({
                         </h5>
 
                         <button
+
                             className="btn-close"
+
                             onClick={onClose}
-                        ></button>
+
+                        />
 
                     </div>
 
-                    <div className="modal-body">
+                    <form onSubmit={handleSubmit}>
 
-                        <div className="mb-3">
+                        <div className="modal-body">
 
-                            <label className="form-label">
+                            <div className="row">
 
-                                Email
+                                <div className="col-md-6 mb-3">
 
-                            </label>
+                                    <label className="form-label">
 
-                            <input
-                                type="email"
-                                className="form-control"
-                                name="email"
-                                value={formData.email}
-                                onChange={handleChange}
-                            />
+                                        First Name
+
+                                    </label>
+
+                                    <input
+
+                                        type="text"
+
+                                        className="form-control"
+
+                                        name="firstName"
+
+                                        value={formData.firstName}
+
+                                        onChange={handleChange}
+
+                                    />
+
+                                </div>
+
+                                <div className="col-md-6 mb-3">
+
+                                    <label className="form-label">
+
+                                        Last Name
+
+                                    </label>
+
+                                    <input
+
+                                        type="text"
+
+                                        className="form-control"
+
+                                        name="lastName"
+
+                                        value={formData.lastName}
+
+                                        onChange={handleChange}
+
+                                    />
+
+                                </div>
+
+                            </div>
+
+                            <div className="row">
+
+                                <div className="col-md-6 mb-3">
+
+                                    <label className="form-label">
+
+                                        Phone
+
+                                    </label>
+
+                                    <input
+
+                                        type="text"
+
+                                        className="form-control"
+
+                                        name="phone"
+
+                                        value={formData.phone}
+
+                                        onChange={handleChange}
+
+                                    />
+
+                                </div>
+
+                                <div className="col-md-6 mb-3">
+
+                                    <label className="form-label">
+
+                                        Designation
+
+                                    </label>
+
+                                    <input
+
+                                        type="text"
+
+                                        className="form-control"
+
+                                        name="designation"
+
+                                        value={formData.designation}
+
+                                        onChange={handleChange}
+
+                                    />
+
+                                </div>
+
+                            </div>
 
                         </div>
 
-                        <div className="mb-3">
+                        <div className="modal-footer">
 
-                            <label className="form-label">
+                            <button
 
-                                Phone
+                                type="button"
 
-                            </label>
+                                className="btn btn-secondary"
 
-                            <input
-                                type="text"
-                                className="form-control"
-                                name="phone"
-                                value={formData.phone}
-                                onChange={handleChange}
-                            />
+                                onClick={onClose}
+
+                            >
+
+                                Cancel
+
+                            </button>
+
+                            <button
+
+                                type="submit"
+
+                                className="btn btn-success"
+
+                            >
+
+                                Save Changes
+
+                            </button>
 
                         </div>
 
-                    </div>
-
-                    <div className="modal-footer">
-
-                        <button
-                            className="btn btn-secondary"
-                            onClick={onClose}
-                        >
-
-                            Cancel
-
-                        </button>
-
-                        <button
-                            className="btn btn-primary"
-                            onClick={handleSubmit}
-                        >
-
-                            Save Changes
-
-                        </button>
-
-                    </div>
+                    </form>
 
                 </div>
 
