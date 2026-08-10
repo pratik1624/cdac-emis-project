@@ -4,7 +4,6 @@ import {
     FaUsers,
     FaBook,
     FaClipboardCheck,
-    FaCog,
     FaSignOutAlt
 } from "react-icons/fa";
 
@@ -45,12 +44,6 @@ export default function FacultySidebar() {
             title: "Attendance",
             icon: <FaClipboardCheck />,
             path: "/faculty/attendance"
-        },
-
-        {
-            title: "Settings",
-            icon: <FaCog />,
-            path: "/faculty/settings"
         }
 
     ];
@@ -69,27 +62,33 @@ export default function FacultySidebar() {
 
             <div className="sidebar-menu">
 
-                {menu.map((item) => (
+                {
 
-                    <NavLink
-                        key={item.path}
-                        to={item.path}
-                        className={({ isActive }) =>
-                            isActive
-                                ? "sidebar-link active"
-                                : "sidebar-link"
-                        }
-                    >
+                    menu.map((item) => (
 
-                        <span className="me-2">
-                            {item.icon}
-                        </span>
+                        <NavLink
+                            key={item.path}
+                            to={item.path}
+                            className={({ isActive }) =>
+                                isActive
+                                    ? "sidebar-link active"
+                                    : "sidebar-link"
+                            }
+                        >
 
-                        {item.title}
+                            <span className="me-2">
 
-                    </NavLink>
+                                {item.icon}
 
-                ))}
+                            </span>
+
+                            {item.title}
+
+                        </NavLink>
+
+                    ))
+
+                }
 
             </div>
 
