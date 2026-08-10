@@ -4,14 +4,11 @@ import FacultyLayout from "../layouts/FacultyLayout";
 
 import Dashboard from "../pages/faculty/Dashboard";
 import Profile from "../pages/faculty/Profile";
-import Attendance from "../pages/faculty/Attendance";
 import Students from "../pages/faculty/Students";
 import StudentDetails from "../pages/faculty/StudentDetails";
 import Subjects from "../pages/faculty/Subjects";
 import SubjectMarks from "../pages/faculty/SubjectMarks";
-import Results from "../pages/faculty/Results";
-import Notices from "../pages/faculty/Notices";
-import Settings from "../pages/faculty/Settings";
+import Attendance from "../pages/faculty/Attendance";
 
 export default function FacultyRoutes() {
 
@@ -32,11 +29,6 @@ export default function FacultyRoutes() {
                 />
 
                 <Route
-                    path="attendance"
-                    element={<Attendance />}
-                />
-
-                <Route
                     path="students"
                     element={<Students />}
                 />
@@ -52,23 +44,18 @@ export default function FacultyRoutes() {
                 />
 
                 <Route
-                    path="subjects/:subjectId"
+                    path="subjects/:subjectId/marks"
                     element={<SubjectMarks />}
                 />
 
                 <Route
-                    path="results"
-                    element={<Results />}
+                    path="attendance"
+                    element={<Attendance />}
                 />
 
                 <Route
-                    path="notices"
-                    element={<Notices />}
-                />
-
-                <Route
-                    path="settings"
-                    element={<Settings />}
+                    index
+                    element={<Navigate to="dashboard" replace />}
                 />
 
                 <Route
