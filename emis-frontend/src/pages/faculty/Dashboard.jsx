@@ -3,16 +3,19 @@ import { useEffect, useState } from "react";
 import { getFacultyDashboard } from "../../api/facultyApi";
 
 import FacultyInfoCard from "../../components/facultyComponent/dashboard/FacultyInfo";
-// import PendingAttendance from "../../components/facultyComponent/dashboard/PendingAttendance";
-// import PendingResults from "../../components/facultyComponent/dashboard/PendingResults";
-// import TodaysClasses from "../../components/facultyComponent/dashboard/TodaysClasses";
-// import QuickActions from "../../components/facultyComponent/dashboard/QuickActions";
 import FacultyStats from "../../components/facultyComponent/dashboard";
+
+import SummaryCards from "../../components/facultyComponent/dashboard/SummaryCards";
+import FacultyInfo from "../../components/facultyComponent/dashboard/FacultyInfo";
 
 import "../../styles/facultyStyles/dashboard.css";
 
 export default function Dashboard() {
   const [dashboard, setDashboard] = useState(null);
+
+  const [loading, setLoading] = useState(true);
+
+  const [error, setError] = useState("");
 
   useEffect(() => {
     loadDashboard();
@@ -24,42 +27,45 @@ export default function Dashboard() {
 
       setDashboard(data);
     } catch (err) {
-      console.error(err);
+      console.log(err);
+
+      setError("Unable to load dashboard.");
+    } finally {
+      setLoading(false);
     }
   };
 
-  if (!dashboard) {
-    return <h4>Loading...</h4>;
+  if (loading) {
+    return (
+      <div className="faculty-dashboard">
+        <h4>Loading Dashboard...</h4>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="faculty-dashboard">
+        <h4>{error}</h4>
+      </div>
+    );
   }
 
   return (
-    <div className="container-fluid">
-      <h2 className="page-title mb-4">Faculty Dashboard</h2>
+    <div className="faculty-dashboard">
+      <div className="dashboard-header">
+        <h2>Dashboard</h2>
 
-      <FacultyStats dashboard={dashboard} />
-
-      <div className="row mt-4">
-        <div className="col-lg-8">
-          <TodaysClasses />
-        </div>
-
-        <div className="col-lg-4">
-          <FacultyInfoCard />
-        </div>
+        <p>
+          Welcome back,
+          <strong> {dashboard.facultyName}</strong>
+        </p>
       </div>
 
-      <div className="row mt-4">
-        <div className="col-lg-6">
-          <PendingAttendance />
-        </div>
+      <SummaryCards dashboard={dashboard} />
 
-        <div className="col-lg-6">
-          <PendingResults />
-        </div>
-      </div>
-
-      <div className="mt-4">
-        <QuickActions />
+      <div className="dashboard-bottom">
+        <FacultyInfo dashboard={dashboard} />
       </div>
     </div>
   );
