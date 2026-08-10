@@ -1,79 +1,115 @@
 import api from "./axios";
 
-// ---------------- PROFILE ----------------
+// ==============================
+// DASHBOARD
+// ==============================
+
+export const getFacultyDashboard = async () => {
+  const response = await api.get("/faculty/dashboard");
+
+  return response.data;
+};
+
+// ==============================
+// PROFILE
+// ==============================
 
 export const getFacultyProfile = async () => {
-    const response = await axiosInstance.get("/faculty/profile");
-    return response.data;
+  const response = await api.get("/faculty/profile");
+
+  return response.data;
 };
 
 export const updateFacultyProfile = async (id, data) => {
-    const response = await axiosInstance.put(`/faculty/profile/${id}`, data);
-    return response.data;
+  const response = await api.put(
+    `/faculty/profile/${id}`,
+
+    data,
+  );
+
+  return response.data;
 };
 
-// ---------------- STUDENTS ----------------
+// ==============================
+// SUBJECTS
+// ==============================
 
-export const getDepartmentStudents = async (semester) => {
-    const response = await axiosInstance.get("/faculty/students", {
-        params: { semester }
-    });
-    return response.data;
-};
+export const getAssignedSubjects = async () => {
+  const response = await api.get("/faculty/subjects");
 
-export const getStudentProfile = async (id) => {
-    const response = await axiosInstance.get(`/faculty/student/${id}`);
-    return response.data;
-};
-
-// ---------------- SUBJECTS ----------------
-
-export const getSubjects = async () => {
-    const response = await axiosInstance.get("/faculty/subjects");
-    return response.data;
+  return response.data;
 };
 
 export const getSubjectMarks = async (subjectId) => {
-    const response = await axiosInstance.get(`/faculty/subjects/${subjectId}/marks`);
-    return response.data;
+  const response = await api.get(`/faculty/subjects/${subjectId}/marks`);
+
+  return response.data;
 };
 
 export const saveMarks = async (subjectId, data) => {
-    const response = await axiosInstance.put(
-        `/faculty/subjects/${subjectId}/marks`,
-        data
-    );
-    return response.data;
+  const response = await api.put(
+    `/faculty/subjects/${subjectId}/marks`,
+
+    data,
+  );
+
+  return response.data;
 };
 
-// ---------------- ATTENDANCE ----------------
+// ==============================
+// STUDENTS
+// ==============================
 
-export const loadStudentsForAttendance = async (data) => {
-    const response = await axiosInstance.post(
-        "/faculty/attendance/loadstudents",
-        data
-    );
-    return response.data;
+export const getDepartmentStudents = async (semester) => {
+  const response = await api.get(
+    "/faculty/students",
+
+    {
+      params: {
+        semester,
+      },
+    },
+  );
+
+  return response.data;
 };
 
-export const uploadAttendance = async (data) => {
-    const response = await axiosInstance.post(
-        "/faculty/attendance/upload",
-        data
-    );
-    return response.data;
+export const getStudentProfile = async (id) => {
+  const response = await api.get(`/faculty/student/${id}`);
+
+  return response.data;
 };
 
+// ==============================
+// ATTENDANCE
+// ==============================
 
-// ---------------- dashboard ----------------
-export const getFacultyDashboard = async () => {
+export const loadStudentsForAttendance = async (request) => {
+  const response = await api.post(
+    "/faculty/attendance/loadstudents",
 
-    const response = await axiosInstance.get(
+    request,
+  );
 
-        "/faculty/dashboard"
+  return response.data;
+};
 
-    );
+export const uploadAttendance = async (request) => {
+  const response = await api.post(
+    "/faculty/attendance/upload",
 
-    return response.data;
+    request,
+  );
 
+  return response.data;
+};
+
+// ==============================
+// NOTICES
+// ==============================
+
+export const getNotices = async () => {
+  const response = await api.get("/faculty/notices");
+
+  return response.data;
 };

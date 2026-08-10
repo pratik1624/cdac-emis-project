@@ -1,60 +1,130 @@
+import { useEffect, useState } from "react";
+
+import { getNotices } from "../../../api/facultyApi";
+
+import {
+    FaBullhorn,
+    FaCalendarAlt
+} from "react-icons/fa";
+
 export default function RecentNotices() {
 
-    const notices = [
+    const [notices, setNotices] = useState([]);
 
-        {
-            title: "Semester Examination Schedule Released",
-            date: "02 Aug 2026"
-        },
+    useEffect(() => {
 
-        {
-            title: "Faculty Meeting Tomorrow at 11:00 AM",
-            date: "01 Aug 2026"
-        },
+        loadNotices();
 
-        {
-            title: "Internal Marks Submission Deadline",
-            date: "30 Jul 2026"
+    }, []);
+
+    const loadNotices = async () => {
+
+        try {
+
+            const data = await getNotices();
+
+            setNotices(data);
+
         }
 
-    ];
+        catch (err) {
+
+            console.log(err);
+
+        }
+
+    };
 
     return (
 
-        <div className="card shadow-sm border-0 rounded-4">
+        <div className="dashboard-card-section">
 
-            <div className="card-body">
+            <div className="dashboard-section-header">
 
-                <h5 className="fw-bold mb-4">
+                <h4>
 
                     Recent Notices
 
-                </h5>
+                </h4>
 
-                {notices.map((notice, index) => (
+                <p>
 
-                    <div
-                        key={index}
-                        className="border-bottom py-3"
-                    >
+                    Latest department announcements
 
-                        <h6 className="fw-semibold mb-1">
+                </p>
 
-                            {notice.title}
+            </div>
 
-                        </h6>
+            {
 
-                        <small className="text-muted">
+                notices.length === 0 ?
 
-                            {notice.date}
+                (
 
-                        </small>
+                    <div className="empty-state">
+
+                        No notices available.
 
                     </div>
 
-                ))}
+                )
 
-            </div>
+                :
+
+                (
+
+                    <div className="notice-list">
+
+                        {
+
+                            notices.map((notice) => (
+
+                                <div
+                                    key={notice.id}
+                                    className="notice-item"
+                                >
+
+                                    <div className="notice-icon">
+
+                                        <FaBullhorn />
+
+                                    </div>
+
+                                    <div className="notice-content">
+
+                                        <h6>
+
+                                            {notice.title}
+
+                                        </h6>
+
+                                        <p>
+
+                                            {notice.description}
+
+                                        </p>
+
+                                        <small>
+
+                                            <FaCalendarAlt className="me-2" />
+
+                                            {notice.createdAt}
+
+                                        </small>
+
+                                    </div>
+
+                                </div>
+
+                            ))
+
+                        }
+
+                    </div>
+
+                )
+
+            }
 
         </div>
 
