@@ -1,0 +1,195 @@
+/* ==========================================
+   STUDENTS PAGE
+========================================== */
+
+.students-page{
+    display:flex;
+    flex-direction:column;
+    gap:28px;
+}
+
+/* ==========================================
+   HEADER
+========================================== */
+
+.students-header h2{
+    color:var(--text-color);
+    font-size:2rem;
+    font-weight:700;
+    margin-bottom:8px;
+}
+
+.students-header p{
+    color:var(--text-secondary);
+    margin:0;
+}
+
+/* ==========================================
+   FILTER
+========================================== */
+
+.student-filter{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+    flex-wrap:wrap;
+}
+
+.search-box{
+    position:relative;
+    flex:1;
+    min-width:280px;
+}
+
+.search-box input{
+    width:100%;
+    padding:12px 16px 12px 42px;
+    border:1px solid var(--border-color);
+    border-radius:12px;
+    background:var(--card-color);
+    color:var(--text-color);
+    outline:none;
+    transition:.25s;
+}
+
+.search-box input::placeholder{
+    color:var(--text-secondary);
+}
+
+.search-box input:focus{
+    border-color:var(--accent-color);
+}
+
+.search-icon{
+    position:absolute;
+    left:15px;
+    top:50%;
+    transform:translateY(-50%);
+    color:var(--text-secondary);
+}
+
+.semester-filter{
+    min-width:200px;
+    padding:12px 16px;
+    border:1px solid var(--border-color);
+    border-radius:12px;
+    background:var(--card-color);
+    color:var(--text-color);
+    outline:none;
+    transition:.25s;
+}
+
+.semester-filter:focus{
+    border-color:var(--accent-color);
+}
+
+/* ==========================================
+   TABLE CARD
+========================================== */
+
+.student-table-card{
+    background:var(--card-color);
+    border:1px solid var(--border-color);
+    border-radius:18px;
+    overflow:hidden;
+}
+
+/* ==========================================
+   TABLE
+========================================== */
+
+.student-table{
+    margin:0;
+}
+
+.student-table.table{
+
+    --bs-table-bg:transparent;
+
+    --bs-table-color:var(--text-color);
+
+    --bs-table-border-color:var(--border-color);
+
+    --bs-table-hover-bg:rgba(255,255,255,.03);
+
+    --bs-table-hover-color:var(--text-color);
+
+}
+
+.student-table thead th{
+    background:#1b1f24;
+    color:var(--text-secondary);
+    padding:18px;
+    font-weight:600;
+    border-bottom:1px solid var(--border-color);
+}
+
+.student-table tbody td{
+    background:var(--card-color);
+    color:var(--text-color);
+    padding:18px;
+    border-color:var(--border-color);
+    vertical-align:middle;
+}
+
+.student-table tbody tr{
+    transition:.25s;
+}
+
+.student-table tbody tr:hover td{
+    background:#232931;
+}
+
+/* ==========================================
+   BUTTON
+========================================== */
+
+.student-table .btn{
+    border-radius:10px;
+    padding:8px 16px;
+    font-weight:600;
+    font-size:.88rem;
+}
+
+/* ==========================================
+   EMPTY STATE
+========================================== */
+
+.empty-state{
+    background:var(--card-color);
+    border:1px solid var(--border-color);
+    border-radius:18px;
+    padding:60px;
+    text-align:center;
+    color:var(--text-secondary);
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media(max-width:992px){
+
+    .student-filter{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .semester-filter{
+        width:100%;
+    }
+
+}
+
+@media(max-width:768px){
+
+    .students-header h2{
+        font-size:1.7rem;
+    }
+
+    .student-table{
+        font-size:.9rem;
+    }
+
+}

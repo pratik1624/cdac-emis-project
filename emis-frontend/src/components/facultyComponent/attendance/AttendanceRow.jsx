@@ -2,23 +2,9 @@ export default function AttendanceRow({
 
     student,
 
-    index,
-
-    students,
-
-    setStudents
+    onStatusChange
 
 }) {
-
-    const handleStatus = (status) => {
-
-        const updated = [...students];
-
-        updated[index].present = status;
-
-        setStudents(updated);
-
-    };
 
     return (
 
@@ -36,45 +22,51 @@ export default function AttendanceRow({
 
             </td>
 
-            <td>
+            <td className="text-center">
 
-                <div className="d-flex gap-4">
+                <div className="btn-group">
 
-                    <div className="form-check">
+                    <button
 
-                        <input
-                            type="radio"
-                            className="form-check-input"
-                            name={`attendance-${student.studentId}`}
-                            checked={student.present === true}
-                            onChange={() => handleStatus(true)}
-                        />
+                        className={`btn btn-sm ${
+                            student.status === "Present"
+                                ? "btn-success"
+                                : "btn-outline-success"
+                        }`}
 
-                        <label className="form-check-label">
+                        onClick={() =>
+                            onStatusChange(
+                                student.studentId,
+                                "Present"
+                            )
+                        }
 
-                            Present
+                    >
 
-                        </label>
+                        Present
 
-                    </div>
+                    </button>
 
-                    <div className="form-check">
+                    <button
 
-                        <input
-                            type="radio"
-                            className="form-check-input"
-                            name={`attendance-${student.studentId}`}
-                            checked={student.present === false}
-                            onChange={() => handleStatus(false)}
-                        />
+                        className={`btn btn-sm ${
+                            student.status === "Absent"
+                                ? "btn-danger"
+                                : "btn-outline-danger"
+                        }`}
 
-                        <label className="form-check-label">
+                        onClick={() =>
+                            onStatusChange(
+                                student.studentId,
+                                "Absent"
+                            )
+                        }
 
-                            Absent
+                    >
 
-                        </label>
+                        Absent
 
-                    </div>
+                    </button>
 
                 </div>
 

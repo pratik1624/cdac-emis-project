@@ -2,37 +2,55 @@ import { useEffect, useState } from "react";
 
 import { getDepartmentStudents } from "../../api/facultyApi";
 
+import StudentStatistics from "../../components/facultyComponent/students/StudentStatistics";
+import StudentFilter from "../../components/facultyComponent/students/StudentFilter";
 import StudentTable from "../../components/facultyComponent/students/StudentTable";
 
 import "../../styles/facultyStyles/students.css";
 
 export default function Students() {
 
-    const [semester, setSemester] = useState(1);
-
     const [students, setStudents] = useState([]);
 
-    const [loading, setLoading] = useState(true);
+    const [filteredStudents, setFilteredStudents] = useState([]);
+
+    const [semester, setSemester] = useState("");
+
+    const [loading, setLoading] = useState(false);
+
+    const [error, setError] = useState("");
 
     useEffect(() => {
 
-        loadStudents();
+        if (semester !== "") {
+
+            loadStudents();
+
+        }
 
     }, [semester]);
 
     const loadStudents = async () => {
 
+        setLoading(true);
+
+        setError("");
+
         try {
 
-            const data = await getDepartmentStudents(semester);
+            const data = await getDepartmentStudents(Number(semester));
 
             setStudents(data);
+
+            setFilteredStudents(data);
 
         }
 
         catch (err) {
 
             console.error(err);
+
+            setError("Unable to load students.");
 
         }
 
@@ -46,56 +64,82 @@ export default function Students() {
 
     return (
 
-        <div className="container-fluid">
+        <div className="students-page">
 
-            <div className="d-flex justify-content-between align-items-center mb-4">
+            <div className="students-header">
 
                 <h2>
 
-                    Department Students
+                    Students
 
                 </h2>
 
-                <select
+                <p>
 
-                    className="form-select w-auto"
+                    View students from your department.
 
-                    value={semester}
-
-                    onChange={(e)=>setSemester(e.target.value)}
-
-                >
-
-                    {[1,2,3,4,5,6,7,8].map((sem)=>(
-
-                        <option
-
-                            key={sem}
-
-                            value={sem}
-
-                        >
-
-                            Semester {sem}
-
-                        </option>
-
-                    ))}
-
-                </select>
+                </p>
 
             </div>
 
+            <StudentFilter
+
+                students={students}
+
+                semester={semester}
+
+                setSemester={setSemester}
+
+                setFilteredStudents={setFilteredStudents}
+
+            />
+
             {
+                loading && (
 
-                loading ?
+                    <div className="mt-4">
 
-                <h5>Loading...</h5>
+                        <h5>Loading Students...</h5>
 
-                :
+                    </div>
 
-                <StudentTable students={students} />
+                )
+            }
 
+            {
+                error && (
+
+                    <div className="alert alert-danger mt-3">
+
+                        {error}
+
+                    </div>
+
+                )
+            }
+
+            {
+                !loading && !error && semester !== "" && (
+
+                    <>
+                        <StudentStatistics students={students} />
+
+                        <StudentTable students={filteredStudents} />
+                    </>
+
+                )
+            }
+
+            {
+                semester === "" && (
+
+                    <div className="alert alert-info mt-4">
+
+                        Please select a semester to load students.
+
+                    </div>
+
+                )
             }
 
         </div>

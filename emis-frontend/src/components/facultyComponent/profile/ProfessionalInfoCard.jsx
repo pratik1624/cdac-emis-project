@@ -1,7 +1,7 @@
 import {
-    FaIdBadge,
-    FaUniversity,
     FaBriefcase,
+    FaIdBadge,
+    FaBuilding,
     FaUserTag
 } from "react-icons/fa";
 
@@ -9,77 +9,89 @@ export default function ProfessionalInfoCard({ faculty }) {
 
     return (
 
-        <div className="card profile-card h-100">
+        <div className="profile-card h-100">
 
-            <div className="card-body">
+            <div className="profile-card-body">
 
-                <h5 className="fw-bold mb-4">
+                <h5 className="profile-card-title">
 
-                    <FaBriefcase className="profile-icon me-2" />
+                    <FaBriefcase className="profile-title-icon" />
 
                     Professional Information
 
                 </h5>
 
-                <div className="row mb-3">
+                <div className="profile-info-list">
 
-                    <div className="col-5 profile-label">
+                    <div className="profile-info-row">
 
-                        Employee Code
+                        <span className="profile-label">
 
-                    </div>
+                            <FaIdBadge className="me-2" />
 
-                    <div className="col-7 profile-value">
+                            Employee Code
 
-                        {faculty.employeeCode}
+                        </span>
 
-                    </div>
+                        <strong>
 
-                </div>
+                            {faculty.employeeCode}
 
-                <div className="row mb-3">
-
-                    <div className="col-5 profile-label">
-
-                        Designation
+                        </strong>
 
                     </div>
 
-                    <div className="col-7 profile-value">
+                    <div className="profile-info-row">
 
-                        {faculty.designation}
+                        <span className="profile-label">
 
-                    </div>
+                            <FaBuilding className="me-2" />
 
-                </div>
+                            Department
 
-                <div className="row mb-3">
+                        </span>
 
-                    <div className="col-5 profile-label">
+                        <strong>
 
-                        Department
+                            {faculty.department}
 
-                    </div>
-
-                    <div className="col-7 profile-value">
-
-                        {faculty.department}
+                        </strong>
 
                     </div>
 
-                </div>
+                    <div className="profile-info-row">
 
-                <div className="row">
+                        <span className="profile-label">
 
-                    <div className="col-5 profile-label">
+                            <FaBriefcase className="me-2" />
 
-                        Role
+                            Designation
+
+                        </span>
+
+                        <strong>
+
+                            {faculty.designation}
+
+                        </strong>
 
                     </div>
 
-                    <div className="col-7 profile-value">
+                    <div className="profile-info-row">
 
-                        {faculty.role}
+                        <span className="profile-label">
+
+                            <FaUserTag className="me-2" />
+
+                            Role
+
+                        </span>
+
+                        <strong>
+
+                            {faculty.role}
+
+                        </strong>
 
                     </div>
 

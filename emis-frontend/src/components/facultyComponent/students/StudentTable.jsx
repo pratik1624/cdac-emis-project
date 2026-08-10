@@ -1,28 +1,66 @@
-import StudentRow from "./StudentRow";
+import { Link } from "react-router-dom";
+
+import {
+    FaEye
+} from "react-icons/fa";
 
 export default function StudentTable({ students }) {
 
+    if (students.length === 0) {
+
+        return (
+
+            <div className="empty-state">
+
+                No students found.
+
+            </div>
+
+        );
+
+    }
+
     return (
 
-        <div className="card shadow-sm border-0 rounded-4">
+        <div className="student-table-card">
 
-            <div className="card-body">
+            <div className="table-responsive">
 
-                <table className="table table-hover align-middle">
+                <table className="table student-table align-middle">
 
                     <thead>
 
                         <tr>
 
-                            <th>Roll No.</th>
+                            <th>
 
-                            <th>Name</th>
+                                Roll Number
 
-                            <th>Semester</th>
+                            </th>
 
-                            <th>Email</th>
+                            <th>
 
-                            <th></th>
+                                Student Name
+
+                            </th>
+
+                            <th>
+
+                                Semester
+
+                            </th>
+
+                            <th>
+
+                                Email
+
+                            </th>
+
+                            <th className="text-center">
+
+                                Action
+
+                            </th>
 
                         </tr>
 
@@ -32,15 +70,53 @@ export default function StudentTable({ students }) {
 
                         {
 
-                            students.map(student=>(
+                            students.map((student) => (
 
-                                <StudentRow
+                                <tr key={student.studentId}>
 
-                                    key={student.rollNumber}
+                                    <td>
 
-                                    student={student}
+                                        {student.rollNumber}
 
-                                />
+                                    </td>
+
+                                    <td>
+
+                                        {student.studentName}
+
+                                    </td>
+
+                                    <td>
+
+                                        Semester {student.semester}
+
+                                    </td>
+
+                                    <td>
+
+                                        {student.email}
+
+                                    </td>
+
+                                    <td className="text-center">
+
+                                        <Link
+
+                                            to={`/faculty/students/${student.studentId}`}
+
+                                            className="btn btn-success btn-sm"
+
+                                        >
+
+                                            <FaEye className="me-2" />
+
+                                            View
+
+                                        </Link>
+
+                                    </td>
+
+                                </tr>
 
                             ))
 

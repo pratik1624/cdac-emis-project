@@ -1,0 +1,253 @@
+/* ==========================================
+   ATTENDANCE PAGE
+========================================== */
+
+.attendance-page{
+    display:flex;
+    flex-direction:column;
+    gap:28px;
+}
+
+/* ==========================================
+   HEADER
+========================================== */
+
+.attendance-header h2{
+    color:var(--text-color);
+    font-size:2rem;
+    font-weight:700;
+    margin-bottom:8px;
+}
+
+.attendance-header p{
+    color:var(--text-secondary);
+    margin:0;
+}
+
+/* ==========================================
+   FILTER
+========================================== */
+
+.attendance-filter{
+
+    background:var(--card-color);
+
+    border:1px solid var(--border-color);
+
+    border-radius:18px;
+
+    padding:24px;
+
+}
+
+.attendance-filter-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:16px;
+
+}
+
+.attendance-filter .form-select,
+.attendance-filter .form-control{
+
+    background:var(--bg-color);
+
+    color:var(--text-color);
+
+    border:1px solid var(--border-color);
+
+    border-radius:10px;
+
+}
+
+.attendance-filter .form-select:focus,
+.attendance-filter .form-control:focus{
+
+    background:var(--bg-color);
+
+    color:var(--text-color);
+
+    border-color:var(--accent-color);
+
+    box-shadow:none;
+
+}
+
+.attendance-filter .btn{
+
+    border-radius:10px;
+
+    font-weight:600;
+
+}
+
+/* ==========================================
+   TABLE CARD
+========================================== */
+
+.attendance-table-card{
+
+    background:var(--card-color);
+
+    border:1px solid var(--border-color);
+
+    border-radius:18px;
+
+    overflow:hidden;
+
+    transition:.25s;
+
+}
+
+.attendance-table-card:hover{
+
+    border-color:var(--accent-color);
+
+}
+
+/* ==========================================
+   TABLE
+========================================== */
+
+.attendance-table{
+
+    margin:0;
+
+}
+
+.attendance-table.table{
+
+    --bs-table-bg:transparent;
+
+    --bs-table-color:var(--text-color);
+
+    --bs-table-border-color:var(--border-color);
+
+    --bs-table-hover-bg:rgba(255,255,255,.03);
+
+    --bs-table-hover-color:var(--text-color);
+
+}
+
+.attendance-table thead th{
+
+    background:#1b1f24;
+
+    color:var(--text-secondary);
+
+    padding:18px;
+
+    font-weight:600;
+
+    border-bottom:1px solid var(--border-color);
+
+}
+
+.attendance-table tbody td{
+
+    background:var(--card-color);
+
+    color:var(--text-color);
+
+    padding:18px;
+
+    border-color:var(--border-color);
+
+    vertical-align:middle;
+
+}
+
+.attendance-table tbody tr{
+
+    transition:.25s;
+
+}
+
+.attendance-table tbody tr:hover td{
+
+    background:#232931;
+
+}
+
+/* ==========================================
+   BUTTON GROUP
+========================================== */
+
+.btn-group .btn{
+
+    min-width:90px;
+
+    font-weight:600;
+
+}
+
+/* ==========================================
+   UPLOAD BUTTON
+========================================== */
+
+.attendance-table-card .btn-success{
+
+    border-radius:10px;
+
+    padding:10px 20px;
+
+}
+
+/* ==========================================
+   EMPTY STATE
+========================================== */
+
+.empty-state{
+
+    background:var(--card-color);
+
+    border:1px solid var(--border-color);
+
+    border-radius:18px;
+
+    padding:60px;
+
+    text-align:center;
+
+    color:var(--text-secondary);
+
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media(max-width:992px){
+
+    .attendance-filter-grid{
+
+        grid-template-columns:repeat(2,1fr);
+
+    }
+
+}
+
+@media(max-width:768px){
+
+    .attendance-header h2{
+
+        font-size:1.7rem;
+
+    }
+
+    .attendance-filter-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .attendance-table{
+
+        font-size:.9rem;
+
+    }
+
+}

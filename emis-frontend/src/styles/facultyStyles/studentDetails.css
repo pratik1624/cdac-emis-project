@@ -1,0 +1,388 @@
+/* ==========================================
+   STUDENT DETAILS
+========================================== */
+
+.student-details-page{
+    display:flex;
+    flex-direction:column;
+    gap:28px;
+}
+
+/* ==========================================
+   HEADER
+========================================== */
+
+.student-header-card{
+
+    background:var(--card-color);
+
+    border:1px solid var(--border-color);
+
+    border-radius:18px;
+
+    overflow:hidden;
+
+    transition:.25s;
+
+}
+
+.student-header-card:hover{
+
+    border-color:var(--accent-color);
+
+}
+
+.student-header-body{
+
+    padding:30px;
+
+}
+
+.student-avatar{
+
+    color:var(--accent-color);
+
+}
+
+.student-name{
+
+    color:var(--text-color);
+
+    font-size:2rem;
+
+    font-weight:700;
+
+    margin-bottom:6px;
+
+}
+
+.student-department{
+
+    color:var(--text-secondary);
+
+    margin-bottom:18px;
+
+}
+
+.student-badges{
+
+    margin-bottom:20px;
+
+}
+
+.student-contact{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+}
+
+.student-contact-icon{
+
+    color:var(--accent-color);
+
+}
+
+.student-contact span{
+
+    color:var(--text-secondary);
+
+}
+
+/* ==========================================
+   GRID
+========================================== */
+
+.details-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,minmax(0,1fr));
+
+    gap:24px;
+
+}
+
+/* ==========================================
+   DETAILS CARD
+========================================== */
+
+.details-card{
+
+    background:var(--card-color);
+
+    border:1px solid var(--border-color);
+
+    border-radius:18px;
+
+    overflow:hidden;
+
+    transition:.25s;
+
+}
+
+.details-card:hover{
+
+    border-color:var(--accent-color);
+
+}
+
+.details-card-body{
+
+    padding:28px;
+
+}
+
+/* ==========================================
+   CARD TITLE
+========================================== */
+
+.details-card-title{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    color:var(--text-color);
+
+    font-size:1.3rem;
+
+    font-weight:700;
+
+    margin-bottom:24px;
+
+}
+
+.details-title-icon{
+
+    color:var(--accent-color);
+
+}
+
+/* ==========================================
+   INFO LIST
+========================================== */
+
+.details-list{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:14px;
+
+}
+
+.details-row{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:16px;
+
+    border:1px solid var(--border-color);
+
+    border-radius:12px;
+
+    background:rgba(255,255,255,.02);
+
+}
+
+.details-label{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    color:var(--text-secondary);
+
+}
+
+.details-row strong{
+
+    color:var(--text-color);
+
+}
+
+/* ==========================================
+   TABLE
+========================================== */
+
+.details-table{
+
+    margin:0;
+
+}
+
+.details-table.table{
+
+    --bs-table-bg:transparent;
+
+    --bs-table-color:var(--text-color);
+
+    --bs-table-border-color:var(--border-color);
+
+    --bs-table-hover-bg:rgba(255,255,255,.03);
+
+    --bs-table-hover-color:var(--text-color);
+
+}
+
+.details-table thead th{
+
+    background:#1b1f24;
+
+    color:var(--text-secondary);
+
+    padding:16px;
+
+    border-bottom:1px solid var(--border-color);
+
+    font-weight:600;
+
+}
+
+.details-table tbody td{
+
+    background:var(--card-color);
+
+    color:var(--text-color);
+
+    padding:16px;
+
+    border-color:var(--border-color);
+
+    vertical-align:middle;
+
+}
+
+.details-table tbody tr{
+
+    transition:.25s;
+
+}
+
+.details-table tbody tr:hover td{
+
+    background:#232931;
+
+}
+
+/* ==========================================
+   GRADE BADGE
+========================================== */
+
+.grade-badge{
+
+    display:inline-block;
+
+    min-width:50px;
+
+    text-align:center;
+
+    padding:6px 12px;
+
+    border-radius:20px;
+
+    font-size:.8rem;
+
+    font-weight:600;
+
+}
+
+.grade-badge.a{
+
+    background:rgba(34,197,94,.15);
+
+    color:#22c55e;
+
+}
+
+.grade-badge.b{
+
+    background:rgba(59,130,246,.15);
+
+    color:#3b82f6;
+
+}
+
+.grade-badge.c{
+
+    background:rgba(245,158,11,.15);
+
+    color:#f59e0b;
+
+}
+
+.grade-badge.d{
+
+    background:rgba(249,115,22,.15);
+
+    color:#f97316;
+
+}
+
+.grade-badge.f{
+
+    background:rgba(239,68,68,.15);
+
+    color:#ef4444;
+
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media(max-width:992px){
+
+    .details-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
+
+@media(max-width:768px){
+
+    .student-name{
+
+        font-size:1.7rem;
+
+    }
+
+    .student-header-body,
+    .details-card-body{
+
+        padding:20px;
+
+    }
+
+    .details-row{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+        gap:8px;
+
+    }
+
+    .details-table{
+
+        font-size:.9rem;
+
+    }
+
+}

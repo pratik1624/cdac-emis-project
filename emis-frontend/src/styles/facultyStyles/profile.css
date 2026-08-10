@@ -1,0 +1,355 @@
+/* ==========================================
+   FACULTY PROFILE
+========================================== */
+
+.faculty-profile-page{
+    display:flex;
+    flex-direction:column;
+    gap:28px;
+}
+
+/* ==========================================
+   COMMON CARD
+========================================== */
+
+.profile-card{
+
+    background:var(--card-color);
+
+    border:1px solid var(--border-color);
+
+    border-radius:18px;
+
+    transition:.25s;
+
+    overflow:hidden;
+
+}
+
+.profile-card:hover{
+
+    border-color:var(--accent-color);
+
+}
+
+.profile-card-body{
+
+    padding:28px;
+
+}
+
+/* ==========================================
+   HEADER
+========================================== */
+
+.profile-avatar-icon{
+
+    color:var(--accent-color);
+
+}
+
+.profile-name{
+
+    font-size:2rem;
+
+    font-weight:700;
+
+    color:var(--text-color);
+
+    margin-bottom:6px;
+
+}
+
+.profile-designation{
+
+    color:var(--text-secondary);
+
+    font-size:1rem;
+
+    margin-bottom:18px;
+
+}
+
+.profile-badges{
+
+    display:flex;
+
+    gap:10px;
+
+    flex-wrap:wrap;
+
+}
+
+/* ==========================================
+   CONTACT
+========================================== */
+
+.profile-contact{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+}
+
+.profile-contact-icon{
+
+    color:var(--accent-color);
+
+    font-size:18px;
+
+}
+
+.profile-contact span{
+
+    color:var(--text-secondary);
+
+}
+
+/* ==========================================
+   TITLES
+========================================== */
+
+.profile-card-title{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    color:var(--text-color);
+
+    font-size:1.35rem;
+
+    font-weight:700;
+
+    margin-bottom:24px;
+
+}
+
+.profile-title-icon{
+
+    color:var(--accent-color);
+
+}
+
+/* ==========================================
+   INFO LIST
+========================================== */
+
+.profile-info-list{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:14px;
+
+}
+
+.profile-info-row{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:14px 16px;
+
+    border:1px solid var(--border-color);
+
+    border-radius:12px;
+
+    background:rgba(255,255,255,.02);
+
+}
+
+.profile-label{
+
+    color:var(--text-secondary);
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+}
+
+.profile-info-row strong{
+
+    color:var(--text-color);
+
+    font-weight:600;
+
+}
+
+/* ==========================================
+   CONTACT BOXES
+========================================== */
+
+.profile-info-box{
+
+    background:rgba(255,255,255,.02);
+
+    border:1px solid var(--border-color);
+
+    border-radius:16px;
+
+    padding:24px;
+
+    text-align:center;
+
+    height:100%;
+
+    transition:.25s;
+
+}
+
+.profile-info-box:hover{
+
+    border-color:var(--accent-color);
+
+}
+
+.profile-box-icon{
+
+    font-size:28px;
+
+    color:var(--accent-color);
+
+    margin-bottom:16px;
+
+}
+
+.profile-info-box h6{
+
+    color:var(--text-color);
+
+    font-weight:600;
+
+    margin-bottom:10px;
+
+}
+
+.profile-info-box p{
+
+    color:var(--text-secondary);
+
+    margin:0;
+
+    word-break:break-word;
+
+}
+
+/* ==========================================
+   BUTTON
+========================================== */
+
+.profile-header .btn{
+
+    border-radius:10px;
+
+    font-weight:600;
+
+}
+
+/* ==========================================
+   MODAL
+========================================== */
+
+.modal-content{
+
+    background:var(--card-color);
+
+    border:1px solid var(--border-color);
+
+    border-radius:18px;
+
+}
+
+.modal-header{
+
+    border-bottom:1px solid var(--border-color);
+
+}
+
+.modal-footer{
+
+    border-top:1px solid var(--border-color);
+
+}
+
+.modal-title{
+
+    color:var(--text-color);
+
+}
+
+.form-label{
+
+    color:var(--text-color);
+
+    font-weight:500;
+
+}
+
+.form-control{
+
+    background:var(--bg-color);
+
+    border:1px solid var(--border-color);
+
+    color:var(--text-color);
+
+}
+
+.form-control:focus{
+
+    background:var(--bg-color);
+
+    color:var(--text-color);
+
+    border-color:var(--accent-color);
+
+    box-shadow:none;
+
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media(max-width:992px){
+
+    .profile-name{
+
+        font-size:1.7rem;
+
+    }
+
+}
+
+@media(max-width:768px){
+
+    .profile-card-body{
+
+        padding:20px;
+
+    }
+
+    .profile-info-row{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+        gap:8px;
+
+    }
+
+}

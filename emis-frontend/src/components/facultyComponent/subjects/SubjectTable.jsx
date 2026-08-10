@@ -1,14 +1,30 @@
-import SubjectRow from "./SubjectRow";
+import { Link } from "react-router-dom";
+
+import { FaClipboardList } from "react-icons/fa";
 
 export default function SubjectTable({ subjects }) {
 
+    if (subjects.length === 0) {
+
+        return (
+
+            <div className="empty-state">
+
+                No subjects found.
+
+            </div>
+
+        );
+
+    }
+
     return (
 
-        <div className="card shadow-sm border-0 rounded-4">
+        <div className="subject-table-card">
 
-            <div className="card-body">
+            <div className="table-responsive">
 
-                <table className="table table-hover align-middle">
+                <table className="table subject-table align-middle">
 
                     <thead>
 
@@ -20,7 +36,11 @@ export default function SubjectTable({ subjects }) {
 
                             <th>Semester</th>
 
-                            <th></th>
+                            <th className="text-center">
+
+                                Action
+
+                            </th>
 
                         </tr>
 
@@ -30,15 +50,47 @@ export default function SubjectTable({ subjects }) {
 
                         {
 
-                            subjects.map((subject,index)=>(
+                            subjects.map((subject) => (
 
-                                <SubjectRow
+                                <tr key={subject.subjectId}>
 
-                                    key={index}
+                                    <td>
 
-                                    subject={subject}
+                                        {subject.subjectCode}
 
-                                />
+                                    </td>
+
+                                    <td>
+
+                                        {subject.subjectName}
+
+                                    </td>
+
+                                    <td>
+
+                                        Semester {subject.semester}
+
+                                    </td>
+
+                                    <td className="text-center">
+
+                                        <Link
+
+                                            to={`/faculty/subjects/${subject.subjectId}/marks`}
+
+                                            className="btn btn-success btn-sm"
+
+                                        >
+
+                                            <FaClipboardList className="me-2" />
+
+                                            Manage Marks
+
+                                        </Link>
+
+                                    </td>
+
+                                </tr>
 
                             ))
 

@@ -1,32 +1,106 @@
-import AttendanceRow from "./AttendanceRow";
+import { FaUpload } from "react-icons/fa";
+import { uploadAttendance } from "../../../api/facultyApi";
 
 export default function AttendanceTable({
 
     students,
 
-    setStudents,
-
-    onUpload
+    setStudents
 
 }) {
 
+    const handleStatusChange = (studentId, status) => {
+
+        const updatedStudents = students.map(student =>
+
+            student.studentId === studentId
+
+                ? { ...student, status }
+
+                : student
+
+        );
+
+        setStudents(updatedStudents);
+
+    };
+
+const handleUpload = async () => {
+
+    try {
+
+        const request = {
+
+            semester: Number(
+                localStorage.getItem("attendanceSemester")
+            ),
+
+            subjectId: Number(
+                localStorage.getItem("attendanceSubjectId")
+            ),
+
+            students: students.map(student => ({
+
+                studentId: student.studentId,
+
+                present: student.status === "Present"
+
+            }))
+
+        };
+
+        await uploadAttendance(request);
+
+        alert("Attendance uploaded successfully.");
+
+    }
+
+    catch (err) {
+
+        console.log(err);
+
+        alert("Failed to upload attendance.");
+
+    }
+
+};
+
+
+    if (students.length === 0) {
+
+        return (
+
+            <div className="empty-state">
+
+                No students loaded.
+
+            </div>
+
+        );
+
+    }
+
     return (
 
-        <div className="card shadow-sm border-0 rounded-4">
+        <div className="attendance-table-card">
 
-            <div className="card-body">
+            <div className="table-responsive">
 
-                <table className="table table-hover align-middle">
+                <table className="table attendance-table align-middle">
 
                     <thead>
 
                         <tr>
 
-                            <th>Roll No.</th>
+                            <th>Roll Number</th>
 
                             <th>Student Name</th>
 
-                            <th>Status</th>
+                            <th className="text-center">
+
+                                Attendance
+
+                            </th>
 
                         </tr>
 
@@ -34,42 +108,101 @@ export default function AttendanceTable({
 
                     <tbody>
 
-                        {students.map((student, index) => (
+                        {
 
-                            <AttendanceRow
+                            students.map(student => (
 
-                                key={student.studentId}
-                                 student={student}
+                                <tr key={student.studentId}>
 
-                                index={index}
+                                    <td>
 
-                                students={students}
+                                        {student.rollNo}
 
-                                setStudents={setStudents}
+                                    </td>
 
-                            />
+                                    <td>
 
-                        ))}
+                                        {student.firstName} {student.lastName}
+
+                                    </td>
+
+                                    <td className="text-center">
+
+                                        <div className="btn-group">
+
+                                            <button
+
+                                                className={`btn btn-sm ${
+                                                    student.status === "Present"
+                                                        ? "btn-success"
+                                                        : "btn-outline-success"
+                                                }`}
+
+                                                onClick={() =>
+                                                    handleStatusChange(
+                                                        student.studentId,
+                                                        "Present"
+                                                    )
+                                                }
+
+                                            >
+
+                                                Present
+
+                                            </button>
+
+                                            <button
+
+                                                className={`btn btn-sm ${
+                                                    student.status === "Absent"
+                                                        ? "btn-danger"
+                                                        : "btn-outline-danger"
+                                                }`}
+
+                                                onClick={() =>
+                                                    handleStatusChange(
+                                                        student.studentId,
+                                                        "Absent"
+                                                    )
+                                                }
+
+                                            >
+
+                                                Absent
+
+                                            </button>
+
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+
+                            ))
+
+                        }
 
                     </tbody>
 
                 </table>
 
-                <div className="text-end mt-4">
+            </div>
 
-                    <button
+            <div className="text-end mt-4">
 
-                        className="btn btn-success"
+                <button
 
-                        onClick={onUpload}
+                    className="btn btn-success"
 
-                    >
+                    onClick={handleUpload}
 
-                        Upload Attendance
+                >
 
-                    </button>
+                    <FaUpload className="me-2" />
 
-                </div>
+                    Upload Attendance
+
+                </button>
 
             </div>
 
