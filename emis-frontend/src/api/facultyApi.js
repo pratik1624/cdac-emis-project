@@ -113,3 +113,11 @@ export const getNotices = async () => {
 
   return response.data;
 };
+
+// ==============================
+// Subject
+// ==============================
+export const getSubjects = async () => {
+  const response = await api.get("/faculty/subjects");
+  return response.data;
+};
