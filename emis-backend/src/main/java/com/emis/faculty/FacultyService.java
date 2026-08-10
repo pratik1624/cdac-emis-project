@@ -5,8 +5,6 @@ import com.emis.common.ApiResp;
 import com.emis.faculty.dto.*;
 import com.emis.notices.Notices;
 import com.emis.student.dto.LoadStudentForAttendanceDto;
-import com.emis.student.dto.StudentProfileResponse;
-import com.emis.subject.SubjectDto;
 
 import java.util.List;
 import java.util.Set;
@@ -69,4 +67,7 @@ public interface FacultyService {
         List<SubjectMarksResponse> getSubjectMarks(Long subjectId);
         //Save Marks
          ApiResp saveMarks(Long subjectId, List<MarksRequest> markRequest);
+
+         //-------------------------ADMIN DASHBOARD----------------
+         Long countFaculty();
 }

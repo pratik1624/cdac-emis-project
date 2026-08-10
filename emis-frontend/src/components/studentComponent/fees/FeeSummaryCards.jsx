@@ -1,4 +1,4 @@
-import DashboardCard from "../ui/DashboardCard";
+import DashboardCard from "../../studentComponent/ui/DashboardCard";
 
 import {
   FaMoneyBillWave,

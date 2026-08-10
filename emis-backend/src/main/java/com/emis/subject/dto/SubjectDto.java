@@ -1,4 +1,4 @@
-package com.emis.subject;
+package com.emis.subject.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

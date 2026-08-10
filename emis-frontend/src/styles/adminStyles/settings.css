@@ -1,0 +1,312 @@
+/* ===================================================
+                    SETTINGS PAGE
+=================================================== */
+
+.settings-page{
+
+    width:100%;
+
+    padding:30px;
+
+}
+
+.settings-header{
+
+    margin-bottom:30px;
+
+}
+
+.settings-header h2{
+
+    font-size:2.2rem;
+
+    font-weight:700;
+
+    color:#212529;
+
+    margin-bottom:8px;
+
+}
+
+.settings-header p{
+
+    color:#6c757d;
+
+    font-size:1rem;
+
+    margin-bottom:0;
+
+}
+
+/* ===================================================
+                    GRID
+=================================================== */
+
+.settings-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:25px;
+
+    align-items:start;
+
+}
+
+/* ===================================================
+                    CARD
+=================================================== */
+
+.settings-card{
+
+    background:#fff;
+
+    border:1px solid #e9ecef;
+
+    border-radius:18px;
+
+    padding:25px;
+
+    box-shadow:0 6px 18px rgba(0,0,0,.06);
+
+    transition:.25s;
+
+    height:fit-content;
+
+
+}
+
+.settings-card:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:0 12px 25px rgba(0,0,0,.10);
+
+}
+
+.settings-card h4{
+
+    font-size:1.25rem;
+
+    font-weight:700;
+
+    color:#198754;
+
+    margin-bottom:25px;
+
+}
+
+.settings-card p{
+
+    color:#6c757d;
+
+}
+
+/* ===================================================
+                    FORM
+=================================================== */
+
+.settings-card .form-label{
+
+    font-weight:600;
+
+    color:#495057;
+
+    margin-bottom:8px;
+
+}
+
+.settings-card .form-control{
+
+    height:48px;
+
+    border-radius:10px;
+
+    border:1px solid #dee2e6;
+
+}
+
+.settings-card .form-control:focus{
+
+    border-color:#198754;
+
+    box-shadow:0 0 0 .2rem rgba(25,135,84,.15);
+
+}
+
+.settings-card .btn-success{
+
+    height:46px;
+
+    border-radius:10px;
+
+    font-weight:600;
+
+    padding:0 24px;
+
+}
+
+/* ===================================================
+                    PREFERENCES
+=================================================== */
+
+.preference-item{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:15px 0;
+
+    border-bottom:1px solid #ececec;
+
+}
+
+.preference-item:last-child{
+
+    border-bottom:none;
+
+}
+
+.preference-item span{
+
+    font-weight:500;
+
+    color:#495057;
+
+}
+
+.form-check-input{
+
+    width:45px;
+
+    height:24px;
+
+    cursor:pointer;
+
+}
+
+/* ===================================================
+                SYSTEM INFORMATION
+=================================================== */
+
+.system-info{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:14px 0;
+
+    border-bottom:1px solid #ececec;
+
+}
+
+.system-info:last-child{
+
+    border-bottom:none;
+
+}
+
+.system-info span{
+
+    font-weight:500;
+
+    color:#495057;
+
+}
+
+.system-info strong{
+
+    font-weight:600;
+
+    color:#212529;
+
+}
+
+/* ===================================================
+                    MODAL
+=================================================== */
+
+.modal-content{
+
+    border:none;
+
+    border-radius:18px;
+
+    overflow:hidden;
+
+}
+
+.modal-header{
+
+    padding:20px 24px;
+
+    border-bottom:1px solid #ececec;
+
+}
+
+.modal-title{
+
+    font-weight:700;
+
+    color:#198754;
+
+}
+
+.modal-body{
+
+    padding:24px;
+
+}
+
+.modal-footer{
+
+    padding:18px 24px;
+
+    border-top:1px solid #ececec;
+
+}
+
+.modal-footer .btn{
+
+    min-width:120px;
+
+    border-radius:10px;
+
+}
+
+/* ===================================================
+                    RESPONSIVE
+=================================================== */
+
+@media(max-width:992px){
+
+    .settings-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
+
+@media(max-width:768px){
+
+    .settings-page{
+
+        padding:20px;
+
+    }
+
+    .settings-card{
+
+        padding:20px;
+
+    }
+
+}

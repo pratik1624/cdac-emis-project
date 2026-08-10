@@ -1,117 +1,78 @@
+import { NavLink } from "react-router-dom";
+
 import {
-    FaHome,
-    FaUsers,
-    FaChalkboardTeacher,
-    FaBook,
-    FaBullhorn,
-    FaCog,
-    FaSignOutAlt
+  FaTachometerAlt,
+  FaUserGraduate,
+  FaChalkboardTeacher,
+  FaBuilding,
+  FaBook,
+  FaUserTie,
+  FaBullhorn,
+  FaCog,
+  FaSignOutAlt,
+  FaGraduationCap,
 } from "react-icons/fa";
 
-import { NavLink } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext";
-
 export default function AdminSidebar() {
+  return (
+    <div className="student-sidebar">
+      <div className="sidebar-logo">
+        <h3>
+          <FaGraduationCap className="me-2" />
+          EMIS
+        </h3>
 
-    const { logout } = useAuth();
+        <p>Admin Portal</p>
+      </div>
 
-    const menu = [
+      <div className="sidebar-menu">
+        <NavLink to="/admin/dashboard" className="sidebar-link">
+          <FaTachometerAlt />
+          Dashboard
+        </NavLink>
 
-        {
-            title: "Dashboard",
-            icon: <FaHome />,
-            path: "/admin/dashboard"
-        },
+        <NavLink to="/admin/students" className="sidebar-link">
+          <FaUserGraduate />
+          Students
+        </NavLink>
 
-        {
-            title: "Students",
-            icon: <FaUsers />,
-            path: "/admin/students"
-        },
+        <NavLink to="/admin/faculties" className="sidebar-link">
+          <FaChalkboardTeacher />
+          Faculty
+        </NavLink>
 
-        {
-            title: "Faculty",
-            icon: <FaChalkboardTeacher />,
-            path: "/admin/faculty"
-        },
+        <NavLink to="/admin/departments" className="sidebar-link">
+          <FaBuilding />
+          Departments
+        </NavLink>
 
-        {
-            title: "Courses",
-            icon: <FaBook />,
-            path: "/admin/courses"
-        },
+        <NavLink to="/admin/subjects" className="sidebar-link">
+          <FaBook />
+          Subjects
+        </NavLink>
 
-        {
-            title: "Notices",
-            icon: <FaBullhorn />,
-            path: "/admin/notices"
-        },
+        <NavLink to="/admin/accountants" className="sidebar-link">
+          <FaUserTie />
+          Accountants
+        </NavLink>
 
-        {
-            title: "Settings",
-            icon: <FaCog />,
-            path: "/admin/settings"
-        }
+        <NavLink to="/admin/notices" className="sidebar-link">
+          <FaBullhorn />
+          Notices
+        </NavLink>
 
-    ];
+        <NavLink to="/admin/settings" className="sidebar-link">
+          <FaCog />
+          Settings
+        </NavLink>
+      </div>
 
-    return (
-
-        <aside className="student-sidebar">
-
-            <div className="sidebar-logo">
-
-                <h3>🎓 EMIS</h3>
-
-                <p>Admin Portal</p>
-
-            </div>
-
-            <div className="sidebar-menu">
-
-                {menu.map(item => (
-
-                    <NavLink
-
-                        key={item.path}
-
-                        to={item.path}
-
-                        className={({ isActive }) =>
-                            isActive
-                                ? "sidebar-link active"
-                                : "sidebar-link"
-                        }
-
-                    >
-
-                        {item.icon}
-
-                        {item.title}
-
-                    </NavLink>
-
-                ))}
-
-            </div>
-
-            <div className="sidebar-footer">
-
-                <button
-                    className="btn btn-light w-100"
-                    onClick={logout}
-                >
-
-                    <FaSignOutAlt className="me-2"/>
-
-                    Logout
-
-                </button>
-
-            </div>
-
-        </aside>
-
-    );
-
+      <div className="sidebar-footer">
+        <button className="btn btn-light w-100">
+          <FaSignOutAlt className="me-2" />
+          Logout
+        </button>
+      </div>
+    </div>
+  );
 }

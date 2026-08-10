@@ -15,5 +15,6 @@ public interface StudentService {
     ApiResp updateStudnetById(Long id , StudentProfileResponse updateRequest);
     ApiResp deleteStudentById(Long id);
     ApiResp updateProfile(StudentProfileResponse request);
+    Long countStudents();
 
 }

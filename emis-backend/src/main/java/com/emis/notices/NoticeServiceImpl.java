@@ -2,7 +2,7 @@ package com.emis.notices;
 
 import com.emis.customexception.ResourceNotFoundException;
 import com.emis.common.ApiResp;
-import com.emis.notices.dto.NoticeDto;
+import com.emis.notices.dto.NoticeRequest;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -21,7 +21,7 @@ public class NoticeServiceImpl implements NoticeService{
 
     //ADD
     @Override
-    public ApiResp addNotice(NoticeDto request) {
+    public ApiResp addNotice(NoticeRequest request) {
        Notices notice = mapper.map(request , Notices.class);
        noticeRepository.save(notice);
        return new ApiResp("SUCCESS" , "Notice Added.....");
@@ -29,13 +29,16 @@ public class NoticeServiceImpl implements NoticeService{
 
     //GET ALL
     @Override
-    public List<NoticeDto> getAllNotices() {
+    public List<NoticeRequest> getAllNotices() {
 
-        List<NoticeDto> dtoList = new ArrayList<>();
-        List<Notices> dbNotices = noticeRepository.findAll();
-        for(Notices indi : dbNotices){
-            NoticeDto dto = new NoticeDto();
-            mapper.map(indi,dto);
+        List<NoticeRequest> dtoList = new ArrayList<>();
+
+        List<Notices> dbNotices =
+                noticeRepository.findTop5ByOrderByPublishDateDesc();
+
+        for (Notices notice : dbNotices) {
+            NoticeRequest dto = new NoticeRequest();
+            mapper.map(notice, dto);
             dtoList.add(dto);
         }
 
@@ -56,14 +59,14 @@ public class NoticeServiceImpl implements NoticeService{
 
     //GET BY ID
     @Override
-    public NoticeDto getNoticeById(Long id) {
+    public NoticeRequest getNoticeById(Long id) {
         Notices dbNotice = noticeRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Notice Not Found......"));
-        return new NoticeDto(dbNotice.getTitle(),dbNotice.getDescription(),dbNotice.getPublishDate());
+        return new NoticeRequest(dbNotice.getId(), dbNotice.getTitle(),dbNotice.getDescription(),dbNotice.getPublishDate());
     }
 
     //UPDATE NOTICE BY ID
     @Override
-    public ApiResp updateNotice(Long id, NoticeDto updateRequest) {
+    public ApiResp updateNotice(Long id, NoticeRequest updateRequest) {
         Notices dbNotice = noticeRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Notice Not Found....."));
         dbNotice.setTitle(updateRequest.getTitle());
         dbNotice.setDescription(updateRequest.getDescription());

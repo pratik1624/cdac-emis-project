@@ -21,15 +21,15 @@ import java.util.List;
 @Setter
 public class Faculty extends BaseEntity {
 
-    @Column(name = "emp_code")
+    @Column(name = "emp_code" , length = 10 , unique = true)
     String employeeCode;
-    @Column(name = "first_name")
+    @Column(name = "first_name" , length = 10 , nullable = false )
     String firstName;
-    @Column(name = "last_name")
+    @Column(name = "last_name" , length = 20 , nullable = false)
     String lastName;
-    @Column(name = "DOB")
+    @Column(name = "DOB" , nullable = false )
     LocalDate DOB;
-    @Column(nullable = false)
+    @Column(nullable = false , length = 30)
     String designation;
     @Enumerated(EnumType.STRING)
     Gender gender;

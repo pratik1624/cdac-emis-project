@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 
 import {
-    getStudentProfile,
-    getAttendance,
-    getResults
+  getStudentProfile,
+  getAttendance,
+  getResults,
 } from "../../api/studentApi";
 
 import { getStudentNotices } from "../../api/noticeApi";
@@ -14,250 +14,176 @@ import InfoCard from "../../components/studentComponent/ui/InfoCard";
 import NoticeCard from "../../components/studentComponent/ui/NoticeCard";
 
 import {
-    FaClipboardCheck,
-    FaChartLine,
-    FaCheckCircle,
-    FaBullhorn
+  FaClipboardCheck,
+  FaChartLine,
+  FaCheckCircle,
+  FaBullhorn,
 } from "react-icons/fa";
 
 export default function Dashboard() {
+  const [profile, setProfile] = useState(null);
+  const [attendance, setAttendance] = useState([]);
+  const [results, setResults] = useState([]);
+  const [notices, setNotices] = useState([]);
 
-    const [profile, setProfile] = useState(null);
-    const [attendance, setAttendance] = useState([]);
-    const [results, setResults] = useState([]);
-    const [notices, setNotices] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-    const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    const loadDashboard = async () => {
+      try {
+        const [profileData, attendanceData, resultData, noticeData] =
+          await Promise.all([
+            getStudentProfile(),
+            getAttendance(),
+            getResults(),
+            getStudentNotices(),
+          ]);
 
-    useEffect(() => {
+        setProfile(profileData);
+        setAttendance(attendanceData);
+        setResults(resultData);
+        setNotices(noticeData);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-        const loadDashboard = async () => {
+    loadDashboard();
+  }, []);
 
-            try {
+  if (loading) {
+    return <h4>Loading Dashboard...</h4>;
+  }
 
-                const [
-                    profileData,
-                    attendanceData,
-                    resultData,
-                    noticeData
-                ] = await Promise.all([
-                    getStudentProfile(),
-                    getAttendance(),
-                    getResults(),
-                    getStudentNotices()
-                ]);
+  // ==========================================
+  // Attendance Statistics
+  // ==========================================
 
-                setProfile(profileData);
-                setAttendance(attendanceData);
-                setResults(resultData);
-                setNotices(noticeData);
+  const totalClasses = attendance.reduce(
+    (sum, item) => sum + item.totalClasses,
+    0,
+  );
 
-            } catch (err) {
+  const attendedClasses = attendance.reduce(
+    (sum, item) => sum + item.attendedClasses,
+    0,
+  );
 
-                console.error(err);
+  const attendancePercentage =
+    totalClasses > 0
+      ? ((attendedClasses * 100) / totalClasses).toFixed(1)
+      : "0";
 
-            } finally {
+  // ==========================================
+  // Result Statistics
+  // ==========================================
 
-                setLoading(false);
+  const totalObtained = results.reduce(
+    (sum, item) => sum + item.obtainedMarks,
+    0,
+  );
 
-            }
+  const totalMarks = results.reduce((sum, item) => sum + item.totalMarks, 0);
 
-        };
+  const percentage =
+    totalMarks > 0 ? ((totalObtained * 100) / totalMarks).toFixed(1) : "0";
 
-        loadDashboard();
+  const passedSubjects = results.filter(
+    (result) => result.grade !== "F",
+  ).length;
 
-    }, []);
+  const totalSubjects = results.length;
 
-    if (loading) {
+  // ==========================================
+  // Latest Notices
+  // ==========================================
 
-        return <h4>Loading Dashboard...</h4>;
+  const latestNotices = [...notices]
+    .sort((a, b) => new Date(b.publishDate) - new Date(a.publishDate))
+    .slice(0, 3);
 
-    }
+  return (
+    <>
+      <WelcomeBanner profile={profile} />
 
-    // ==========================================
-    // Attendance Statistics
-    // ==========================================
+      <div className="dashboard-grid">
+        <DashboardCard
+          title="Attendance"
+          value={`${attendancePercentage}%`}
+          subtitle="Current Attendance"
+          icon={<FaClipboardCheck />}
+        />
 
-    const totalClasses = attendance.reduce(
-        (sum, item) => sum + item.totalClasses,
-        0
-    );
+        <DashboardCard
+          title="Results"
+          value={`${percentage}%`}
+          subtitle="Overall Percentage"
+          icon={<FaChartLine />}
+        />
 
-    const attendedClasses = attendance.reduce(
-        (sum, item) => sum + item.attendedClasses,
-        0
-    );
+        <DashboardCard
+          title="Subjects Passed"
+          value={`${passedSubjects}/${totalSubjects}`}
+          subtitle="Current Semester"
+          icon={<FaCheckCircle />}
+        />
 
-    const attendancePercentage =
-        totalClasses > 0
-            ? ((attendedClasses * 100) / totalClasses).toFixed(1)
-            : "0";
+        <DashboardCard
+          title="Notices"
+          value={notices.length}
+          subtitle="Published Notices"
+          icon={<FaBullhorn />}
+        />
+      </div>
 
-    // ==========================================
-    // Result Statistics
-    // ==========================================
+      <div className="info-grid">
+        <InfoCard title="Recent Notices">
+          {latestNotices.map((notice, index) => (
+            <NoticeCard
+              key={index}
+              title={notice.title}
+              date={new Date(notice.publishDate).toLocaleDateString("en-GB", {
+                day: "2-digit",
+                month: "short",
+                year: "numeric",
+              })}
+              description={notice.description}
+            />
+          ))}
+        </InfoCard>
 
-    const totalObtained = results.reduce(
-        (sum, item) => sum + item.obtainedMarks,
-        0
-    );
+        <InfoCard title="Student Information">
+          <div className="student-info">
+            <div>
+              <strong>Name</strong>
 
-    const totalMarks = results.reduce(
-        (sum, item) => sum + item.totalMarks,
-        0
-    );
-
-    const percentage =
-        totalMarks > 0
-            ? ((totalObtained * 100) / totalMarks).toFixed(1)
-            : "0";
-
-    const passedSubjects = results.filter(
-        result => result.grade !== "F"
-    ).length;
-
-    const totalSubjects = results.length;
-
-    // ==========================================
-    // Latest Notices
-    // ==========================================
-
-    const latestNotices = [...notices]
-        .sort(
-            (a, b) =>
-                new Date(b.publishDate) -
-                new Date(a.publishDate)
-        )
-        .slice(0, 3);
-
-    return (
-
-        <>
-
-            <WelcomeBanner profile={profile} />
-
-            <div className="dashboard-grid">
-
-                <DashboardCard
-                    title="Attendance"
-                    value={`${attendancePercentage}%`}
-                    subtitle="Current Attendance"
-                    icon={<FaClipboardCheck />}
-                />
-
-                <DashboardCard
-                    title="Results"
-                    value={`${percentage}%`}
-                    subtitle="Overall Percentage"
-                    icon={<FaChartLine />}
-                />
-
-                <DashboardCard
-                    title="Subjects Passed"
-                    value={`${passedSubjects}/${totalSubjects}`}
-                    subtitle="Current Semester"
-                    icon={<FaCheckCircle />}
-                />
-
-                <DashboardCard
-                    title="Notices"
-                    value={notices.length}
-                    subtitle="Published Notices"
-                    icon={<FaBullhorn />}
-                />
-
+              <p>
+                {profile?.firstName} {profile?.lastName}
+              </p>
             </div>
 
-            <div className="info-grid">
+            <div>
+              <strong>Department</strong>
 
-                <InfoCard title="Recent Notices">
-
-                    {
-
-                        latestNotices.map((notice, index) => (
-
-                            <NoticeCard
-                                key={index}
-                                title={notice.title}
-                                date={new Date(
-                                    notice.publishDate
-                                ).toLocaleDateString(
-                                    "en-GB",
-                                    {
-                                        day: "2-digit",
-                                        month: "short",
-                                        year: "numeric"
-                                    }
-                                )}
-                                description={notice.description}
-                            />
-
-                        ))
-
-                    }
-
-                </InfoCard>
-
-                <InfoCard title="Student Information">
-
-                    <div className="student-info">
-
-                        <div>
-
-                            <strong>Name</strong>
-
-                            <p>
-
-                                {profile?.firstName} {profile?.lastName}
-
-                            </p>
-
-                        </div>
-
-                        <div>
-
-                            <strong>Department</strong>
-
-                            <p>
-
-                                {profile?.department}
-
-                            </p>
-
-                        </div>
-
-                        <div>
-
-                            <strong>Semester</strong>
-
-                            <p>
-
-                                {profile?.semester}
-
-                            </p>
-
-                        </div>
-
-                        <div>
-
-                            <strong>Email</strong>
-
-                            <p>
-
-                                {profile?.email}
-
-                            </p>
-
-                        </div>
-
-                    </div>
-
-                </InfoCard>
-
+              <p>{profile?.department}</p>
             </div>
 
-        </>
+            <div>
+              <strong>Semester</strong>
 
-    );
+              <p>{profile?.semester}</p>
+            </div>
 
+            <div>
+              <strong>Email</strong>
+
+              <p>{profile?.email}</p>
+            </div>
+          </div>
+        </InfoCard>
+      </div>
+    </>
+  );
 }

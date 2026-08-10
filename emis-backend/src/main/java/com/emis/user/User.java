@@ -1,7 +1,6 @@
 package com.emis.user;
 
 import com.emis.common.BaseEntity;
-import org.springframework.stereotype.Service;
 
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.Column;
@@ -28,7 +27,7 @@ public class User extends BaseEntity {
     @Column(name = "password", length = 100 , nullable = false)
     private String password;
 
-    @Column(name = "mobile_no", length = 10)
+    @Column(name = "mobile_no", length = 10 , unique = true)
     private String mobileNo;
 
     @Enumerated(EnumType.STRING)
