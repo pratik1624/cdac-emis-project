@@ -7,61 +7,35 @@ import SubjectTable from "../../components/facultyComponent/subjects/SubjectTabl
 import "../../styles/facultyStyles/subjects.css";
 
 export default function Subjects() {
+  const [subjects, setSubjects] = useState([]);
 
-    const [subjects, setSubjects] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-    const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    loadSubjects();
+  }, []);
 
-    useEffect(() => {
+  const loadSubjects = async () => {
+    try {
+      const data = await getSubjects();
 
-        loadSubjects();
-
-    }, []);
-
-    const loadSubjects = async () => {
-
-        try {
-
-            const data = await getSubjects();
-
-            setSubjects(data);
-
-        }
-
-        catch (err) {
-
-            console.error(err);
-
-        }
-
-        finally {
-
-            setLoading(false);
-
-        }
-
-    };
-
-    if (loading) {
-
-        return <h4>Loading...</h4>;
-
+      setSubjects(data);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
     }
+  };
 
-    return (
+  if (loading) {
+    return <h4>Loading...</h4>;
+  }
 
-        <div className="container-fluid">
+  return (
+    <div className="container-fluid">
+      <h2 className="mb-4">Assigned Subjects</h2>
 
-            <h2 className="mb-4">
-
-                Assigned Subjects
-
-            </h2>
-
-            <SubjectTable subjects={subjects} />
-
-        </div>
-
-    );
-
+      <SubjectTable subjects={subjects} />
+    </div>
+  );
 }
