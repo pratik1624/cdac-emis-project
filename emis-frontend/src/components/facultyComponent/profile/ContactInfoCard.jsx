@@ -7,13 +7,13 @@ export default function ContactInfoCard({ faculty }) {
 
     return (
 
-        <div className="card profile-card">
+        <div className="profile-card">
 
-            <div className="card-body">
+            <div className="profile-card-body">
 
-                <h5 className="fw-bold mb-4">
+                <h5 className="profile-card-title">
 
-                    <FaEnvelope className="profile-icon me-2" />
+                    <FaEnvelope className="profile-title-icon" />
 
                     Contact Information
 
@@ -21,53 +21,45 @@ export default function ContactInfoCard({ faculty }) {
 
                 <div className="row">
 
-                    {/* Email */}
+                    <div className="col-md-6 mb-4">
 
-                    <div className="col-md-6 mb-3">
+                        <div className="profile-info-box">
 
-                        <div className="border rounded-3 p-3 h-100">
+                            <FaEnvelope className="profile-box-icon" />
 
-                            <FaEnvelope
-                                className="profile-icon mb-2"
-                            />
+                            <h6>
 
-                            <div className="profile-label">
+                                Email Address
 
-                                Email
+                            </h6>
 
-                            </div>
-
-                            <div className="profile-value">
+                            <p>
 
                                 {faculty.email}
 
-                            </div>
+                            </p>
 
                         </div>
 
                     </div>
 
-                    {/* Phone */}
+                    <div className="col-md-6 mb-4">
 
-                    <div className="col-md-6 mb-3">
+                        <div className="profile-info-box">
 
-                        <div className="border rounded-3 p-3 h-100">
+                            <FaPhone className="profile-box-icon" />
 
-                            <FaPhone
-                                className="profile-icon mb-2"
-                            />
+                            <h6>
 
-                            <div className="profile-label">
+                                Phone Number
 
-                                Phone
+                            </h6>
 
-                            </div>
-
-                            <div className="profile-value">
+                            <p>
 
                                 {faculty.phone}
 
-                            </div>
+                            </p>
 
                         </div>
 

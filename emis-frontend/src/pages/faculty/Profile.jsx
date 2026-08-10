@@ -5,10 +5,10 @@ import {
     updateFacultyProfile
 } from "../../api/facultyApi";
 
-import FacultyProfileHeader from "../../components/facultyComponent/profile/FacultyProfileHeader";
+import ProfileHeader from "../../components/facultyComponent/profile/ProfileHeader";
 import PersonalInfoCard from "../../components/facultyComponent/profile/PersonalInfoCard";
-import ContactInfoCard from "../../components/facultyComponent/profile/ContactInfoCard";
 import ProfessionalInfoCard from "../../components/facultyComponent/profile/ProfessionalInfoCard";
+import ContactInfoCard from "../../components/facultyComponent/profile/ContactInfoCard";
 import EditProfileModal from "../../components/facultyComponent/profile/EditProfileModal";
 
 import "../../styles/facultyStyles/profile.css";
@@ -18,6 +18,8 @@ export default function Profile() {
     const [faculty, setFaculty] = useState(null);
 
     const [loading, setLoading] = useState(true);
+
+    const [error, setError] = useState("");
 
     const [showEditModal, setShowEditModal] = useState(false);
 
@@ -39,7 +41,9 @@ export default function Profile() {
 
         catch (err) {
 
-            console.error(err);
+            console.log(err);
+
+            setError("Unable to load profile.");
 
         }
 
@@ -53,33 +57,50 @@ export default function Profile() {
 
     const handleSave = async (updatedFaculty) => {
 
-        await updateFacultyProfile(
-            faculty.id,
-            updatedFaculty
-        );
+        try {
 
-        loadProfile();
+            await updateFacultyProfile(
+                faculty.id,
+                updatedFaculty
+            );
 
-        setShowEditModal(false);
+            loadProfile();
+
+            setShowEditModal(false);
+
+            alert("Profile Updated Successfully");
+
+        }
+
+        catch (err) {
+
+            console.log(err);
+
+            alert("Unable to update profile.");
+
+        }
 
     };
 
     if (loading) {
 
-        return <h4>Loading...</h4>;
+        return <h4>Loading Profile...</h4>;
+
+    }
+
+    if (error) {
+
+        return <h4>{error}</h4>;
 
     }
 
     return (
 
-        <div className="container-fluid">
+        <div className="container-fluid faculty-profile-page">
 
-            <FacultyProfileHeader
-
-                student={faculty}
-
+            <ProfileHeader
+                faculty={faculty}
                 onEdit={() => setShowEditModal(true)}
-
             />
 
             <div className="row">
@@ -87,9 +108,7 @@ export default function Profile() {
                 <div className="col-lg-6 mb-4">
 
                     <PersonalInfoCard
-
-                        student={faculty}
-
+                        faculty={faculty}
                     />
 
                 </div>
@@ -97,9 +116,7 @@ export default function Profile() {
                 <div className="col-lg-6 mb-4">
 
                     <ProfessionalInfoCard
-
                         faculty={faculty}
-
                     />
 
                 </div>
@@ -107,22 +124,16 @@ export default function Profile() {
             </div>
 
             <ContactInfoCard
-
-                student={faculty}
-
+                faculty={faculty}
             />
 
             <EditProfileModal
 
                 show={showEditModal}
 
-                student={faculty}
+                faculty={faculty}
 
-                onClose={() =>
-
-                    setShowEditModal(false)
-
-                }
+                onClose={() => setShowEditModal(false)}
 
                 onSave={handleSave}
 

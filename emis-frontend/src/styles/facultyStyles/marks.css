@@ -1,8 +1,8 @@
 /* ==========================================
-   SUBJECTS PAGE
+   MARKS PAGE
 ========================================== */
 
-.subjects-page{
+.marks-page{
     display:flex;
     flex-direction:column;
     gap:28px;
@@ -12,65 +12,23 @@
    HEADER
 ========================================== */
 
-.subjects-header h2{
+.marks-header h2{
     color:var(--text-color);
     font-size:2rem;
     font-weight:700;
     margin-bottom:8px;
 }
 
-.subjects-header p{
+.marks-header p{
     color:var(--text-secondary);
     margin:0;
-}
-
-/* ==========================================
-   FILTER
-========================================== */
-
-.subject-filter{
-    display:flex;
-    justify-content:flex-end;
-}
-
-.search-box{
-    position:relative;
-    width:100%;
-    max-width:380px;
-}
-
-.search-box input{
-    width:100%;
-    background:var(--card-color);
-    color:var(--text-color);
-    border:1px solid var(--border-color);
-    border-radius:12px;
-    padding:12px 16px 12px 42px;
-    outline:none;
-    transition:.25s;
-}
-
-.search-box input:focus{
-    border-color:var(--accent-color);
-}
-
-.search-box input::placeholder{
-    color:var(--text-secondary);
-}
-
-.search-icon{
-    position:absolute;
-    top:50%;
-    left:15px;
-    transform:translateY(-50%);
-    color:var(--text-secondary);
 }
 
 /* ==========================================
    TABLE CARD
 ========================================== */
 
-.subject-table-card{
+.marks-table-card{
 
     background:var(--card-color);
 
@@ -80,17 +38,25 @@
 
     overflow:hidden;
 
+    transition:.25s;
+
+}
+
+.marks-table-card:hover{
+
+    border-color:var(--accent-color);
+
 }
 
 /* ==========================================
    TABLE
 ========================================== */
 
-.subject-table{
+.marks-table{
     margin:0;
 }
 
-.subject-table.table{
+.marks-table.table{
 
     --bs-table-bg:transparent;
 
@@ -104,7 +70,7 @@
 
 }
 
-.subject-table thead th{
+.marks-table thead th{
 
     background:#1b1f24;
 
@@ -118,45 +84,137 @@
 
 }
 
-.subject-table tbody td{
+.marks-table tbody td{
 
-    padding:18px;
+    background:var(--card-color);
 
     color:var(--text-color);
+
+    padding:18px;
 
     border-color:var(--border-color);
 
     vertical-align:middle;
 
-    background:var(--card-color);
-
 }
 
-.subject-table tbody tr{
+.marks-table tbody tr{
 
     transition:.25s;
 
 }
 
-.subject-table tbody tr:hover td{
+.marks-table tbody tr:hover td{
 
     background:#232931;
 
 }
 
 /* ==========================================
-   BUTTON
+   INPUT
 ========================================== */
 
-.subject-table .btn{
+.marks-table .form-control{
+
+    background:var(--bg-color);
+
+    color:var(--text-color);
+
+    border:1px solid var(--border-color);
 
     border-radius:10px;
 
-    font-size:.88rem;
+    min-width:100px;
+
+}
+
+.marks-table .form-control:focus{
+
+    background:var(--bg-color);
+
+    color:var(--text-color);
+
+    border-color:var(--accent-color);
+
+    box-shadow:none;
+
+}
+
+/* ==========================================
+   SAVE BUTTON
+========================================== */
+
+.marks-table-card .btn{
+
+    border-radius:10px;
 
     font-weight:600;
 
-    padding:8px 16px;
+    padding:10px 20px;
+
+}
+
+/* ==========================================
+   GRADE BADGES
+========================================== */
+
+.grade-badge{
+
+    display:inline-flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    min-width:55px;
+
+    padding:6px 14px;
+
+    border-radius:30px;
+
+    font-size:.8rem;
+
+    font-weight:600;
+
+}
+
+.grade-badge.a{
+
+    background:rgba(34,197,94,.15);
+
+    color:#22c55e;
+
+}
+
+.grade-badge.b{
+
+    background:rgba(59,130,246,.15);
+
+    color:#3b82f6;
+
+}
+
+.grade-badge.c{
+
+    background:rgba(245,158,11,.15);
+
+    color:#f59e0b;
+
+}
+
+.grade-badge.d{
+
+    background:rgba(249,115,22,.15);
+
+    color:#f97316;
+
+}
+
+.grade-badge.f{
+
+    background:rgba(239,68,68,.15);
+
+    color:#ef4444;
 
 }
 
@@ -184,27 +242,30 @@
    RESPONSIVE
 ========================================== */
 
-@media(max-width:992px){
-
-    .search-box{
-
-        max-width:100%;
-
-    }
-
-}
-
 @media(max-width:768px){
 
-    .subjects-header h2{
+    .marks-header h2{
 
         font-size:1.7rem;
 
     }
 
-    .subject-table{
+    .marks-table{
 
         font-size:.9rem;
+
+    }
+
+    .marks-table th,
+    .marks-table td{
+
+        padding:14px;
+
+    }
+
+    .marks-table .form-control{
+
+        min-width:80px;
 
     }
 

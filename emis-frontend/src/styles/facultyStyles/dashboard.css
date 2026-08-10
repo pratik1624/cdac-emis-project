@@ -2,71 +2,71 @@
    FACULTY DASHBOARD
 ========================================== */
 
-.faculty-dashboard {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
+.faculty-dashboard{
+    display:flex;
+    flex-direction:column;
+    gap:30px;
 }
 
 /* ==========================================
    HEADER
 ========================================== */
 
-.dashboard-header h2 {
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--text-color);
-    margin-bottom: 8px;
+.dashboard-header h2{
+    font-size:2rem;
+    font-weight:700;
+    color:var(--text-color);
+    margin-bottom:8px;
 }
 
-.dashboard-header p {
-    color: var(--text-secondary);
-    margin: 0;
+.dashboard-header p{
+    color:var(--text-secondary);
+    margin:0;
 }
 
-.dashboard-header strong {
-    color: var(--accent-color);
+.dashboard-header strong{
+    color:var(--accent-color);
 }
 
 /* ==========================================
    GRID
 ========================================== */
 
-.dashboard-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 24px;
+.dashboard-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:24px;
 }
 
-.dashboard-bottom {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
+.dashboard-bottom{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:24px;
 }
 
 /* ==========================================
    COMMON CARD
 ========================================== */
 
-.dashboard-card-section {
+.dashboard-card-section{
 
-    background: var(--card-color);
+    background:var(--card-color);
 
-    border: 1px solid var(--border-color);
+    border:1px solid var(--border-color);
 
-    border-radius: 18px;
+    border-radius:18px;
 
-    padding: 28px;
+    padding:28px;
 
-    transition: .25s;
+    transition:.25s;
 
-    height: 100%;
+    height:100%;
 
 }
 
-.dashboard-card-section:hover {
+.dashboard-card-section:hover{
 
-    border-color: var(--accent-color);
+    border-color:var(--accent-color);
 
 }
 
@@ -74,31 +74,31 @@
    CARD HEADER
 ========================================== */
 
-.dashboard-section-header {
+.dashboard-section-header{
 
-    margin-bottom: 24px;
-
-}
-
-.dashboard-section-header h4 {
-
-    color: var(--text-color);
-
-    font-size: 1.35rem;
-
-    font-weight: 700;
-
-    margin-bottom: 6px;
+    margin-bottom:24px;
 
 }
 
-.dashboard-section-header p {
+.dashboard-section-header h4{
 
-    color: var(--text-secondary);
+    color:var(--text-color);
 
-    margin: 0;
+    font-size:1.35rem;
 
-    font-size: .92rem;
+    font-weight:700;
+
+    margin-bottom:6px;
+
+}
+
+.dashboard-section-header p{
+
+    color:var(--text-secondary);
+
+    margin:0;
+
+    font-size:.92rem;
 
 }
 
@@ -106,61 +106,61 @@
    FACULTY INFO
 ========================================== */
 
-.faculty-info-list {
+.faculty-info-list{
 
-    display: flex;
+    display:flex;
 
-    flex-direction: column;
+    flex-direction:column;
 
-    gap: 14px;
-
-}
-
-.faculty-info-item {
-
-    display: flex;
-
-    justify-content: space-between;
-
-    align-items: center;
-
-    padding: 16px;
-
-    border: 1px solid var(--border-color);
-
-    border-radius: 12px;
-
-    background: rgba(255, 255, 255, .02);
+    gap:14px;
 
 }
 
-.faculty-info-left {
+.faculty-info-item{
 
-    display: flex;
+    display:flex;
 
-    align-items: center;
+    justify-content:space-between;
 
-    gap: 12px;
+    align-items:center;
 
-}
+    padding:16px;
 
-.faculty-info-icon {
+    border:1px solid var(--border-color);
 
-    color: var(--accent-color);
+    border-radius:12px;
 
-    font-size: 18px;
-
-}
-
-.faculty-info-left span {
-
-    color: var(--text-secondary);
+    background:rgba(255,255,255,.02);
 
 }
 
-.faculty-info-item strong {
+.faculty-info-left{
 
-    color: var(--text-color);
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+}
+
+.faculty-info-icon{
+
+    color:var(--accent-color);
+
+    font-size:18px;
+
+}
+
+.faculty-info-left span{
+
+    color:var(--text-secondary);
+
+}
+
+.faculty-info-item strong{
+
+    color:var(--text-color);
 
 }
 
@@ -168,91 +168,91 @@
    NOTICE
 ========================================== */
 
-.notice-list {
+.notice-list{
 
-    display: flex;
+    display:flex;
 
-    flex-direction: column;
+    flex-direction:column;
 
-    gap: 16px;
-
-}
-
-.notice-item {
-
-    display: flex;
-
-    gap: 16px;
-
-    padding: 16px;
-
-    border: 1px solid var(--border-color);
-
-    border-radius: 12px;
-
-    background: rgba(255, 255, 255, .02);
-
-    transition: .25s;
+    gap:16px;
 
 }
 
-.notice-item:hover {
+.notice-item{
 
-    background: rgba(255, 255, 255, .04);
+    display:flex;
 
-}
+    gap:16px;
 
-.notice-icon {
+    padding:16px;
 
-    width: 45px;
+    border:1px solid var(--border-color);
 
-    height: 45px;
+    border-radius:12px;
 
-    border-radius: 12px;
+    background:rgba(255,255,255,.02);
 
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    background: rgba(34, 197, 94, .12);
-
-    color: var(--accent-color);
-
-    flex-shrink: 0;
+    transition:.25s;
 
 }
 
-.notice-content {
+.notice-item:hover{
 
-    flex: 1;
-
-}
-
-.notice-content h6 {
-
-    color: var(--text-color);
-
-    font-weight: 600;
-
-    margin-bottom: 6px;
+    background:rgba(255,255,255,.04);
 
 }
 
-.notice-content p {
+.notice-icon{
 
-    color: var(--text-secondary);
+    width:45px;
 
-    margin-bottom: 8px;
+    height:45px;
 
-    line-height: 1.6;
+    border-radius:12px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:rgba(34,197,94,.12);
+
+    color:var(--accent-color);
+
+    flex-shrink:0;
 
 }
 
-.notice-content small {
+.notice-content{
 
-    color: var(--text-secondary);
+    flex:1;
+
+}
+
+.notice-content h6{
+
+    color:var(--text-color);
+
+    font-weight:600;
+
+    margin-bottom:6px;
+
+}
+
+.notice-content p{
+
+    color:var(--text-secondary);
+
+    margin-bottom:8px;
+
+    line-height:1.6;
+
+}
+
+.notice-content small{
+
+    color:var(--text-secondary);
 
 }
 
@@ -260,13 +260,13 @@
    EMPTY
 ========================================== */
 
-.empty-state {
+.empty-state{
 
-    color: var(--text-secondary);
+    color:var(--text-secondary);
 
-    text-align: center;
+    text-align:center;
 
-    padding: 40px 0;
+    padding:40px 0;
 
 }
 
@@ -274,21 +274,21 @@
    RESPONSIVE
 ========================================== */
 
-@media(max-width:992px) {
+@media(max-width:992px){
 
-    .dashboard-bottom {
+    .dashboard-bottom{
 
-        grid-template-columns: 1fr;
+        grid-template-columns:1fr;
 
     }
 
 }
 
-@media(max-width:768px) {
+@media(max-width:768px){
 
-    .dashboard-header h2 {
+    .dashboard-header h2{
 
-        font-size: 1.7rem;
+        font-size:1.7rem;
 
     }
 

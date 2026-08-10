@@ -6,9 +6,10 @@ import {
     saveMarks
 } from "../../api/facultyApi";
 
-import SubjectMarksTable from "../../components/facultyComponent/subjects/SubjectMarksTable";
+import MarksSummary from "../../components/facultyComponent/marks/MarksSummary";
+import MarksTable from "../../components/facultyComponent/marks/MarksTable";
 
-import "../../styles/facultyStyles/subjects.css";
+import "../../styles/facultyStyles/marks.css";
 
 export default function SubjectMarks() {
 
@@ -17,6 +18,8 @@ export default function SubjectMarks() {
     const [marks, setMarks] = useState([]);
 
     const [loading, setLoading] = useState(true);
+
+    const [error, setError] = useState("");
 
     useEffect(() => {
 
@@ -36,7 +39,9 @@ export default function SubjectMarks() {
 
         catch (err) {
 
-            console.error(err);
+            console.log(err);
+
+            setError("Unable to load marks.");
 
         }
 
@@ -52,27 +57,27 @@ export default function SubjectMarks() {
 
         try {
 
-            const request = marks.map(item => ({
+            const request = marks.map(student => ({
 
-                studentId: item.studentId,
+                studentId: student.studentId,
 
-                obtainedMarks: Number(item.obtainedMarks),
+                obtainedMarks: Number(student.obtainedMarks),
 
-                totalMarks: Number(item.totalMarks)
+                totalMarks: Number(student.totalMarks)
 
             }));
 
             await saveMarks(subjectId, request);
 
-            alert("Marks Saved Successfully");
+            alert("Marks saved successfully.");
 
         }
 
         catch (err) {
 
-            console.error(err);
+            console.log(err);
 
-            alert("Unable to Save Marks");
+            alert("Unable to save marks.");
 
         }
 
@@ -80,43 +85,51 @@ export default function SubjectMarks() {
 
     if (loading) {
 
-        return <h4>Loading...</h4>;
+        return <h4>Loading Marks...</h4>;
+
+    }
+
+    if (error) {
+
+        return <h4>{error}</h4>;
 
     }
 
     return (
 
-        <div className="container-fluid">
+        <div className="marks-page">
 
-            <h2 className="mb-4">
+            <div className="marks-header">
 
-                Manage Marks
+                <h2>
 
-            </h2>
+                    Subject Marks
 
-            <SubjectMarksTable
+                </h2>
+
+                <p>
+
+                    View and update student marks.
+
+                </p>
+
+            </div>
+
+            <MarksSummary
+
+                marks={marks}
+
+            />
+
+            <MarksTable
 
                 marks={marks}
 
                 setMarks={setMarks}
 
+                onSave={handleSave}
+
             />
-
-            <div className="text-end mt-4">
-
-                <button
-
-                    className="btn btn-success"
-
-                    onClick={handleSave}
-
-                >
-
-                    Save Marks
-
-                </button>
-
-            </div>
 
         </div>
 

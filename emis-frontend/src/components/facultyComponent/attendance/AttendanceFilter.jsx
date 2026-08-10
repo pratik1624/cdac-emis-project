@@ -1,146 +1,187 @@
+import { useEffect, useState } from "react";
+import { FaFilter } from "react-icons/fa";
+
+import {
+    getAssignedSubjects,
+    loadStudentsForAttendance
+} from "../../../api/facultyApi";
+
 export default function AttendanceFilter({
 
-    filter,
+    selectedSubject,
+    setSelectedSubject,
 
-    setFilter,
+    selectedSemester,
+    setSelectedSemester,
 
-    onLoad
+    selectedDate,
+    setSelectedDate,
 
-}){
+    setStudents
 
-    return(
+}) {
 
-        <div className="card shadow-sm border-0 rounded-4 mb-4">
+    const [subjects, setSubjects] = useState([]);
 
-            <div className="card-body">
+    useEffect(() => {
 
-                <div className="row">
+        fetchSubjects();
 
-                    <div className="col-md-3">
+    }, []);
 
-                        <select
+    const fetchSubjects = async () => {
 
-                            className="form-select"
+        try {
 
-                            value={filter.semester}
+            const data = await getAssignedSubjects();
 
-                            onChange={(e)=>
+            setSubjects(data);
 
-                                setFilter({
+        } catch (err) {
 
-                                    ...filter,
+            console.log(err);
 
-                                    semester:e.target.value
+        }
 
-                                })
+    };
 
-                            }
+    const handleLoadStudents = async () => {
 
+        if (!selectedSemester || !selectedSubject) {
+
+            alert("Please select semester and subject.");
+
+            return;
+
+        }
+
+        try {
+
+            const data = await loadStudentsForAttendance({
+
+                semester: Number(selectedSemester),
+
+                subjectId: Number(selectedSubject)
+
+            });
+
+            // Save selected values for upload request
+            localStorage.setItem(
+                "attendanceSemester",
+                selectedSemester
+            );
+
+            localStorage.setItem(
+                "attendanceSubjectId",
+                selectedSubject
+            );
+
+            // Default every student as Present
+            const studentsWithStatus = data.map(student => ({
+
+                ...student,
+
+                status: "Present"
+
+            }));
+
+            setStudents(studentsWithStatus);
+
+        }
+
+        catch (err) {
+
+            console.log(err);
+
+            alert("Unable to load students.");
+
+        }
+
+    };
+
+    return (
+
+        <div className="attendance-filter">
+
+            <div className="attendance-filter-grid">
+
+                <select
+                    className="form-select"
+                    value={selectedSemester}
+                    onChange={(e) =>
+                        setSelectedSemester(e.target.value)
+                    }
+                >
+
+                    <option value="">
+                        Select Semester
+                    </option>
+
+                    {[1,2,3,4,5,6,7,8].map((semester) => (
+
+                        <option
+                            key={semester}
+                            value={semester}
                         >
 
-                            <option value="">
+                            Semester {semester}
 
-                                Semester
+                        </option>
+
+                    ))}
+
+                </select>
+
+                <select
+                    className="form-select"
+                    value={selectedSubject}
+                    onChange={(e) =>
+                        setSelectedSubject(e.target.value)
+                    }
+                >
+
+                    <option value="">
+                        Select Subject
+                    </option>
+
+                    {
+
+                        subjects.map(subject => (
+
+                            <option
+                                key={subject.subjectId}
+                                value={subject.subjectId}
+                            >
+
+                                {subject.subjectCode} - {subject.subjectName}
 
                             </option>
 
-                            {
+                        ))
 
-                                [1,2,3,4,5,6,7,8].map(
+                    }
 
-                                    sem=>
+                </select>
 
-                                    <option
+                <input
+                    type="date"
+                    className="form-control"
+                    value={selectedDate}
+                    onChange={(e) =>
+                        setSelectedDate(e.target.value)
+                    }
+                />
 
-                                        key={sem}
+                <button
+                    className="btn btn-success"
+                    onClick={handleLoadStudents}
+                >
 
-                                        value={sem}
+                    <FaFilter className="me-2" />
 
-                                    >
+                    Load Students
 
-                                        Semester {sem}
-
-                                    </option>
-
-                                )
-
-                            }
-
-                        </select>
-
-                    </div>
-
-                    <div className="col-md-3">
-
-                        <input
-
-                            type="number"
-
-                            placeholder="Subject Id"
-
-                            className="form-control"
-
-                            value={filter.subjectId}
-
-                            onChange={(e)=>
-
-                                setFilter({
-
-                                    ...filter,
-
-                                    subjectId:e.target.value
-
-                                })
-
-                            }
-
-                        />
-
-                    </div>
-
-                    <div className="col-md-3">
-
-                        <input
-
-                            type="date"
-
-                            className="form-control"
-
-                            value={filter.attendanceDate}
-
-                            onChange={(e)=>
-
-                                setFilter({
-
-                                    ...filter,
-
-                                    attendanceDate:e.target.value
-
-                                })
-
-                            }
-
-                        />
-
-                    </div>
-
-                    <div className="col-md-3">
-
-                        <button
-
-                            className="btn btn-primary w-100"
-
-                            onClick={onLoad}
-
-                        >
-
-                            Load Students
-
-                        </button>
-
-                    </div>
-
-                </div>
+                </button>
 
             </div>
 

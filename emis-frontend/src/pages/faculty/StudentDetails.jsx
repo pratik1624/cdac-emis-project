@@ -1,21 +1,26 @@
 import { useEffect, useState } from "react";
+
 import { useParams } from "react-router-dom";
 
 import { getStudentProfile } from "../../api/facultyApi";
 
-import StudentProfileCard from "../../components/facultyComponent/students/StudentProfileCard";
-import AttendanceSummary from "../../components/facultyComponent/students/AttendanceSummary";
-import ResultSummary from "../../components/facultyComponent/students/ResultSummary";
+import StudentHeader from "../../components/facultyComponent/studentDetails/StudentHeader";
+import AcademicDetails from "../../components/facultyComponent/studentDetails/AcademicDetails";
+import AttendanceDetails from "../../components/facultyComponent/studentDetails/AttendanceDetails";
+import MarksDetails from "../../components/facultyComponent/studentDetails/MarksDetails";
+import ContactDetails from "../../components/facultyComponent/studentDetails/ContactDetails";
 
-import "../../styles/facultyStyles/students.css";
+import "../../styles/facultyStyles/studentDetails.css";
 
 export default function StudentDetails() {
 
     const { id } = useParams();
 
-    const [data, setData] = useState(null);
+    const [studentData, setStudentData] = useState(null);
 
     const [loading, setLoading] = useState(true);
+
+    const [error, setError] = useState("");
 
     useEffect(() => {
 
@@ -27,15 +32,17 @@ export default function StudentDetails() {
 
         try {
 
-            const response = await getStudentProfile(id);
+            const data = await getStudentProfile(id);
 
-            setData(response);
+            setStudentData(data);
 
         }
 
         catch (err) {
 
-            console.error(err);
+            console.log(err);
+
+            setError("Unable to load student.");
 
         }
 
@@ -49,43 +56,53 @@ export default function StudentDetails() {
 
     if (loading) {
 
-        return <h4>Loading...</h4>;
+        return <h4>Loading Student...</h4>;
+
+    }
+
+    if (error) {
+
+        return <h4>{error}</h4>;
 
     }
 
     return (
 
-        <div className="container-fluid">
+        <div className="student-details-page">
 
-            <StudentProfileCard
+            <StudentHeader
 
-                student={data.student}
+                student={studentData.student}
 
             />
 
-            <div className="row mt-4">
+            <div className="details-grid">
 
-                <div className="col-lg-6">
+                <AcademicDetails
 
-                    <AttendanceSummary
+                    student={studentData.student}
 
-                        attendance={data.attendance}
+                />
 
-                    />
+                <ContactDetails
 
-                </div>
+                    student={studentData.student}
 
-                <div className="col-lg-6">
-
-                    <ResultSummary
-
-                        results={data.results}
-
-                    />
-
-                </div>
+                />
 
             </div>
+
+            <AttendanceDetails
+
+                attendance={studentData.attendance}
+
+            />
+
+            <MarksDetails
+
+                results={studentData.results}
+
+            />
 
         </div>
 

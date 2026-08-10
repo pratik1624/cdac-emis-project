@@ -1,11 +1,7 @@
 import { useState } from "react";
 
-import {
-    loadStudentsForAttendance,
-    uploadAttendance
-} from "../../api/facultyApi";
-
 import AttendanceFilter from "../../components/facultyComponent/attendance/AttendanceFilter";
+import AttendanceSummary from "../../components/facultyComponent/attendance/AttendanceSummary";
 import AttendanceTable from "../../components/facultyComponent/attendance/AttendanceTable";
 
 import "../../styles/facultyStyles/attendance.css";
@@ -14,95 +10,63 @@ export default function Attendance() {
 
     const [students, setStudents] = useState([]);
 
-    const [filter, setFilter] = useState({
+    const [selectedSubject, setSelectedSubject] = useState("");
 
-        semester: "",
+    const [selectedSemester, setSelectedSemester] = useState("");
 
-        subjectId: "",
-
-        
-
-    });
-
-    const handleLoad = async () => {
-
-        try {
-
-            const data = await loadStudentsForAttendance(filter);
-
-            setStudents(data);
-
-        }
-
-        catch (err) {
-
-            console.error(err);
-
-        }
-
-    };
-
-    const handleUpload = async () => {
-
-        try {
-
-await uploadAttendance({
-
-    subjectId: Number(filter.subjectId),
-
-    semester: Number(filter.semester),
-
-    students: students
-
-});
-
-            alert("Attendance Uploaded");
-
-        }
-
-        catch(err){
-
-            console.error(err);
-
-        }
-
-    };
+    const [selectedDate, setSelectedDate] = useState("");
 
     return (
 
-        <div className="container-fluid">
+        <div className="attendance-page">
 
-            <h2 className="mb-4">
+            <div className="attendance-header">
 
-                Attendance
+                <h2>
 
-            </h2>
+                    Attendance
+
+                </h2>
+
+                <p>
+
+                    Mark and upload student attendance.
+
+                </p>
+
+            </div>
 
             <AttendanceFilter
 
-                filter={filter}
+                selectedSubject={selectedSubject}
 
-                setFilter={setFilter}
+                setSelectedSubject={setSelectedSubject}
 
-                onLoad={handleLoad}
+                selectedSemester={selectedSemester}
+
+                setSelectedSemester={setSelectedSemester}
+
+                selectedDate={selectedDate}
+
+                setSelectedDate={setSelectedDate}
+
+                setStudents={setStudents}
 
             />
 
-            {
+            <AttendanceSummary
 
-                students.length>0 &&
+                students={students}
 
-                <AttendanceTable
+            />
 
-                    students={students}
+            <AttendanceTable
 
-                    setStudents={setStudents}
+                students={students}
 
-                    onUpload={handleUpload}
+                setStudents={setStudents}
 
-                />
-
-            }
+            />
 
         </div>
 
