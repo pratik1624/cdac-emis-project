@@ -16,6 +16,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+//@AttributeOverride(name = "Id" , column = @Column(name = "result_id"))
 public class Result extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)

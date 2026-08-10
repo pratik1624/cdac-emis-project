@@ -16,6 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -105,7 +106,7 @@ public class StudentServiceImpl implements StudentService {
     //  admin  and student
     @Override
     public ApiResp updateStudnetById(
-            Long id,
+           @PathVariable Long id,
             StudentProfileResponse updateRequest) {
 
         Student student = studentRepository.findById(id)
@@ -172,6 +173,12 @@ public class StudentServiceImpl implements StudentService {
                 "SUCCESS",
                 "Profile Updated Successfully"
         );
+    }
+
+    //---------------------------ADMIN DASHBOARD-----------------
+    @Override
+    public Long countStudents() {
+        return studentRepository.count();
     }
 
 }

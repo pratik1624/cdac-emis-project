@@ -31,17 +31,15 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
                                     FilterChain filterChain)
             throws ServletException, IOException {
 
-        try {
+        String authHeader = request.getHeader("Authorization");
 
-            System.out.println("JWT Filter Executed");
+        // Only attempt JWT processing if a Bearer token is present.
+        // Anything outside this block (i.e. the rest of the chain,
+        // including controller/service exceptions) must NOT be caught
+        // here, otherwise real errors get masked as "Invalid JWT Token".
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
 
-            // Check Authorization header
-            String authHeader = request.getHeader("Authorization");
-            System.out.println("Header = " + authHeader);
-
-            // Verify Bearer token
-            if (authHeader != null && authHeader.startsWith("Bearer ")) {
-
+            try {
                 String jwt = authHeader.substring(7);
 
                 Claims payload = jwtUtils.verifyJwtAndExtractClaims(jwt);
@@ -55,11 +53,9 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
                         email,
                         null,
                         UserRole.valueOf(roleName)
-
                 );
 
-                System.out.println("UserId = " + userId);
-                System.out.println("Role = " + roleName);
+                log.debug("Authenticated userId={} role={}", userId, roleName);
 
                 UsernamePasswordAuthenticationToken authentication =
                         new UsernamePasswordAuthenticationToken(
@@ -69,16 +65,24 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
                         );
 
                 SecurityContextHolder.getContext().setAuthentication(authentication);
+
+            } catch (Exception e) {
+
+                log.warn("JWT verification failed: {}", e.getMessage());
+
+                SecurityContextHolder.clearContext();
+
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                response.getWriter().write("Invalid JWT Token");
+                return; // stop here — do not continue the filter chain
             }
-
-            filterChain.doFilter(request, response);
-
-        } catch (Exception e) {
-
-            SecurityContextHolder.clearContext();
-
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            response.getWriter().write("Invalid JWT Token");
         }
+
+        // Runs for: no Authorization header, non-Bearer header, or
+        // successful authentication above. Any exception thrown further
+        // down the chain (controllers/services) is NOT caught here,
+        // so it reaches Spring's normal error handling (/error) instead
+        // of being reported as an auth failure.
+        filterChain.doFilter(request, response);
     }
 }

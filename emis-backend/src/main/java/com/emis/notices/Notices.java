@@ -19,12 +19,13 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@AttributeOverride(name = "Id" , column = @Column(name = "notice_id"))
 public class Notices extends BaseEntity {
 
     @Column(length = 50)
     private String title;
     private String description;
-    @Column(name = "public_date")
+    @Column(name = "public_date" , nullable = false)
     private LocalDate publishDate;
 
 }

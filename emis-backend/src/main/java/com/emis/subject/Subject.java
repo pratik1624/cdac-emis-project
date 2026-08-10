@@ -14,12 +14,13 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+//AttributeOverride(name = "Id" , column = @Column(name = "subject_id"))
 public class Subject extends BaseEntity {
 
     @Column(name = "subject_code", nullable = false, unique = true, length = 10)
     private String subjectCode;
 
-    @Column(name = "subject_name", nullable = false, length = 100)
+    @Column(name = "subject_name", nullable = false, length = 50)
     private String subjectName;
 
     @Column(nullable = false)

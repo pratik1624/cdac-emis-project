@@ -1,0 +1,161 @@
+/* ===========================
+   ADMIN DASHBOARD
+=========================== */
+
+.admin-page {
+
+    width: 100%;
+
+    padding: 30px;
+
+}
+
+.admin-dashboard-grid {
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 25px;
+
+    margin-top: 30px;
+
+}
+
+/* ===========================
+   QUICK ACTIONS
+=========================== */
+
+.quick-actions-card {
+
+    min-height: 420px;
+
+}
+
+.quick-actions-grid {
+
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 18px;
+
+    margin-top: 20px;
+
+}
+
+.quick-btn {
+
+    height: 70px;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    font-size: 1rem;
+
+    font-weight: 600;
+
+    border-radius: 12px;
+
+}
+
+/* ===========================
+   RECENT NOTICES
+=========================== */
+
+.recent-notices-card {
+
+    min-height: 420px;
+
+}
+
+.notice-list {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 18px;
+
+    margin-top: 20px;
+
+}
+
+.notice-item {
+
+    padding: 18px;
+
+    border: 1px solid var(--border-color);
+
+    border-radius: 12px;
+
+    background: var(--bg-color);
+
+    transition: .25s;
+
+}
+
+.notice-item:hover {
+
+    transform: translateY(-3px);
+
+    box-shadow: 0 8px 20px rgba(0,0,0,.08);
+
+}
+
+.notice-title {
+
+    display: flex;
+
+    align-items: center;
+
+    font-size: 1rem;
+
+    font-weight: 600;
+
+    margin-bottom: 10px;
+
+}
+
+.notice-description {
+
+    margin-bottom: 12px;
+
+    color: var(--text-secondary);
+
+    line-height: 1.6;
+
+}
+
+/* ===========================
+   RESPONSIVE
+=========================== */
+
+@media(max-width:992px){
+
+    .admin-dashboard-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
+
+@media(max-width:768px){
+
+    .admin-page{
+
+        padding:20px;
+
+    }
+
+    .quick-actions-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
