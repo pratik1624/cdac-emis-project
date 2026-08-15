@@ -1,4 +1,4 @@
-@emis_logger_HostAddress = http://localhost:5145
+@emis_logger_HostAddress = http://localhost:5063
 
 GET {{emis_logger_HostAddress}}/weatherforecast/
 Accept: application/json
