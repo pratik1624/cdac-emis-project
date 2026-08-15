@@ -1,12 +1,26 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using LoggerService.Models;
+using LoggerService.Services;
+using Microsoft.AspNetCore.Mvc;
 
-namespace emis_logger.Controllers
+namespace LoggerService.Controllers
 {
-    public class LogsController : Controller
+    [ApiController]
+    [Route("api/logs")]
+    public class LogsController : ControllerBase
     {
-        public IActionResult Index()
+        private readonly IFileLoggerService loggerService;
+
+        public LogsController(IFileLoggerService loggerService)
         {
-            return View();
+            this.loggerService = loggerService;
+        }
+
+        [HttpPost]
+        public IActionResult SaveLog(LogRequest request)
+        {
+            loggerService.WriteLog(request);
+
+            return Ok("Log Saved");
         }
     }
 }
