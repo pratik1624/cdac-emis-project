@@ -1,0 +1,197 @@
+/* ==========================================
+   ACCOUNTANT PROFILE
+========================================== */
+
+.accountant-profile {
+  width: 100%;
+}
+
+/* ==========================================
+   HEADER
+========================================== */
+
+.accountant-profile-header {
+  margin-bottom: 28px;
+}
+
+/* ==========================================
+   PROFILE CARD
+========================================== */
+
+.accountant-profile-card {
+  max-width: 850px;
+
+  margin: 0 auto;
+
+  padding: 40px;
+
+  background: var(--card-color);
+
+  border: 1px solid var(--border-color);
+
+  border-radius: 18px;
+
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+
+  color: var(--text-color);
+
+  text-align: center;
+}
+
+/* ==========================================
+   AVATAR
+========================================== */
+
+.accountant-profile-avatar {
+  width: 90px;
+  height: 90px;
+
+  margin: 0 auto 18px;
+
+  border-radius: 50%;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  background: var(--accent-color);
+
+  color: white;
+
+  font-size: 36px;
+}
+
+/* ==========================================
+   NAME
+========================================== */
+
+.accountant-profile-name {
+  margin-bottom: 8px;
+
+  font-size: 26px;
+
+  font-weight: 700;
+
+  color: var(--text-color);
+}
+
+/* ==========================================
+   ROLE
+========================================== */
+
+.accountant-profile-role {
+  display: inline-block;
+
+  padding: 6px 16px;
+
+  border-radius: 20px;
+
+  background: rgba(30, 215, 96, 0.15);
+
+  color: var(--accent-color);
+
+  font-size: 14px;
+
+  font-weight: 600;
+}
+
+/* ==========================================
+   INFORMATION
+========================================== */
+
+.accountant-profile-info {
+  margin-top: 35px;
+
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 20px;
+
+  text-align: left;
+}
+
+/* ==========================================
+   INFORMATION ITEM
+========================================== */
+
+.accountant-profile-info-item {
+  display: flex;
+
+  align-items: center;
+
+  gap: 14px;
+
+  padding: 20px;
+
+  background: var(--bg-color);
+
+  border: 1px solid var(--border-color);
+
+  border-radius: 14px;
+}
+
+/* ==========================================
+   ICON
+========================================== */
+
+.accountant-profile-info-icon {
+  width: 42px;
+  height: 42px;
+
+  flex-shrink: 0;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 10px;
+
+  background: rgba(30, 215, 96, 0.15);
+
+  color: var(--accent-color);
+}
+
+/* ==========================================
+   LABEL
+========================================== */
+
+.accountant-profile-label {
+  display: block;
+
+  margin-bottom: 4px;
+
+  color: var(--text-secondary);
+
+  font-size: 13px;
+}
+
+/* ==========================================
+   VALUE
+========================================== */
+
+.accountant-profile-info-item p {
+  margin: 0;
+
+  color: var(--text-color);
+
+  font-size: 15px;
+
+  font-weight: 600;
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (max-width: 768px) {
+  .accountant-profile-card {
+    padding: 25px;
+  }
+
+  .accountant-profile-info {
+    grid-template-columns: 1fr;
+  }
+}

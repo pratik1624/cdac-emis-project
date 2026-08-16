@@ -1,0 +1,100 @@
+/* ==========================================
+   ACCOUNTANT SIDEBAR
+========================================== */
+
+.accountant-sidebar {
+  width: 260px;
+  min-height: 100vh;
+
+  background: var(--sidebar-color);
+  color: white;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 24px 18px;
+
+  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.15);
+
+  flex-shrink: 0;
+}
+
+/* ==========================================
+   SIDEBAR LOGO
+========================================== */
+
+.accountant-sidebar .sidebar-logo {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.accountant-sidebar .sidebar-logo h3 {
+  color: white;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.accountant-sidebar .sidebar-logo p {
+  color: white;
+  opacity: 0.8;
+  font-size: 0.9rem;
+}
+
+/* ==========================================
+   SIDEBAR MENU
+========================================== */
+
+.accountant-sidebar .sidebar-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* ==========================================
+   SIDEBAR LINK
+========================================== */
+
+.accountant-sidebar .sidebar-link {
+  display: flex;
+  align-items: center;
+
+  gap: 14px;
+
+  color: white;
+  text-decoration: none;
+
+  padding: 14px 16px;
+
+  border-radius: 12px;
+
+  transition: 0.25s;
+}
+
+.accountant-sidebar .sidebar-link:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+}
+
+.accountant-sidebar .sidebar-link.active {
+  background: white;
+  color: var(--sidebar-color);
+  font-weight: 600;
+}
+
+/* ==========================================
+   SIDEBAR FOOTER
+========================================== */
+
+.accountant-sidebar .sidebar-footer {
+  margin-top: auto;
+}
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media (max-width: 768px) {
+  .accountant-sidebar {
+    width: 220px;
+  }
+}

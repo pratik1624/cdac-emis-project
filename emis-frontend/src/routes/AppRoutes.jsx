@@ -17,7 +17,6 @@ import AcademicResults from "../pages/student/AcademicResults";
 import Fees from "../pages/student/Fees";
 import Notices from "../pages/student/Notices";
 
-
 import FacultyDashboard from "../pages/faculty/Dashboard";
 import FacultyProfile from "../pages/faculty/Profile";
 import FacultyAttendance from "../pages/faculty/Attendance";
@@ -32,8 +31,13 @@ import AdminFaculty from "../pages/admin/Faculty";
 import AdminDepartments from "../pages/admin/Departments";
 import AdminSubjects from "../pages/admin/Subjects";
 import AdminNotices from "../pages/admin/Notices";
-
 import Settings from "../pages/admin/Settings";
+
+import AccountantLayout from "../layouts/AccountantLayout";
+import AccountantDashboard from "../pages/accountant/Dashboard";
+import AccountantFees from "../pages/accountant/Fees";
+import StudentFeeDetails from "../pages/accountant/StudentFeeDetails";
+import AccountantProfile from "../pages/accountant/Profile";
 export default function AppRoutes() {
   return (
     <Routes>
@@ -69,51 +73,28 @@ export default function AppRoutes() {
         {/* ================= FACULTY ================= */}
 
         <Route element={<RoleRoute allowedRoles={["FACULTY"]} />}>
-    <Route path="/faculty" element={<FacultyLayout />}>
+          <Route path="/faculty" element={<FacultyLayout />}>
+            <Route path="dashboard" element={<FacultyDashboard />} />
 
-        <Route
-            path="dashboard"
-            element={<FacultyDashboard />}
-        />
+            <Route path="profile" element={<FacultyProfile />} />
 
-        <Route
-            path="profile"
-            element={<FacultyProfile />}
-        />
+            <Route path="students" element={<FacultyStudents />} />
 
-        <Route
-            path="students"
-            element={<FacultyStudents />}
-        />
+            <Route path="students/:id" element={<StudentDetails />} />
 
-        <Route
-            path="students/:id"
-            element={<StudentDetails />}
-        />
+            <Route path="subjects" element={<FacultySubjects />} />
 
-        <Route
-            path="subjects"
-            element={<FacultySubjects />}
-        />
+            {/* MANAGE MARKS */}
+            <Route
+              path="subjects/:subjectId/marks"
+              element={<SubjectMarks />}
+            />
 
-        {/* MANAGE MARKS */}
-        <Route
-            path="subjects/:subjectId/marks"
-            element={<SubjectMarks />}
-        />
+            <Route path="attendance" element={<FacultyAttendance />} />
 
-        <Route
-            path="attendance"
-            element={<FacultyAttendance />}
-        />
-
-        <Route
-            path="settings"
-            element={<Settings />}
-        />
-
-    </Route>
-</Route>
+            <Route path="settings" element={<Settings />} />
+          </Route>
+        </Route>
 
         {/* ================= ADMIN ================= */}
         {/* ================= ADMIN ================= */}
@@ -130,11 +111,26 @@ export default function AppRoutes() {
 
             <Route path="subjects" element={<AdminSubjects />} />
 
-    
-
             <Route path="notices" element={<AdminNotices />} />
 
             <Route path="settings" element={<Settings />} />
+          </Route>
+        </Route>
+
+        {/* ================= ACCOUNTANT ================= */}
+
+        <Route element={<RoleRoute allowedRoles={["ACCOUNTANT"]} />}>
+          <Route path="/accountant" element={<AccountantLayout />}>
+            <Route path="dashboard" element={<AccountantDashboard />} />
+
+            <Route path="fees" element={<AccountantFees />} />
+
+            <Route
+              path="fees/student/:studentId"
+              element={<StudentFeeDetails />}
+            />
+
+            <Route path="profile" element={<AccountantProfile />} />
           </Route>
         </Route>
       </Route>
