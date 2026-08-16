@@ -1,7 +1,5 @@
 package com.emis.fee;
 
-
-
 import java.util.List;
 
 import com.emis.fee.dto.FeeRequest;
@@ -12,12 +10,11 @@ public interface FeeService {
 
     FeeResponse addFee(FeeRequest request);
 
-    FeeResponse updateFee(Long feeId, UpdateFeeRequest request);
+    FeeResponse getFeeByStudent(Long studentId);
 
     List<FeeResponse> getAllFees();
 
-    FeeResponse getFeeByStudent(Long studentId);
+    FeeResponse updateFee(Long feeId, UpdateFeeRequest request);
 
     void deleteFee(Long feeId);
-
 }

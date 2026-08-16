@@ -1,9 +1,10 @@
 package com.emis.fee;
 
+import java.math.BigDecimal;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.emis.fee.dto.FeeRequest;
 import com.emis.fee.dto.FeeResponse;
@@ -21,54 +22,155 @@ public class FeeServiceImpl implements FeeService {
     private final StudentRepository studentRepository;
 
     @Override
+    @Transactional
     public FeeResponse addFee(FeeRequest request) {
 
+        // 1. Check whether student exists
+        Student student = studentRepository
+                .findByIdWithDepartment(request.getStudentId())
+                .orElseThrow(() ->
+                        new RuntimeException("Student not found"));
 
-        if (feeRepository.existsByStudentId(request.getStudentId())) {
-            throw new RuntimeException("Fee record already exists for this student.");
+        // 2. Check whether fee already exists for student
+        if (feeRepository.existsByStudent_Id(request.getStudentId())) {
+            throw new RuntimeException(
+                    "Fee record already exists for this student");
         }
 
-        Student student = studentRepository.findById(request.getStudentId())
-                .orElseThrow(() -> new RuntimeException("Student not found."));
+        // 3. Validate amounts
+        if (request.getTotalFee() == null ||
+            request.getPaidAmount() == null) {
 
-        if (request.getPaidAmount() > request.getTotalFee()) {
-            throw new RuntimeException("Paid amount cannot be greater than total fee.");
+            throw new RuntimeException(
+                    "Total fee and paid amount are required");
         }
 
+        if (request.getTotalFee().signum() < 0 ||
+            request.getPaidAmount().signum() < 0) {
+
+            throw new RuntimeException(
+                    "Fee amount cannot be negative");
+        }
+
+        if (request.getPaidAmount()
+                .compareTo(request.getTotalFee()) > 0) {
+
+            throw new RuntimeException(
+                    "Paid amount cannot be greater than total fee");
+        }
+
+        // 4. Create Fee
         Fee fee = new Fee();
+
         fee.setStudent(student);
         fee.setTotalFee(request.getTotalFee());
         fee.setPaidAmount(request.getPaidAmount());
 
-        double remainingAmount = request.getTotalFee() - request.getPaidAmount();
-        fee.setRemainingAmount(remainingAmount);
+        // 5. Calculate pending amount
+        fee.setPendingAmount(
+                request.getTotalFee()
+                        .subtract(request.getPaidAmount())
+        );
 
-        fee.setStatus(calculateStatus(request.getTotalFee(), request.getPaidAmount()));
+        // 6. Calculate payment status
+        fee.setPaymentStatus(
+                calculateStatus(
+                        request.getTotalFee(),
+                        request.getPaidAmount()
+                )
+        );
+
         fee.setPaymentDate(request.getPaymentDate());
+        fee.setRemarks(request.getRemarks());
 
+        // 7. Save
         Fee savedFee = feeRepository.save(fee);
 
+        // 8. Convert entity to response
         return mapToResponse(savedFee);
     }
 
     @Override
-    public FeeResponse updateFee(Long feeId, UpdateFeeRequest request) {
+    @Transactional(readOnly = true)
+    public FeeResponse getFeeByStudent(Long studentId) {
+
+        Fee fee = feeRepository.findByStudent_Id(studentId)
+                .orElseThrow(() ->
+                        new RuntimeException(
+                                "Fee record not found for this student"));
+
+        // Department may be lazy, so initialize it while session is open
+        fee.getStudent().getDepartment().getDeptName();
+
+        return mapToResponse(fee);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<FeeResponse> getAllFees() {
+
+        List<Fee> fees = feeRepository.findAll();
+
+        // Initialize Department while session is open
+        fees.forEach(fee ->
+                fee.getStudent().getDepartment().getDeptName()
+        );
+
+        return fees.stream()
+                .map(this::mapToResponse)
+                .toList();
+    }
+
+    @Override
+    @Transactional
+    public FeeResponse updateFee(
+            Long feeId,
+            UpdateFeeRequest request) {
 
         Fee fee = feeRepository.findById(feeId)
-                .orElseThrow(() -> new RuntimeException("Fee record not found."));
+                .orElseThrow(() ->
+                        new RuntimeException("Fee record not found"));
 
-        double newPaidAmount = fee.getPaidAmount() + request.getPaidAmount();
+        if (request.getTotalFee() == null ||
+            request.getPaidAmount() == null) {
 
-        if (newPaidAmount > fee.getTotalFee()) {
-            throw new RuntimeException("Paid amount cannot exceed total fee.");
+            throw new RuntimeException(
+                    "Total fee and paid amount are required");
         }
 
-        fee.setPaidAmount(newPaidAmount);
+        if (request.getTotalFee().signum() < 0 ||
+            request.getPaidAmount().signum() < 0) {
 
-        double remainingAmount = fee.getTotalFee() - newPaidAmount;
-        fee.setRemainingAmount(remainingAmount);
+            throw new RuntimeException(
+                    "Fee amount cannot be negative");
+        }
 
-        fee.setStatus(calculateStatus(fee.getTotalFee(), newPaidAmount));
+        if (request.getPaidAmount()
+                .compareTo(request.getTotalFee()) > 0) {
+
+            throw new RuntimeException(
+                    "Paid amount cannot be greater than total fee");
+        }
+
+        fee.setTotalFee(request.getTotalFee());
+        fee.setPaidAmount(request.getPaidAmount());
+
+        // Recalculate pending amount
+        fee.setPendingAmount(
+                request.getTotalFee()
+                        .subtract(request.getPaidAmount())
+        );
+
+        // Recalculate payment status
+        fee.setPaymentStatus(
+                calculateStatus(
+                        request.getTotalFee(),
+                        request.getPaidAmount()
+                )
+        );
+
+        fee.setPaymentDate(request.getPaymentDate());
+        fee.setRemarks(request.getRemarks());
 
         Fee updatedFee = feeRepository.save(fee);
 
@@ -76,58 +178,70 @@ public class FeeServiceImpl implements FeeService {
     }
 
     @Override
-    public List<FeeResponse> getAllFees() {
-
-        return feeRepository.findAll()
-                .stream()
-                .map(this::mapToResponse)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public FeeResponse getFeeByStudent(Long studentId) {
-
-        Fee fee = feeRepository.findByStudentId(studentId)
-                .orElseThrow(() -> new RuntimeException("Fee record not found."));
-
-        return mapToResponse(fee);
-    }
-
-    @Override
+    @Transactional
     public void deleteFee(Long feeId) {
 
         Fee fee = feeRepository.findById(feeId)
-                .orElseThrow(() -> new RuntimeException("Fee record not found."));
+                .orElseThrow(() ->
+                        new RuntimeException("Fee record not found"));
 
         feeRepository.delete(fee);
     }
 
-    private FeeStatus calculateStatus(Double totalFee, Double paidAmount) {
+    // --------------------------------
+    // Helper Methods
+    // --------------------------------
 
-        if (Double.compare(paidAmount, 0.0) == 0) {
-            return FeeStatus.UNPAID;
-        }
+    private FeeStatus calculateStatus(
+            BigDecimal totalFee,
+            BigDecimal paidAmount) {
 
-        if (paidAmount.equals(totalFee)) {
+        if (paidAmount.signum() == 0) {
+
+            return FeeStatus.PENDING;
+
+        } else if (paidAmount.compareTo(totalFee) < 0) {
+
+            return FeeStatus.PARTIALLY_PAID;
+
+        } else {
+
             return FeeStatus.PAID;
         }
-
-        return FeeStatus.PARTIALLY_PAID;
     }
 
     private FeeResponse mapToResponse(Fee fee) {
 
         FeeResponse response = new FeeResponse();
 
-        response.setId(fee.getId());
+        Student student = fee.getStudent();
+
+        response.setFeeId(fee.getId());
+        response.setStudentId(student.getId());
+
         response.setStudentName(
-                fee.getStudent().getFirstName() + " " + fee.getStudent().getLastName()
+                student.getFirstName() + " "
+                + student.getLastName()
         );
+
+        response.setRollNumber(student.getRollNumber());
+
+        response.setDepartment(
+                student.getDepartment().getDeptName()
+        );
+
+        response.setSemester(student.getSemester());
+
         response.setTotalFee(fee.getTotalFee());
         response.setPaidAmount(fee.getPaidAmount());
-        response.setRemainingAmount(fee.getRemainingAmount());
-        response.setStatus(fee.getStatus());
+        response.setPendingAmount(fee.getPendingAmount());
+
+        response.setPaymentStatus(
+                fee.getPaymentStatus().name()
+        );
+
         response.setPaymentDate(fee.getPaymentDate());
+        response.setRemarks(fee.getRemarks());
 
         return response;
     }

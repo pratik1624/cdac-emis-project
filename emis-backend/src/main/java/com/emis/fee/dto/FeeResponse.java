@@ -1,32 +1,34 @@
 package com.emis.fee.dto;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import com.emis.fee.FeeStatus;
+import lombok.Data;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@Data
 public class FeeResponse {
 
-    private Long id;
+    private Long feeId;
+
+    private Long studentId;
 
     private String studentName;
 
-    private Double totalFee;
+    private String rollNumber;
 
-    private Double paidAmount;
+    private String department;
 
-    private Double remainingAmount;
+    private Integer semester;
 
-    private FeeStatus status;
+    private BigDecimal totalFee;
+
+    private BigDecimal paidAmount;
+
+    private BigDecimal pendingAmount;
+
+    private String paymentStatus;
 
     private LocalDate paymentDate;
 
+    private String remarks;
 }

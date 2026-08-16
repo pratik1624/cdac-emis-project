@@ -2,8 +2,7 @@ package com.emis.fee;
 
 public enum FeeStatus {
 
-    PAID,
+    PENDING,
     PARTIALLY_PAID,
-    UNPAID
-
+    PAID
 }

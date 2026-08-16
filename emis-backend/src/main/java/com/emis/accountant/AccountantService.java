@@ -1,9 +1,13 @@
 package com.emis.accountant;
 
-import com.emis.accountant.CreateAccountantRequest;
+import com.emis.accountant.dto.AccountantDashboardResponse;
 
 public interface AccountantService {
 
-    void createAccountant(CreateAccountantRequest request);
+    Accountant createAccountant(Accountant accountant);
+
+    Accountant getAccountant();
+
+    AccountantDashboardResponse getDashboard();
 
 }
