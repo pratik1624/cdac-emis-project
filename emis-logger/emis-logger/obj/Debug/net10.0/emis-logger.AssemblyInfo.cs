@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("emis-logger")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+13f895e4b53df82b4bb4b0d1afc835f45bcf360a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ff68659cfc09c57a45dfbc30b95fb3a71e437328")]
 [assembly: System.Reflection.AssemblyProductAttribute("emis-logger")]
 [assembly: System.Reflection.AssemblyTitleAttribute("emis-logger")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
