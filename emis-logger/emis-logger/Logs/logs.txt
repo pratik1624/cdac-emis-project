@@ -1,0 +1,47 @@
+[16-08-2026 01:04:57] [INFO] [EMIS] Operation successful
+[16-08-2026 01:04:57] [INFO] [EMIS] Operation successful
+[16-08-2026 01:04:57] [INFO] [EMIS] Operation successful
+[16-08-2026 01:27:33] [ERROR] [EMIS] User login failed: Bad credentials
+[16-08-2026 01:27:34] [ERROR] [EMIS] Bad credentials
+[16-08-2026 01:28:24] [INFO] [EMIS] User login successful
+[16-08-2026 01:30:15] [ERROR] [EMIS] could not execute statement [Cannot delete or update a parent row: a foreign key constraint fails ("emis_db"."fee", CONSTRAINT "FKib8srd9dy1c6fhjv4bxj2cfpy" FOREIGN KEY ("student_id") REFERENCES "students" ("student_id"))] [delete from students where student_id=?]; SQL [delete from students where student_id=?]; constraint [null]
+[16-08-2026 01:31:53] [INFO] [EMIS] User login successful
+[16-08-2026 01:38:33] [INFO] [EMIS] User login successful
+[16-08-2026 01:48:30] [INFO] [EMIS] ADMIN Login Successfully
+[16-08-2026 01:49:20] [INFO] [EMIS] FACULTY Login Successfully
+[16-08-2026 01:57:58] [ERROR] [EMIS] Login failed: Bad credentials
+[16-08-2026 01:57:59] [ERROR] [EMIS] Bad credentials
+[16-08-2026 01:58:12] [INFO] [EMIS] ADMIN Login Successfully
+[16-08-2026 02:00:08] [ERROR] [EMIS] Department name already exists.
+[16-08-2026 02:00:08] [ERROR] [EMIS] Department name already exists.
+[16-08-2026 02:02:10] [INFO] [EMIS] STUDENT Login Successfully
+[16-08-2026 02:03:39] [INFO] [EMIS] FACULTY Login Successfully
+[16-08-2026 02:04:11] [ERROR] [EMIS] Argument to parameter named 'department' has an incompatible type (argument [1] is not assignable to com.emis.department.Department)
+[16-08-2026 02:04:11] [ERROR] [EMIS] Argument to parameter named 'department' has an incompatible type (argument [1] is not assignable to com.emis.department.Department)
+[16-08-2026 02:04:14] [ERROR] [EMIS] Argument to parameter named 'department' has an incompatible type (argument [1] is not assignable to com.emis.department.Department)
+[16-08-2026 02:04:14] [ERROR] [EMIS] Argument to parameter named 'department' has an incompatible type (argument [1] is not assignable to com.emis.department.Department)
+[16-08-2026 02:04:15] [ERROR] [EMIS] Argument to parameter named 'department' has an incompatible type (argument [1] is not assignable to com.emis.department.Department)
+[16-08-2026 02:04:15] [ERROR] [EMIS] Argument to parameter named 'department' has an incompatible type (argument [1] is not assignable to com.emis.department.Department)
+[16-08-2026 02:04:17] [ERROR] [EMIS] Argument to parameter named 'department' has an incompatible type (argument [1] is not assignable to com.emis.department.Department)
+[16-08-2026 02:04:17] [ERROR] [EMIS] Argument to parameter named 'department' has an incompatible type (argument [1] is not assignable to com.emis.department.Department)
+[16-08-2026 02:04:18] [ERROR] [EMIS] Argument to parameter named 'department' has an incompatible type (argument [1] is not assignable to com.emis.department.Department)
+[16-08-2026 02:04:18] [ERROR] [EMIS] Argument to parameter named 'department' has an incompatible type (argument [1] is not assignable to com.emis.department.Department)
+[16-08-2026 02:04:19] [ERROR] [EMIS] Argument to parameter named 'department' has an incompatible type (argument [1] is not assignable to com.emis.department.Department)
+[16-08-2026 02:04:19] [ERROR] [EMIS] Argument to parameter named 'department' has an incompatible type (argument [1] is not assignable to com.emis.department.Department)
+[16-08-2026 02:04:20] [ERROR] [EMIS] Argument to parameter named 'department' has an incompatible type (argument [1] is not assignable to com.emis.department.Department)
+[16-08-2026 02:04:20] [ERROR] [EMIS] Argument to parameter named 'department' has an incompatible type (argument [1] is not assignable to com.emis.department.Department)
+[16-08-2026 02:04:21] [ERROR] [EMIS] Argument to parameter named 'department' has an incompatible type (argument [1] is not assignable to com.emis.department.Department)
+[16-08-2026 02:04:21] [ERROR] [EMIS] Argument to parameter named 'department' has an incompatible type (argument [1] is not assignable to com.emis.department.Department)
+[16-08-2026 02:05:03] [ERROR] [EMIS] Argument to parameter named 'department' has an incompatible type (argument [1] is not assignable to com.emis.department.Department)
+[16-08-2026 02:05:03] [ERROR] [EMIS] Argument to parameter named 'department' has an incompatible type (argument [1] is not assignable to com.emis.department.Department)
+[16-08-2026 02:05:08] [ERROR] [EMIS] Argument to parameter named 'department' has an incompatible type (argument [1] is not assignable to com.emis.department.Department)
+[16-08-2026 02:05:08] [ERROR] [EMIS] Argument to parameter named 'department' has an incompatible type (argument [1] is not assignable to com.emis.department.Department)
+[16-08-2026 02:05:17] [ERROR] [EMIS] Argument to parameter named 'department' has an incompatible type (argument [1] is not assignable to com.emis.department.Department)
+[16-08-2026 02:05:17] [ERROR] [EMIS] Argument to parameter named 'department' has an incompatible type (argument [1] is not assignable to com.emis.department.Department)
+[16-08-2026 02:05:22] [ERROR] [EMIS] Argument to parameter named 'department' has an incompatible type (argument [1] is not assignable to com.emis.department.Department)
+[16-08-2026 02:05:22] [ERROR] [EMIS] Argument to parameter named 'department' has an incompatible type (argument [1] is not assignable to com.emis.department.Department)
+[16-08-2026 02:05:30] [ERROR] [EMIS] Argument to parameter named 'department' has an incompatible type (argument [1] is not assignable to com.emis.department.Department)
+[16-08-2026 02:05:30] [ERROR] [EMIS] Argument to parameter named 'department' has an incompatible type (argument [1] is not assignable to com.emis.department.Department)
+[16-08-2026 02:05:59] [INFO] [EMIS] ADMIN Login Successfully
+[16-08-2026 02:07:30] [INFO] [EMIS] FACULTY Login Successfully
+[16-08-2026 02:21:14] [INFO] [EMIS] ADMIN Login Successfully

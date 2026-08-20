@@ -1,29 +1,29 @@
-﻿using emis_logger.Models;
+﻿    using LoggerService.Models;
 
 
-namespace LoggerService.Services
-{
-    public class FileLoggerService : IFileLoggerService
+    namespace LoggerService.Services
     {
-        private readonly string filePath;
-
-        public FileLoggerService()
+        public class FileLoggerService : IFileLoggerService
         {
-            var directory = Path.Combine(Directory.GetCurrentDirectory(), "Logs");
+            private readonly string filePath;
 
-            if (!Directory.Exists(directory))
+            public FileLoggerService()
             {
-                Directory.CreateDirectory(directory);
+                var directory = Path.Combine(Directory.GetCurrentDirectory(), "Logs");
+
+                if (!Directory.Exists(directory))
+                {
+                    Directory.CreateDirectory(directory);
+                }
+
+                filePath = Path.Combine(directory, "logs.txt");
             }
 
-            filePath = Path.Combine(directory, "logs.txt");
-        }
+            public void WriteLog(LogRequest request)
+            {
+                string log = $"[{request.TimeStamp}] [{request.Level}] [{request.ServiceName}] {request.Message}";
 
-        public void WriteLog(LogRequest request)
-        {
-            string log = $"[{request.TimeStamp}] [{request.Level}] [{request.ServiceName}] {request.Message}";
-
-            File.AppendAllText(filePath, log + Environment.NewLine);
+                File.AppendAllText(filePath, log + Environment.NewLine);
+            }
         }
     }
-}
