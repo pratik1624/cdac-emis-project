@@ -1,0 +1,647 @@
+/* ==========================================
+   ACCOUNTANT FEES
+========================================== */
+
+.accountant-fees {
+  width: 100%;
+}
+
+/* ==========================================
+   HEADER
+========================================== */
+
+.accountant-fees-header {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: flex-start;
+
+  gap: 20px;
+
+  margin-bottom: 24px;
+}
+
+.accountant-add-btn {
+  padding: 10px 18px;
+
+  white-space: nowrap;
+}
+
+/* ==========================================
+   SEARCH
+========================================== */
+
+.accountant-fees-search {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  width: 100%;
+
+  padding: 12px 16px;
+
+  margin-bottom: 24px;
+
+  background: var(--card-color);
+
+  border: 1px solid var(--border-color);
+
+  border-radius: 12px;
+
+  color: var(--text-secondary);
+}
+
+.accountant-fees-search input {
+  flex: 1;
+
+  border: none;
+
+  outline: none;
+
+  background: transparent;
+
+  color: var(--text-color);
+
+  font-size: 14px;
+}
+
+.accountant-fees-search input::placeholder {
+  color: var(--text-secondary);
+}
+
+/* ==========================================
+   TABLE CARD
+========================================== */
+
+.accountant-fees-card {
+  background: var(--card-color);
+
+  border: 1px solid var(--border-color);
+
+  border-radius: 18px;
+
+  overflow: hidden;
+
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+}
+
+/* ==========================================
+   TABLE
+========================================== */
+
+.accountant-fees-table {
+  margin: 0;
+}
+
+.accountant-fees-table thead th {
+  padding: 15px 18px;
+
+  background: var(--bg-color);
+
+  color: var(--text-secondary);
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+  white-space: nowrap;
+
+  border-bottom: 1px solid var(--border-color);
+}
+
+.accountant-fees-table tbody td {
+  padding: 16px 18px;
+
+  background: var(--card-color);
+
+  color: var(--text-color);
+
+  font-size: 14px;
+
+  vertical-align: middle;
+
+  border-bottom: 1px solid var(--border-color);
+}
+
+.accountant-fees-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.accountant-fees-table tbody tr:hover td {
+  background: var(--bg-color);
+}
+
+/* ==========================================
+   STUDENT NAME
+========================================== */
+
+.fee-student-name {
+  color: var(--text-color);
+
+  font-size: 15px;
+
+  font-weight: 500;
+}
+
+/* ==========================================
+   STATUS
+========================================== */
+
+.fee-status {
+  display: inline-block;
+
+  padding: 5px 10px;
+
+  border-radius: 20px;
+
+  font-size: 11px;
+
+  font-weight: 600;
+
+  white-space: nowrap;
+}
+
+.fee-status.paid {
+  background: rgba(30, 215, 96, 0.15);
+
+  color: var(--accent-color);
+}
+
+.fee-status.partial {
+  background: rgba(255, 193, 7, 0.15);
+
+  color: #d39e00;
+}
+
+.fee-status.pending {
+  background: rgba(220, 53, 69, 0.15);
+
+  color: #dc3545;
+}
+
+/* ==========================================
+   ACTIONS
+========================================== */
+
+.fee-actions {
+  display: flex;
+
+  align-items: center;
+
+  gap: 7px;
+}
+
+.fee-action-btn {
+  width: 32px;
+
+  height: 32px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border: none;
+
+  border-radius: 8px;
+
+  background: var(--bg-color);
+
+  color: var(--text-secondary);
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.fee-action-btn:hover {
+  transform: translateY(-1px);
+}
+
+.fee-action-btn.view:hover {
+  color: var(--accent-color);
+}
+
+.fee-action-btn.edit:hover {
+  color: #0d6efd;
+}
+
+.fee-action-btn.delete:hover {
+  color: #dc3545;
+}
+
+/* ==========================================
+   EMPTY STATE
+========================================== */
+
+.empty-icon {
+  font-size: 30px;
+
+  color: var(--text-secondary);
+}
+
+/* ==========================================
+   MODAL
+========================================== */
+
+.accountant-modal-overlay {
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 1050;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding: 20px;
+
+  background: rgba(0, 0, 0, 0.55);
+}
+
+.accountant-modal {
+  width: 100%;
+
+  max-width: 500px;
+
+  max-height: 90vh;
+
+  overflow-y: auto;
+
+  background: var(--card-color);
+
+  border: 1px solid var(--border-color);
+
+  border-radius: 18px;
+
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+}
+
+/* ==========================================
+   MODAL HEADER
+========================================== */
+
+.accountant-modal-header {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  padding: 20px 24px;
+
+  border-bottom: 1px solid var(--border-color);
+}
+
+.accountant-modal-header h3 {
+  margin: 0;
+
+  color: var(--text-color);
+
+  font-size: 20px;
+
+  font-weight: 700;
+}
+
+.accountant-modal-header button {
+  border: none;
+
+  background: transparent;
+
+  color: var(--text-secondary);
+
+  font-size: 28px;
+
+  line-height: 1;
+
+  cursor: pointer;
+}
+
+/* ==========================================
+   MODAL FORM
+========================================== */
+
+.accountant-modal-form {
+  padding: 24px;
+}
+
+.accountant-modal-form label {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: var(--text-color);
+
+  font-size: 14px;
+
+  font-weight: 500;
+}
+
+.accountant-modal-form input,
+.accountant-modal-form textarea {
+  width: 100%;
+
+  padding: 10px 12px;
+
+  border: 1px solid var(--border-color);
+
+  border-radius: 8px;
+
+  background: var(--card-color);
+
+  color: var(--text-color);
+
+  outline: none;
+}
+
+.accountant-modal-form input:focus,
+.accountant-modal-form textarea:focus {
+  border-color: var(--accent-color);
+
+  box-shadow: 0 0 0 2px rgba(30, 215, 96, 0.12);
+}
+
+.accountant-modal-form textarea {
+  resize: vertical;
+}
+
+/* ==========================================
+   EDIT STUDENT INFO
+========================================== */
+
+.accountant-edit-student {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 3px;
+
+  padding: 12px 14px;
+
+  margin-bottom: 20px;
+
+  border-radius: 10px;
+
+  background: var(--bg-color);
+
+  border: 1px solid var(--border-color);
+}
+
+.accountant-edit-student strong {
+  color: var(--text-color);
+
+  font-size: 15px;
+}
+
+.accountant-edit-student span {
+  color: var(--text-secondary);
+
+  font-size: 13px;
+}
+
+/* ==========================================
+   MODAL ACTIONS
+========================================== */
+
+.accountant-modal-actions {
+  display: flex;
+
+  justify-content: flex-end;
+
+  gap: 10px;
+
+  margin-top: 20px;
+}
+
+/* ==========================================
+   VIEW FEE DETAILS MODAL
+========================================== */
+
+.accountant-view-modal {
+  max-width: 650px;
+}
+
+.accountant-modal-subtitle {
+  margin: 4px 0 0;
+
+  color: var(--text-secondary);
+
+  font-size: 13px;
+}
+
+/* ==========================================
+   VIEW BODY
+========================================== */
+
+.accountant-view-body {
+  padding: 24px;
+}
+
+/* ==========================================
+   DETAIL SECTION
+========================================== */
+
+.fee-detail-section {
+  margin-bottom: 24px;
+}
+
+.fee-detail-section:last-child {
+  margin-bottom: 0;
+}
+
+.fee-detail-section h4 {
+  margin-bottom: 14px;
+
+  color: var(--text-color);
+
+  font-size: 16px;
+
+  font-weight: 600;
+}
+
+/* ==========================================
+   DETAIL GRID
+========================================== */
+
+.fee-detail-grid {
+  display: grid;
+
+  grid-template-columns: repeat(2, 1fr);
+
+  gap: 12px;
+}
+
+.fee-detail-item {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 4px;
+
+  padding: 12px 14px;
+
+  background: var(--bg-color);
+
+  border: 1px solid var(--border-color);
+
+  border-radius: 10px;
+}
+
+.fee-detail-item span {
+  color: var(--text-secondary);
+
+  font-size: 12px;
+}
+
+.fee-detail-item strong {
+  color: var(--text-color);
+
+  font-size: 14px;
+
+  font-weight: 600;
+}
+
+/* ==========================================
+   FEE SUMMARY
+========================================== */
+
+.fee-summary-grid {
+  display: grid;
+
+  grid-template-columns: repeat(2, 1fr);
+
+  gap: 12px;
+}
+
+.fee-summary-item {
+  padding: 14px;
+
+  background: var(--bg-color);
+
+  border: 1px solid var(--border-color);
+
+  border-radius: 10px;
+}
+
+.fee-summary-item > span:first-child {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: var(--text-secondary);
+
+  font-size: 12px;
+}
+
+.fee-summary-item strong {
+  color: var(--text-color);
+
+  font-size: 17px;
+
+  font-weight: 600;
+}
+
+/* ==========================================
+   REMARKS
+========================================== */
+
+.fee-remarks {
+  margin-top: 12px;
+
+  padding: 14px;
+
+  background: var(--bg-color);
+
+  border: 1px solid var(--border-color);
+
+  border-radius: 10px;
+}
+
+.fee-remarks > span {
+  display: block;
+
+  margin-bottom: 6px;
+
+  color: var(--text-secondary);
+
+  font-size: 12px;
+}
+
+.fee-remarks p {
+  margin: 0;
+
+  color: var(--text-color);
+
+  font-size: 14px;
+}
+
+/* ==========================================
+   VIEW LOADING
+========================================== */
+
+.accountant-view-loading {
+  padding: 40px 20px;
+
+  text-align: center;
+
+  color: var(--text-secondary);
+}
+
+/* ==========================================
+   VIEW FOOTER
+========================================== */
+
+.accountant-view-footer {
+  display: flex;
+
+  justify-content: flex-end;
+
+  gap: 10px;
+
+  padding: 18px 24px;
+
+  border-top: 1px solid var(--border-color);
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (max-width: 768px) {
+  .accountant-fees-header {
+    flex-direction: column;
+
+    align-items: stretch;
+  }
+
+  .accountant-add-btn {
+    width: 100%;
+  }
+
+  .accountant-fees-table thead th,
+  .accountant-fees-table tbody td {
+    padding: 13px 14px;
+  }
+}
+
+@media (max-width: 600px) {
+  .fee-detail-grid,
+  .fee-summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .accountant-view-footer {
+    flex-direction: column;
+  }
+
+  .accountant-view-footer button {
+    width: 100%;
+  }
+}

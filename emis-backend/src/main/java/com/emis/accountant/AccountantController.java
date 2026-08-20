@@ -1,59 +1,62 @@
 package com.emis.accountant;
 
-import java.util.List;
-
-import com.emis.fee.FeeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import com.emis.fee.dto.FeeRequest;
-import com.emis.fee.dto.FeeResponse;
-import com.emis.fee.dto.UpdateFeeRequest;
+import com.emis.accountant.dto.AccountantDashboardResponse;
 
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api/fees")
+@RequestMapping("/accountant")
 @RequiredArgsConstructor
 public class AccountantController {
 
-    private final FeeService feeService;
+    private final AccountantService accountantService;
+
+    // ==========================================
+    // CREATE ACCOUNTANT
+    // ==========================================
 
     @PostMapping
-    public ResponseEntity<FeeResponse> addFee(@Valid @RequestBody FeeRequest request) {
+    public ResponseEntity<Accountant> createAccountant(
+            @RequestBody Accountant accountant) {
 
-        FeeResponse response = feeService.addFee(request);
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(
+                        accountantService
+                                .createAccountant(accountant)
+                );
     }
 
-    @PutMapping("/{feeId}")
-    public ResponseEntity<FeeResponse> updateFee(
-            @PathVariable Long feeId,
-            @Valid @RequestBody UpdateFeeRequest request) {
-
-        FeeResponse response = feeService.updateFee(feeId, request);
-        return ResponseEntity.ok(response);
-    }
+    // ==========================================
+    // GET ACCOUNTANT PROFILE
+    // ==========================================
 
     @GetMapping
-    public ResponseEntity<List<FeeResponse>> getAllFees() {
+    public ResponseEntity<Accountant> getAccountant() {
 
-        return ResponseEntity.ok(feeService.getAllFees());
+        return ResponseEntity.ok(
+                accountantService.getAccountant()
+        );
     }
 
-    @GetMapping("/student/{studentId}")
-    public ResponseEntity<FeeResponse> getFeeByStudent(@PathVariable Long studentId) {
+    // ==========================================
+    // ACCOUNTANT DASHBOARD
+    // ==========================================
 
-        return ResponseEntity.ok(feeService.getFeeByStudent(studentId));
-    }
+    @GetMapping("/dashboard")
+    public ResponseEntity<AccountantDashboardResponse>
+            getDashboard() {
 
-    @DeleteMapping("/{feeId}")
-    public ResponseEntity<String> deleteFee(@PathVariable Long feeId) {
-
-        feeService.deleteFee(feeId);
-        return ResponseEntity.ok("Fee record deleted successfully.");
+        return ResponseEntity.ok(
+                accountantService.getDashboard()
+        );
     }
 }
-

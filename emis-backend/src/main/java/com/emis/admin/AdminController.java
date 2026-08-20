@@ -2,7 +2,6 @@ package com.emis.admin;
 
 
 import com.emis.accountant.AccountantService;
-import com.emis.accountant.CreateAccountantRequest;
 import com.emis.admin.dto.AdminDashboardResponse;
 import com.emis.department.DepartmentService;
 import com.emis.department.dto.DepartmentRequest;
@@ -20,7 +19,6 @@ import com.emis.student.dto.StudentProfileResponse;
 import com.emis.student.dto.StudentRequest;
 import com.emis.subject.SubjectService;
 import com.emis.subject.dto.SubjectRequest;
-import com.emis.subject.dto.SubjectResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -34,7 +32,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AdminController {
 
-    private final AccountantService accountantService;
     private final NoticeService noticeService;
     private final StudentService studentService;
     private final DepartmentService departmentService;
@@ -53,20 +50,6 @@ public class AdminController {
 
         return ResponseEntity.ok(
                 adminService.getDashboardData());
-    }
-
-     //---------------- Accountant APIs ----------------
-
-    @PostMapping
-    public ResponseEntity<String> createAccountant(
-            @Valid @RequestBody CreateAccountantRequest request) {
-
-        accountantService.createAccountant(request);
-
-        return new ResponseEntity<>(
-                "Accountant created successfully.",
-                HttpStatus.CREATED
-        );
     }
 
     // ---------------- Notice APIs ----------------
@@ -264,7 +247,6 @@ public class AdminController {
         return new ResponseEntity<>(
 
                 subjectService.addSubject(request),
-
                 HttpStatus.CREATED);
 
     }
@@ -282,11 +264,9 @@ public class AdminController {
     public ResponseEntity<?> updateSubject(
 
             @PathVariable Long id,
-
             @Valid @RequestBody SubjectRequest request) {
 
         return ResponseEntity.ok(
-
                 subjectService.updateSubject(id, request));
 
     }
@@ -295,13 +275,9 @@ public class AdminController {
     public ResponseEntity<?> deleteSubject(
 
             @PathVariable Long id) {
-
         subjectService.deleteSubject(id);
 
         return ResponseEntity.noContent().build();
 
     }
-
-
-
 }

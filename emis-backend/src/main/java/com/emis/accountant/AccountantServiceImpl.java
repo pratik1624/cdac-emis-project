@@ -1,12 +1,16 @@
 package com.emis.accountant;
 
-import org.springframework.security.crypto.password.PasswordEncoder;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
-import com.emis.accountant.CreateAccountantRequest;
+import com.emis.accountant.dto.AccountantDashboardResponse;
+import com.emis.accountant.dto.RecentPaymentResponse;
+import com.emis.fee.Fee;
+import com.emis.fee.FeeRepository;
 import com.emis.user.User;
 import com.emis.user.UserRepository;
-import com.emis.user.UserRole;
+import com.emis.student.StudentRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -14,32 +18,122 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AccountantServiceImpl implements AccountantService {
 
-    private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
+    private final AccountantRepository accountantRepository;
 
+    private final UserRepository userRepository;
+
+    private final StudentRepository studentRepository;
+
+    private final FeeRepository feeRepository;
+
+    // ==========================================
+    // CREATE ACCOUNTANT
+    // ==========================================
 
     @Override
-    public void createAccountant(CreateAccountantRequest request) {
+    public Accountant createAccountant(Accountant accountant) {
 
-        if (userRepository.findByEmail(request.getEmail()).isPresent()) {
-            throw new RuntimeException("Email already exists");
+        // Only one Accountant is allowed
+        if (accountantRepository.count() > 0) {
+            throw new RuntimeException("Accountant already exists");
         }
 
+        // Get existing User
+        Long userId = accountant
+                .getUserDetails()
+                .getId();
 
-        User user = new User();
+        User user = userRepository.findById(userId)
+                .orElseThrow(() ->
+                        new RuntimeException("User not found"));
 
-        user.setEmail(request.getEmail());
+        // Make sure the User is an Accountant
+        if (user.getRole() != com.emis.user.UserRole.ACCOUNTANT) {
+            throw new RuntimeException(
+                    "User does not have ACCOUNTANT role");
+        }
 
-        user.setPassword(
-                passwordEncoder.encode(request.getPassword())
-        );
+        // Attach existing User
+        accountant.setUserDetails(user);
 
-        user.setMobileNo(request.getMobileNo());
-
-        user.setRole(UserRole.ACCOUNTANT);
-
-
-        userRepository.save(user);
+        return accountantRepository.save(accountant);
     }
 
+    // ==========================================
+    // GET ACCOUNTANT
+    // ==========================================
+
+    @Override
+    public Accountant getAccountant() {
+
+        return accountantRepository.findAll()
+                .stream()
+                .findFirst()
+                .orElseThrow(() ->
+                        new RuntimeException(
+                                "Accountant not found"));
+    }
+
+    // ==========================================
+    // ACCOUNTANT DASHBOARD
+    // ==========================================
+
+    @Override
+    public AccountantDashboardResponse getDashboard() {
+
+        // Total students
+        long totalStudents =
+                studentRepository.count();
+
+        // Total collected
+        var totalCollected =
+                feeRepository.getTotalCollected();
+
+        // Total pending
+        var totalPending =
+                feeRepository.getTotalPending();
+
+        // Students with dues
+        long studentsWithDues =
+                feeRepository.countStudentsWithDues();
+
+        // Recent payments
+        List<RecentPaymentResponse> recentPayments =
+                feeRepository
+                        .findTop5ByPaymentDateIsNotNullOrderByPaymentDateDesc()
+                        .stream()
+                        .map(this::mapRecentPayment)
+                        .toList();
+
+        return new AccountantDashboardResponse(
+                totalStudents,
+                totalCollected,
+                totalPending,
+                studentsWithDues,
+                recentPayments
+        );
+    }
+
+    // ==========================================
+    // MAP RECENT PAYMENT
+    // ==========================================
+
+    private RecentPaymentResponse mapRecentPayment(
+            Fee fee) {
+
+        var student = fee.getStudent();
+
+        String studentName =
+                student.getFirstName()
+                + " "
+                + student.getLastName();
+
+        return new RecentPaymentResponse(
+                student.getId(),
+                studentName,
+                fee.getPaidAmount(),
+                fee.getPaymentDate(),
+                fee.getPaymentStatus().name()
+        );
+    }
 }

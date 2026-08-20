@@ -1,0 +1,244 @@
+/* ==========================================
+   ACCOUNTANT DASHBOARD
+========================================== */
+
+.accountant-dashboard {
+  width: 100%;
+}
+
+/* ==========================================
+   HEADER
+========================================== */
+
+.accountant-dashboard .dashboard-header {
+  margin-bottom: 28px;
+}
+
+/* ==========================================
+   STAT CARDS
+========================================== */
+
+.accountant-stat-card {
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+
+  gap: 18px;
+
+  padding: 22px;
+
+  background: var(--card-color);
+
+  border: 1px solid var(--border-color);
+
+  border-radius: 18px;
+
+  color: var(--text-color);
+
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+
+  transition: 0.25s ease;
+}
+
+.accountant-stat-card:hover {
+  transform: translateY(-3px);
+
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+}
+
+/* ==========================================
+   STAT ICON
+========================================== */
+
+.accountant-stat-icon {
+  width: 54px;
+  height: 54px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 14px;
+
+  background: var(--accent-color);
+
+  color: white;
+
+  font-size: 22px;
+}
+
+/* ==========================================
+   STAT INFORMATION
+========================================== */
+
+.accountant-stat-info {
+  min-width: 0;
+}
+
+.accountant-stat-info .stat-label {
+  margin: 0 0 5px;
+
+  color: var(--text-secondary);
+
+  font-size: 14px;
+}
+
+.accountant-stat-info .stat-value {
+  margin: 0;
+
+  color: var(--text-color);
+
+  font-size: 24px;
+
+  font-weight: 700;
+}
+
+/* ==========================================
+   RECENT PAYMENTS CARD
+========================================== */
+
+.accountant-payments-card {
+  background: var(--card-color);
+
+  border: 1px solid var(--border-color);
+
+  border-radius: 18px;
+
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+
+  overflow: hidden;
+}
+
+/* ==========================================
+   CARD HEADER
+========================================== */
+
+.accountant-payments-header {
+  padding: 22px 24px;
+
+  border-bottom: 1px solid var(--border-color);
+}
+
+.accountant-payments-header h2 {
+  margin: 0;
+
+  font-size: 22px;
+
+  font-weight: 700;
+
+  color: var(--text-color);
+}
+
+.accountant-payments-header p {
+  margin: 5px 0 0;
+
+  color: var(--text-secondary);
+
+  font-size: 14px;
+}
+
+/* ==========================================
+   TABLE
+========================================== */
+
+.accountant-payment-table {
+  margin: 0;
+}
+
+.accountant-payment-table thead th {
+  padding: 15px 24px;
+
+  background: var(--bg-color);
+
+  color: var(--text-secondary);
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+  border-bottom: 1px solid var(--border-color);
+}
+
+.accountant-payment-table tbody td {
+  padding: 17px 24px;
+
+  color: var(--text-color);
+
+  background: var(--card-color);
+
+  border-bottom: 1px solid var(--border-color);
+
+  vertical-align: middle;
+
+  font-size: 14px;
+}
+
+.accountant-payment-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.accountant-payment-table tbody tr:hover td {
+  background: var(--bg-color);
+}
+
+/* ==========================================
+   STUDENT NAME
+========================================== */
+
+.accountant-student-name {
+  color: var(--text-color);
+
+  font-size: 15px;
+
+  font-weight: 550;
+}
+
+/* ==========================================
+   STATUS
+========================================== */
+
+.accountant-payment-status {
+  display: inline-block;
+
+  padding: 5px 11px;
+
+  border-radius: 20px;
+
+  font-size: 12px;
+
+  font-weight: 600;
+}
+
+.accountant-payment-status.paid {
+  background: rgba(30, 215, 96, 0.15);
+
+  color: var(--accent-color);
+}
+
+.accountant-payment-status.partial {
+  background: rgba(255, 193, 7, 0.15);
+
+  color: #d39e00;
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (max-width: 768px) {
+  .accountant-stat-card {
+    padding: 18px;
+  }
+
+  .accountant-stat-info .stat-value {
+    font-size: 20px;
+  }
+
+  .accountant-payment-table thead th,
+  .accountant-payment-table tbody td {
+    padding: 14px 16px;
+  }
+}

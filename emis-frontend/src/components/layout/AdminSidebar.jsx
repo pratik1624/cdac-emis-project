@@ -15,7 +15,6 @@ import {
 } from "react-icons/fa";
 
 export default function AdminSidebar() {
-
   const { logout } = useAuth();
   return (
     <div className="student-sidebar">
@@ -54,11 +53,6 @@ export default function AdminSidebar() {
           Subjects
         </NavLink>
 
-        <NavLink to="/admin/accountants" className="sidebar-link">
-          <FaUserTie />
-          Accountants
-        </NavLink>
-
         <NavLink to="/admin/notices" className="sidebar-link">
           <FaBullhorn />
           Notices
@@ -71,8 +65,7 @@ export default function AdminSidebar() {
       </div>
 
       <div className="sidebar-footer">
-        <button className="btn btn-light w-100"
-        onClick={logout}>
+        <button className="btn btn-light w-100" onClick={logout}>
           <FaSignOutAlt className="me-2" />
           Logout
         </button>
